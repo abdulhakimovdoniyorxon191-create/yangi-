@@ -10,7 +10,7 @@
   <style>
     :root {
       --bg-dark: #04130c;
-      --bg-glass: rgba(8, 33, 21, 0.8);
+      --bg-glass: rgba(8, 33, 21, 0.82);
       --gold: #d4af37;
       --gold-light: #f6df8f;
       --paper: #fcf7ea;
@@ -57,7 +57,7 @@
       100% { transform: perspective(900px) rotateY(0) scale(1); opacity: 1; }
     }
     .loader-bar { width: 180px; height: 3px; background: rgba(212, 175, 55, 0.2); border-radius: 99px; overflow: hidden; }
-    .loader-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-light)); animation: loadBar 1.4s ease forwards; }
+    .loader-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-light)); animation: loadBar 1.3s ease forwards; }
     @keyframes loadBar { to { width: 100%; } }
 
     header {
@@ -73,8 +73,8 @@
     .nav-logo-box { width: 46px; height: 46px; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.35)); }
     .logo-text strong { display: block; font-size: 1.02rem; color: var(--gold-light); line-height: 1.1; }
     .logo-text span { font-size: 0.64rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
-    nav { display: flex; gap: 22px; }
-    nav a { color: var(--text-main); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
+    nav { display: flex; gap: 20px; }
+    nav a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
     nav a:hover { color: var(--gold-light); }
     .nav-actions { display: flex; align-items: center; gap: 7px; }
 
@@ -135,14 +135,12 @@
     .hero-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
     main, footer { position: relative; z-index: 2; }
-    section { max-width: 1180px; margin: 0 auto; padding: 76px 18px; }
+    section { max-width: 1180px; margin: 0 auto; padding: 74px 18px; }
     .section-header { text-align: center; margin-bottom: 34px; }
     .section-header h2 { font-size: clamp(1.7rem, 3.3vw, 2.5rem); color: var(--gold-light); margin-bottom: 8px; }
-    .section-header p { color: var(--text-muted); max-width: 580px; margin: 0 auto; font-size: 0.95rem; }
+    .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 0.95rem; }
 
-    .cat-quick-tabs {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px;
-    }
+    .cat-quick-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 22px; }
     .cat-tab {
       padding: 7px 14px; border-radius: 999px; background: var(--bg-glass);
       color: var(--text-muted); border: 1px solid var(--border-gold);
@@ -153,12 +151,12 @@
     .flipbook-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 
     .book-viewport-desktop {
-      width: 100%; max-width: 920px; height: 580px;
+      width: 100%; max-width: 940px; height: 590px;
       display: flex; align-items: center; justify-content: center;
-      perspective: 2200px; position: relative;
+      perspective: 2400px; position: relative;
     }
     .book-3d {
-      position: relative; width: 440px; height: 560px;
+      position: relative; width: 450px; height: 570px;
       transform-style: preserve-3d;
       transition: transform 0.85s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform: translateX(0);
@@ -167,7 +165,7 @@
     .book-3d.is-back { transform: translateX(100%); }
 
     .sheet {
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; width: 100%; height: 100%;
       transform-origin: left center;
       transform-style: preserve-3d;
       transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -176,7 +174,7 @@
     .sheet.flipped { transform: rotateY(-180deg); }
 
     .face {
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; width: 100%; height: 100%;
       backface-visibility: hidden; -webkit-backface-visibility: hidden;
       border-radius: 4px 16px 16px 4px;
       overflow: hidden;
@@ -184,25 +182,22 @@
     }
     .face.back { transform: rotateY(180deg); border-radius: 16px 4px 4px 16px; }
 
-    .face.cover-front, .mobile-cover-front {
+    .face.cover-front {
       background: linear-gradient(145deg, #0c3823 0%, #051c11 65%, #0a2e1d 100%);
       border: 2.5px solid var(--gold);
-      box-shadow: 10px 16px 38px rgba(0,0,0,0.68), inset 14px 0 22px rgba(0,0,0,0.45);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 30px; gap: 16px; position: relative;
+      box-shadow: 12px 18px 42px rgba(0,0,0,0.75), 5px 0 0 #d8c79c, 8px 0 0 #b8a374, inset 16px 0 24px rgba(0,0,0,0.45);
+      align-items: center; justify-content: center; text-align: center; padding: 34px; gap: 16px;
     }
-    .face.cover-front::before, .mobile-cover-front::before {
-      content: ""; position: absolute; inset: 12px;
-      border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 4px 12px 12px 4px; pointer-events: none;
+    .face.cover-front::before {
+      content: ""; position: absolute; inset: 14px;
+      border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 3px 12px 12px 3px; pointer-events: none;
     }
-    .face.cover-back, .mobile-cover-back {
+    .face.cover-back {
       background: linear-gradient(145deg, #051c11 0%, #0c3823 100%);
       border: 2.5px solid var(--gold);
-      box-shadow: 0 16px 38px rgba(0,0,0,0.68);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 30px; gap: 14px; position: relative;
+      box-shadow: -12px 18px 42px rgba(0,0,0,0.75), inset -16px 0 24px rgba(0,0,0,0.45);
+      align-items: center; justify-content: center; text-align: center; padding: 34px; gap: 14px;
     }
-
     .face.paper-front {
       background: linear-gradient(90deg, #e2d4b0 0%, var(--paper) 7%, var(--paper) 96%, var(--paper-edge) 100%);
       color: var(--ink); padding: 24px 22px 16px;
@@ -218,34 +213,65 @@
 
     .book-viewport-mobile {
       display: none;
-      width: 100%; max-width: 390px;
-      perspective: 1400px;
-      touch-action: pan-y;
+      width: 100%; max-width: 380px;
+      margin: 0 auto;
       user-select: none;
     }
-    .mobile-book-card {
-      width: 100%; min-height: 510px;
-      border-radius: 14px; overflow: hidden;
+    .m-book-stage {
+      position: relative; width: 100%; height: 530px;
+      perspective: 1800px;
+      touch-action: pan-y;
+    }
+    .m-sheet {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.28, 0.84, 0.42, 1);
+      will-change: transform;
+    }
+    .m-sheet.dragging { transition: none !important; }
+    .m-sheet.flipped { transform: rotateY(-180deg); pointer-events: none; }
+
+    .m-face {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      border-radius: 6px 16px 16px 6px; overflow: hidden;
       display: flex; flex-direction: column; justify-content: space-between;
-      transform-origin: center center;
-      transition: transform 0.32s ease, opacity 0.25s ease;
     }
-    .mobile-book-card.paper-mobile {
-      background: linear-gradient(90deg, #e4d7b5 0%, var(--paper) 5%, var(--paper) 95%, var(--paper-edge) 100%);
-      color: var(--ink); padding: 22px 18px 14px;
-      border: 2px solid #8a6922;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    .m-face.m-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(270deg, #dfd1ac 0%, #f5edd8 100%);
+      border: 1px solid rgba(107, 78, 22, 0.35);
+      border-radius: 16px 6px 6px 16px;
     }
-    .mobile-book-card.flip-left { transform: rotateY(-35deg) translateX(-24px); opacity: 0.15; }
-    .mobile-book-card.flip-right { transform: rotateY(35deg) translateX(24px); opacity: 0.15; }
+    .m-face.m-cover {
+      background: linear-gradient(145deg, #0c3823 0%, #051c11 65%, #0a2e1d 100%);
+      border: 2.5px solid var(--gold);
+      box-shadow: 8px 16px 36px rgba(0,0,0,0.75), 4px 0 0 #d8c79c, inset 14px 0 22px rgba(0,0,0,0.45);
+      align-items: center; justify-content: center; text-align: center; padding: 28px; gap: 16px;
+    }
+    .m-face.m-cover::before {
+      content: ""; position: absolute; inset: 12px;
+      border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 3px 12px 12px 3px; pointer-events: none;
+    }
+    .m-face.m-paper {
+      background: linear-gradient(90deg, #dfd1ac 0%, var(--paper) 6%, var(--paper) 95%, var(--paper-edge) 100%);
+      color: var(--ink); padding: 20px 16px 14px;
+      border: 1.5px solid #8a6922;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.5);
+    }
+    .m-shadow-overlay {
+      position: absolute; inset: 0; background: #000; opacity: 0;
+      pointer-events: none; transition: opacity 0.3s ease; z-index: 5;
+    }
     .swipe-hint {
       text-align: center; font-size: 0.78rem; color: var(--gold-light);
-      opacity: 0.85; margin-top: 10px; letter-spacing: 0.5px;
+      opacity: 0.88; margin-top: 12px; letter-spacing: 0.4px;
     }
 
     .page-title {
-      font-family: 'Cinzel', serif; font-size: 1.14rem; color: #0a301d;
-      border-bottom: 2px solid var(--gold); padding-bottom: 7px; margin-bottom: 12px;
+      font-family: 'Cinzel', serif; font-size: 1.12rem; color: #0a301d;
+      border-bottom: 2px solid var(--gold); padding-bottom: 7px; margin-bottom: 10px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .page-title span { font-size: 0.74rem; color: #7c6221; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -255,13 +281,17 @@
 
     .book-dish {
       display: flex; justify-content: space-between; align-items: center; gap: 10px;
-      padding: 10px 0; border-bottom: 1px dashed rgba(107, 78, 22, 0.32);
+      padding: 9px 0; border-bottom: 1px dashed rgba(107, 78, 22, 0.32);
     }
     .book-dish:last-child { border-bottom: none; }
-    .book-dish-name { font-weight: 700; color: #092b1b; font-size: 0.92rem; line-height: 1.25; }
-    .book-dish-desc { font-size: 0.76rem; color: #546359; line-height: 1.3; margin-top: 2px; }
-    .book-dish-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
-    .book-dish-price { font-weight: 700; color: #8c6513; font-size: 0.85rem; white-space: nowrap; }
+    .book-dish.sold-out { opacity: 0.5; }
+    .book-dish-info { flex: 1; cursor: pointer; }
+    .book-dish-name { font-weight: 700; color: #092b1b; font-size: 0.9rem; line-height: 1.25; display: flex; align-items: center; gap: 5px; }
+    .book-dish-info:hover .book-dish-name { color: #8c6513; text-decoration: underline; }
+    .book-dish-desc { font-size: 0.74rem; color: #546359; line-height: 1.3; margin-top: 2px; }
+    .book-dish-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+    .book-dish-price { font-weight: 700; color: #8c6513; font-size: 0.84rem; white-space: nowrap; }
+    .sold-tag { font-size: 0.7rem; background: #a82835; color: #fff; padding: 2px 7px; border-radius: 5px; font-weight: 700; }
 
     .dish-add-btn {
       width: 32px; height: 30px; border-radius: 8px; border: none; cursor: pointer;
@@ -280,16 +310,27 @@
       width: 24px; height: 24px; border: none; background: transparent;
       color: var(--gold-light); font-size: 1rem; font-weight: 700; cursor: pointer;
     }
-    .dish-stepper span {
-      color: #fff; font-size: 0.82rem; font-weight: 700; min-width: 14px; text-align: center;
-    }
+    .dish-stepper span { color: #fff; font-size: 0.82rem; font-weight: 700; min-width: 14px; text-align: center; }
 
     .page-foot {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.75rem; color: #7c6221; margin-top: 10px; font-weight: 600;
-      border-top: 1px solid rgba(107, 78, 22, 0.2); padding-top: 7px;
+      font-size: 0.74rem; color: #7c6221; margin-top: 8px; font-weight: 600;
+      border-top: 1px solid rgba(107, 78, 22, 0.2); padding-top: 6px;
     }
     .book-controls { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    .banquet-box {
+      background: var(--bg-glass); backdrop-filter: blur(14px);
+      border: 1px solid var(--border-gold); border-radius: 18px; padding: 28px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: center;
+    }
+    .banquet-summary {
+      background: rgba(4, 19, 12, 0.82); border: 1px solid var(--gold);
+      border-radius: 14px; padding: 22px;
+    }
+    .banquet-summary ul { list-style: none; margin: 12px 0 16px; }
+    .banquet-summary li { font-size: 0.88rem; color: var(--text-muted); padding: 4px 0; border-bottom: 1px dashed rgba(212,175,55,0.2); }
+    .banquet-price-big { font-size: 1.65rem; font-weight: 800; color: var(--gold-light); font-family: 'Cinzel', serif; }
 
     .halls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
     .hall-card {
@@ -309,6 +350,21 @@
     .hall-body h3 { color: var(--gold-light); font-size: 1.12rem; margin-bottom: 6px; }
     .hall-body p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 14px; }
 
+    .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; margin-bottom: 24px; }
+    .review-card {
+      background: var(--bg-glass); border: 1px solid var(--border-gold); border-radius: 14px; padding: 20px;
+    }
+    .stars { color: var(--gold-light); letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 8px; }
+    .review-card p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; }
+    .review-author { font-size: 0.82rem; color: var(--gold-light); font-weight: 700; }
+    .rating-banner {
+      background: rgba(8, 33, 21, 0.88); border: 1px solid var(--gold); border-radius: 14px;
+      padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    }
+    .star-picker { display: flex; gap: 6px; font-size: 1.7rem; cursor: pointer; }
+    .star-picker span { color: rgba(212, 175, 55, 0.3); transition: color 0.15s, transform 0.15s; }
+    .star-picker span.lit { color: var(--gold-light); transform: scale(1.1); }
+
     .booking-section {
       max-width: 100%; position: relative;
       background: linear-gradient(rgba(4, 19, 12, 0.86), rgba(4, 19, 12, 0.92)),
@@ -324,18 +380,18 @@
     .quick-label { font-size: 0.86rem; color: var(--gold-light); font-weight: 600; margin-bottom: 8px; display: block; }
     .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
     .chip {
-      flex: 1 1 110px; padding: 10px 12px; text-align: center; border-radius: 10px;
+      flex: 1 1 105px; padding: 10px 12px; text-align: center; border-radius: 10px;
       background: rgba(4, 19, 12, 0.75); border: 1px solid var(--border-gold);
       color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 0.88rem; transition: all 0.2s;
     }
     .chip.selected, .chip:hover { background: var(--gold); color: #04130c; border-color: var(--gold); }
     .simple-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    input, select {
+    input, select, textarea {
       width: 100%; padding: 11px 14px; border-radius: 9px;
       border: 1px solid var(--border-gold); background: rgba(4, 19, 12, 0.9);
       color: var(--text-main); font-family: inherit; font-size: 0.94rem;
     }
-    input:focus, select:focus { outline: none; border-color: var(--gold-light); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold-light); }
 
     .location-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 26px; align-items: stretch; }
     .location-info {
@@ -396,33 +452,62 @@
       background: #072114; border: 1px solid var(--gold); border-radius: 16px;
       width: 100%; max-width: 500px; padding: 22px; max-height: 90vh; overflow-y: auto;
     }
-    .modal.modal-lg { max-width: 860px; }
+    .modal.modal-lg { max-width: 900px; }
     .modal-header {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 16px; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px;
     }
     .close-btn { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+
+    .dish-preview-img {
+      width: 100%; height: 220px; object-fit: cover; border-radius: 12px;
+      border: 1px solid var(--border-gold); margin-bottom: 14px;
+    }
+    .dish-meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 14px; }
+    .meta-badge {
+      font-size: 0.78rem; padding: 4px 10px; border-radius: 999px;
+      background: rgba(212, 175, 55, 0.14); color: var(--gold-light); border: 1px solid var(--border-gold);
+    }
+
+    .upsell-box {
+      background: rgba(4, 19, 12, 0.72); border: 1px dashed var(--gold);
+      border-radius: 12px; padding: 12px; margin: 12px 0;
+    }
+    .upsell-title { font-size: 0.82rem; color: var(--gold-light); font-weight: 700; margin-bottom: 8px; }
+    .upsell-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; gap: 8px; }
+
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 10px; }
     .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--gold); background: transparent; color: var(--gold-light); cursor: pointer; font-weight: 700; }
     .cart-total { display: flex; justify-content: space-between; font-size: 1.12rem; font-weight: 700; color: var(--gold-light); margin: 16px 0; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 18px; }
-    .stat-box { background: rgba(4, 19, 12, 0.8); border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px; text-align: center; }
-    .stat-box strong { display: block; font-size: 1.3rem; color: var(--gold-light); }
-    .stat-box span { font-size: 0.78rem; color: var(--text-muted); }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .stat-box { background: rgba(4, 19, 12, 0.85); border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat-box strong { display: block; font-size: 1.25rem; color: var(--gold-light); }
+    .stat-box span { font-size: 0.76rem; color: var(--text-muted); }
+
+    .chart-card {
+      background: rgba(4, 19, 12, 0.75); border: 1px solid var(--border-gold);
+      border-radius: 12px; padding: 16px; margin-bottom: 16px;
+    }
+    .bar-row { margin-bottom: 10px; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 4px; color: var(--text-main); }
+    .bar-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; }
+
     .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
     .admin-item {
-      background: rgba(4, 19, 12, 0.7); border: 1px solid rgba(212, 175, 55, 0.22);
+      background: rgba(4, 19, 12, 0.72); border: 1px solid rgba(212, 175, 55, 0.22);
       border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
       display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
     }
     .status-pill { padding: 3px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; background: rgba(212, 175, 55, 0.18); color: var(--gold-light); }
     .status-pill.done { background: rgba(40, 167, 69, 0.22); color: #7ef29d; }
+    .status-pill.stop { background: rgba(220, 53, 69, 0.25); color: #ff8a95; }
 
     @media (max-width: 960px) {
       .book-viewport-desktop { height: 500px; }
-      .book-3d { width: 340px; height: 480px; }
-      .location-grid { grid-template-columns: 1fr; }
+      .book-3d { width: 345px; height: 485px; }
+      .location-grid, .banquet-box { grid-template-columns: 1fr; }
     }
     @media (max-width: 740px) {
       nav { display: none; }
@@ -430,7 +515,7 @@
       .book-viewport-desktop { display: none; }
       .book-viewport-mobile { display: block; }
       .simple-inputs { grid-template-columns: 1fr; }
-      .booking-card { padding: 20px; }
+      .booking-card, .banquet-box { padding: 20px; }
     }
   </style>
 </head>
@@ -460,6 +545,7 @@
       </a>
       <nav>
         <a href="#menyu" data-i18n="navMenu">Menyu</a>
+        <a href="#banket" data-i18n="navBanquet">Banket</a>
         <a href="#zallar" data-i18n="navHalls">Zallar</a>
         <a href="#bron" data-i18n="navBooking">Bron</a>
         <a href="#aloqa" data-i18n="navContact">Aloqa</a>
@@ -470,7 +556,7 @@
           <button class="lang-btn" onclick="setLang('ru', this)">RU</button>
           <button class="lang-btn" onclick="setLang('en', this)">EN</button>
         </div>
-        <button class="btn btn-outline" onclick="openAdminGate()" data-i18n="btnAdmin">Admin</button>
+        <button class="btn btn-outline" onclick="openAdminGate()" data-i18n="btnAdmin">Direktor</button>
         <button class="btn btn-gold" onclick="openCart()">
           <span data-i18n="btnCart">Savat</span> <span class="cart-badge" id="cartCount">0</span>
         </button>
@@ -502,7 +588,7 @@
     <section id="menyu">
       <div class="section-header">
         <h2 data-i18n="menuHeading">Menyu</h2>
-        <p data-i18n="menuSub">Bo'limni tanlang yoki sahifalarni varaqlab taomlarni savatga qo'shing.</p>
+        <p data-i18n="menuSub">Taom nomiga bosib rasm va tarkibini ko'ring, «+» orqali savatga qo'shing.</p>
       </div>
 
       <div class="cat-quick-tabs" id="catQuickTabs"></div>
@@ -512,15 +598,48 @@
           <div class="book-3d" id="book3d"></div>
         </div>
 
-        <div class="book-viewport-mobile" id="mobileBookViewport">
-          <div class="mobile-book-card" id="mobileBookCard"></div>
-          <div class="swipe-hint" data-i18n="swipeHint">← Chapga yoki o'ngga suring →</div>
+        <div class="book-viewport-mobile">
+          <div class="m-book-stage" id="mobileBookStage"></div>
+          <div class="swipe-hint" data-i18n="swipeHint">← Varaqni chapga yoki o'ngga suring →</div>
         </div>
 
         <div class="book-controls">
           <button class="btn btn-outline" onclick="handlePrev()" data-i18n="prevBtn">Oldingi</button>
           <span id="pageIndicator" style="color:var(--gold-light); font-weight:700; min-width:80px; text-align:center;"></span>
           <button class="btn btn-gold" onclick="handleNext()" data-i18n="nextBtn">Keyingi</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="banket">
+      <div class="section-header">
+        <h2 data-i18n="banquetHeading">Banket va Davra Kalkulyatori</h2>
+        <p data-i18n="banquetSub">Tug'ilgan kun, oilaviy yig'in yoki iftorlik dasturxoni narxini darhol hisoblang.</p>
+      </div>
+      <div class="banquet-box">
+        <div>
+          <span class="quick-label" data-i18n="bqGuests">Mehmonlar soni:</span>
+          <div class="chip-group" id="bqGuestChips">
+            <div class="chip selected" data-n="10" onclick="pickBanquetGuest(this)">10 kishi</div>
+            <div class="chip" data-n="15" onclick="pickBanquetGuest(this)">15 kishi</div>
+            <div class="chip" data-n="20" onclick="pickBanquetGuest(this)">20 kishi</div>
+            <div class="chip" data-n="30" onclick="pickBanquetGuest(this)">30 kishi</div>
+          </div>
+
+          <span class="quick-label" data-i18n="bqTier">Dasturxon to'plami:</span>
+          <div class="chip-group" id="bqTierChips">
+            <div class="chip selected" data-tier="standard" onclick="pickBanquetTier(this)">Standart</div>
+            <div class="chip" data-tier="royal" onclick="pickBanquetTier(this)">Shohona</div>
+            <div class="chip" data-tier="vip" onclick="pickBanquetTier(this)">VIP</div>
+          </div>
+        </div>
+
+        <div class="banquet-summary">
+          <div style="font-size:0.84rem; color:var(--text-muted);" id="bqTitle"></div>
+          <div class="banquet-price-big" id="bqTotal"></div>
+          <div style="font-size:0.82rem; color:var(--gold-light); margin-bottom:10px;" id="bqPerPerson"></div>
+          <ul id="bqItems"></ul>
+          <button class="btn btn-gold" style="width:100%;" onclick="orderBanquet()" data-i18n="bqOrderBtn">Dasturxonni band qilish</button>
         </div>
       </div>
     </section>
@@ -563,6 +682,44 @@
             <p data-i18n="hall3Desc">Yaqinlaringiz bilan erkin va shinam suhbat uchun yopiq kabinalar.</p>
             <button class="btn btn-outline" style="width:100%;" onclick="pickRoom('Oilaviy')" data-i18n="chooseHall">Tanlash</button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sharhlar">
+      <div class="section-header">
+        <h2 data-i18n="trustHeading">Mehmonlarimiz Fikri • 4.9 ★</h2>
+        <p data-i18n="trustSub">Yandex va Google xaritalarida 450+ ijobiy baho.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"To'y oshi va qozon kabobi juda mazali, xizmat ko'rsatish tez va samimiy. Oilaviy kabinalari shinam ekan."</p>
+          <div class="review-author">Jamshid R. • Olmazor</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"VIP xonada mehmon kutdik, dasturxon va shashliklar hammani hayratda qoldirdi. Albatta yana kelamiz."</p>
+          <div class="review-author">Dilnoza M. • Toshkent</div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Ko'za sho'rva va tandir somsa zo'r. Narxlar ham sifatiga nisbatan juda qulay."</p>
+          <div class="review-author">Sardorbek A. • Toshkent</div>
+        </div>
+      </div>
+
+      <div class="rating-banner">
+        <div>
+          <strong style="color:var(--gold-light); font-size:1rem; display:block;" data-i18n="rateAsk">Xizmatimizni baholang</strong>
+          <span style="color:var(--text-muted); font-size:0.84rem;" data-i18n="rateSub">Fikringiz biz uchun muhim — 1 soniyada baho bering.</span>
+        </div>
+        <div class="star-picker" id="starPicker">
+          <span onclick="pickStar(1)">★</span>
+          <span onclick="pickStar(2)">★</span>
+          <span onclick="pickStar(3)">★</span>
+          <span onclick="pickStar(4)">★</span>
+          <span onclick="pickStar(5)">★</span>
         </div>
       </div>
     </section>
@@ -648,18 +805,42 @@
 
   <footer>
     <div class="copyright">
-      © 2026 SHAHBOZ RESTAURANT • <a href="javascript:void(0)" onclick="openAdminGate()">Admin Panel</a>
+      © 2026 SHAHBOZ RESTAURANT • <a href="javascript:void(0)" onclick="openAdminGate()">Direktor Paneli</a>
     </div>
   </footer>
 
   <div class="bottom-cart-bar" id="bottomCartBar" onclick="openCart()">
-    <div>
-      <strong style="color:var(--gold-light); font-size:0.92rem;" id="bottomCartSummary"></strong>
-    </div>
+    <div><strong style="color:var(--gold-light); font-size:0.92rem;" id="bottomCartSummary"></strong></div>
     <span class="btn btn-gold" style="padding:6px 14px; font-size:0.82rem;" data-i18n="btnCart">Savat</span>
   </div>
 
   <a href="tel:+998880004850" class="floating-call" title="+998 88 000 48 50">📞</a>
+
+  <div class="modal-backdrop" id="dishModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="brand-font" style="color:var(--gold-light);" id="dpName"></h3>
+        <button class="close-btn" onclick="closeModal('dishModal')">&times;</button>
+      </div>
+      <img id="dpImg" class="dish-preview-img" src="" alt="" />
+      <p id="dpDesc" style="color:var(--text-muted); font-size:0.92rem;"></p>
+      <div class="dish-meta-row" id="dpMeta"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+        <strong style="font-size:1.25rem; color:var(--gold-light);" id="dpPrice"></strong>
+        <button class="btn btn-gold" id="dpAddBtn">+ Savatga qo'shish</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="feedbackModal">
+    <div class="modal" style="max-width:420px;">
+      <div class="modal-header">
+        <h3 class="brand-font" style="color:var(--gold-light);" id="fbTitle">Fikringiz</h3>
+        <button class="close-btn" onclick="closeModal('feedbackModal')">&times;</button>
+      </div>
+      <div id="fbBody"></div>
+    </div>
+  </div>
 
   <div class="modal-backdrop" id="cartModal">
     <div class="modal">
@@ -668,6 +849,7 @@
         <button class="close-btn" onclick="closeModal('cartModal')">&times;</button>
       </div>
       <div id="cartItems"></div>
+      <div id="cartUpsell"></div>
       <div class="cart-total"><span data-i18n="lblTotal">Jami:</span><span id="cartTotal">0 so'm</span></div>
       <div class="simple-inputs" style="margin-bottom:12px;">
         <input type="text" id="orderName" placeholder="Ismingiz" />
@@ -680,9 +862,9 @@
   </div>
 
   <div class="modal-backdrop" id="adminLoginModal">
-    <div class="modal" style="max-width:350px; text-align:center;">
+    <div class="modal" style="max-width:340px; text-align:center;">
       <div class="modal-header">
-        <h3 class="brand-font" style="color:var(--gold-light);">Admin</h3>
+        <h3 class="brand-font" style="color:var(--gold-light);">Direktor Paneli</h3>
         <button class="close-btn" onclick="closeModal('adminLoginModal')">&times;</button>
       </div>
       <input type="password" id="adminPinInput" placeholder="PIN" style="text-align:center; margin-bottom:14px;" />
@@ -693,14 +875,16 @@
   <div class="modal-backdrop" id="adminPanelModal">
     <div class="modal modal-lg">
       <div class="modal-header">
-        <h3 class="brand-font" style="color:var(--gold-light);">SHAHBOZ — Admin</h3>
+        <h3 class="brand-font" style="color:var(--gold-light);">SHAHBOZ — Direktor Paneli</h3>
         <button class="close-btn" onclick="closeModal('adminPanelModal')">&times;</button>
       </div>
       <div class="stats-row" id="adminStats"></div>
       <div class="admin-tabs">
-        <button class="btn btn-gold" id="tabOrdersBtn" onclick="switchAdminTab('orders')">Buyurtmalar</button>
+        <button class="btn btn-gold" id="tabAnalyticsBtn" onclick="switchAdminTab('analytics')">Analitika</button>
+        <button class="btn btn-outline" id="tabOrdersBtn" onclick="switchAdminTab('orders')">Buyurtmalar</button>
         <button class="btn btn-outline" id="tabBookingsBtn" onclick="switchAdminTab('bookings')">Bronlar</button>
-        <button class="btn btn-outline" id="tabMenuBtn" onclick="switchAdminTab('menu')">Menyu</button>
+        <button class="btn btn-outline" id="tabMenuBtn" onclick="switchAdminTab('menu')">Menyu & Stop-list</button>
+        <button class="btn btn-outline" id="tabFeedbackBtn" onclick="switchAdminTab('feedback')">Sifat nazorati</button>
       </div>
       <div id="adminTabContent"></div>
     </div>
@@ -708,22 +892,16 @@
 
   <script>
     function handleLogoErr(img) {
-      if (!img.dataset.step) {
-        img.dataset.step = "1";
-        img.src = "logo.jpeg";
-      } else if (img.dataset.step === "1") {
-        img.dataset.step = "2";
-        img.src = "logo.png";
-      } else {
+      if (!img.dataset.step) { img.dataset.step = "1"; img.src = "logo.jpeg"; }
+      else if (img.dataset.step === "1") { img.dataset.step = "2"; img.src = "logo.png"; }
+      else {
         img.onerror = null;
         img.src = "data:image/svg+xml;utf8," + encodeURIComponent(
           `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'>
             <rect width='220' height='220' fill='#062718'/>
             <circle cx='110' cy='110' r='92' fill='none' stroke='#d4af37' stroke-width='3'/>
-            <circle cx='110' cy='110' r='82' fill='none' stroke='#f6df8f' stroke-width='1.2' stroke-dasharray='4 3'/>
-            <polygon points='110,18 118,32 134,32 122,42 126,56 110,48 94,56 98,42 86,32 102,32' fill='#d4af37'/>
-            <text x='110' y='115' text-anchor='middle' fill='#f6df8f' font-family='serif' font-weight='800' font-size='26' letter-spacing='2'>SHAHBOZ</text>
-            <text x='110' y='138' text-anchor='middle' fill='#d4af37' font-family='sans-serif' font-weight='600' font-size='11' letter-spacing='3'>RESTAURANT</text>
+            <text x='110' y='115' text-anchor='middle' fill='#f6df8f' font-family='serif' font-weight='800' font-size='26'>SHAHBOZ</text>
+            <text x='110' y='138' text-anchor='middle' fill='#d4af37' font-family='sans-serif' font-size='11' letter-spacing='3'>RESTAURANT</text>
           </svg>`
         );
       }
@@ -731,17 +909,21 @@
 
     const I18N = {
       uz: {
-        navMenu: "Menyu", navHalls: "Zallar", navBooking: "Bron", navContact: "Aloqa",
-        btnAdmin: "Admin", btnCart: "Savat",
+        navMenu: "Menyu", navBanquet: "Banket", navHalls: "Zallar", navBooking: "Bron", navContact: "Aloqa",
+        btnAdmin: "Direktor", btnCart: "Savat",
         heroSub: "O'zbek milliy taomlarining shohona ta'mi, samimiy xizmat va nafis sharqona muhit.",
         heroBook: "Joy band qilish",
-        menuHeading: "Menyu", menuSub: "Bo'limni tanlang yoki sahifalarni varaqlab taomlarni savatga qo'shing.",
-        prevBtn: "Oldingi", nextBtn: "Keyingi", swipeHint: "← Chapga yoki o'ngga suring →",
+        menuHeading: "Menyu", menuSub: "Taom nomiga bosib rasm va tarkibini ko'ring, «+» orqali savatga qo'shing.",
+        prevBtn: "Oldingi", nextBtn: "Keyingi", swipeHint: "← Varaqni chapga yoki o'ngga suring →",
+        banquetHeading: "Banket va Davra Kalkulyatori", banquetSub: "Tug'ilgan kun, oilaviy yig'in yoki iftorlik dasturxoni narxini darhol hisoblang.",
+        bqGuests: "Mehmonlar soni:", bqTier: "Dasturxon to'plami:", bqOrderBtn: "Dasturxonni band qilish",
         hallsHeading: "Zallar va VIP Xonalar", hallsSub: "Oilaviy kechki ovqat, do'stlar davrasi va muhim uchrashuvlar uchun shinam joylar.",
         hall1Title: "Umumiy Zal", hall1Desc: "Keng, yorug' va jonli muhitga ega asosiy zal.",
         hall2Title: "VIP Xona", hall2Desc: "Alohida xizmat, sokin muhit va biznes uchrashuvlar uchun ideal.",
         hall3Title: "Oilaviy Kabina", hall3Desc: "Yaqinlaringiz bilan erkin va shinam suhbat uchun yopiq kabinalar.",
         chooseHall: "Tanlash",
+        trustHeading: "Mehmonlarimiz Fikri • 4.9 ★", trustSub: "Yandex va Google xaritalarida 450+ ijobiy baho.",
+        rateAsk: "Xizmatimizni baholang", rateSub: "Fikringiz biz uchun muhim — 1 soniyada baho bering.",
         bookHeading: "Joy Band Qilish", bookSub: "Xona va vaqtni tanlang, ismingiz hamda raqamingizni qoldiring.",
         lblRoom: "Xona turi:", lblGuests: "Mehmonlar soni:", lblTime: "Vaqt:", btnConfirmBook: "Joyni band qilish",
         locHeading: "Manzil va Yo'nalish", locSub: "Toshkent shahri, Olmazor tumanida sizni kutib qolamiz.",
@@ -751,20 +933,24 @@
         openNow: "Hozir ochiq • 23:00 gacha", closedNow: "Yopiq • 09:00 da ochiladi",
         coverTap: "Ochish uchun chapga suring", coverTapDesk: "Ochish uchun bosing",
         backThanks: "Yoqimli ishtaha!", backSub: "Olmazor tumani • +998 88 000 48 50",
-        addedToast: "Savatga qo'shildi", wrongPin: "Noto'g'ri PIN"
+        addedToast: "Savatga qo'shildi", wrongPin: "Noto'g'ri PIN", upsellTitle: "Taom bilan zo'r ketadi:"
       },
       ru: {
-        navMenu: "Меню", navHalls: "Залы", navBooking: "Бронь", navContact: "Контакты",
-        btnAdmin: "Админ", btnCart: "Корзина",
+        navMenu: "Меню", navBanquet: "Банкет", navHalls: "Залы", navBooking: "Бронь", navContact: "Контакты",
+        btnAdmin: "Директор", btnCart: "Корзина",
         heroSub: "Королевский вкус национальной узбекской кухни, искренний сервис и изысканная атмосфера.",
         heroBook: "Забронировать стол",
-        menuHeading: "Меню", menuSub: "Выберите раздел или листайте страницы, чтобы добавить блюда в корзину.",
-        prevBtn: "Назад", nextBtn: "Вперёд", swipeHint: "← Листайте влево или вправо →",
+        menuHeading: "Меню", menuSub: "Нажмите на блюдо, чтобы увидеть фото и состав, или «+» для добавления в корзину.",
+        prevBtn: "Назад", nextBtn: "Вперёд", swipeHint: "← Листайте страницу влево или вправо →",
+        banquetHeading: "Калькулятор Банкета", banquetSub: "Рассчитайте стоимость праздничного стола за секунду.",
+        bqGuests: "Количество гостей:", bqTier: "Пакет стола:", bqOrderBtn: "Забронировать банкет",
         hallsHeading: "Залы и VIP-комнаты", hallsSub: "Уютные пространства для семейных ужинов, встреч с друзьями и деловых приёмов.",
         hall1Title: "Основной зал", hall1Desc: "Просторный, светлый зал с живой атмосферой.",
         hall2Title: "VIP-комната", hall2Desc: "Отдельный сервис и тишина для важных встреч.",
         hall3Title: "Семейная кабина", hall3Desc: "Уютные закрытые кабины для отдыха в кругу близких.",
         chooseHall: "Выбрать",
+        trustHeading: "Отзывы Гостей • 4.9 ★", trustSub: "Более 450 положительных отзывов на Яндекс и Google Картах.",
+        rateAsk: "Оцените наш сервис", rateSub: "Ваше мнение помогает нам становиться лучше.",
         bookHeading: "Бронирование стола", bookSub: "Выберите зал, время и оставьте контактные данные.",
         lblRoom: "Тип зала:", lblGuests: "Количество гостей:", lblTime: "Время:", btnConfirmBook: "Забронировать",
         locHeading: "Адрес и маршрут", locSub: "Ждём вас в Алмазарском районе города Ташкента.",
@@ -774,20 +960,24 @@
         openNow: "Сейчас открыто • до 23:00", closedNow: "Закрыто • откроемся в 09:00",
         coverTap: "Свайпните влево, чтобы открыть", coverTapDesk: "Нажмите, чтобы открыть",
         backThanks: "Приятного аппетита!", backSub: "Алмазарский район • +998 88 000 48 50",
-        addedToast: "Добавлено в корзину", wrongPin: "Неверный PIN"
+        addedToast: "Добавлено в корзину", wrongPin: "Неверный PIN", upsellTitle: "Отлично сочетается:"
       },
       en: {
-        navMenu: "Menu", navHalls: "Halls", navBooking: "Reserve", navContact: "Contact",
-        btnAdmin: "Admin", btnCart: "Cart",
+        navMenu: "Menu", navBanquet: "Banquet", navHalls: "Halls", navBooking: "Reserve", navContact: "Contact",
+        btnAdmin: "Director", btnCart: "Cart",
         heroSub: "Royal taste of authentic Uzbek cuisine, warm hospitality, and refined Eastern ambiance.",
         heroBook: "Reserve a Table",
-        menuHeading: "Menu", menuSub: "Select a section or flip pages to add dishes to your cart.",
-        prevBtn: "Previous", nextBtn: "Next", swipeHint: "← Swipe left or right →",
+        menuHeading: "Menu", menuSub: "Tap any dish to view photo & details, or «+» to add to your cart.",
+        prevBtn: "Previous", nextBtn: "Next", swipeHint: "← Swipe page left or right →",
+        banquetHeading: "Banquet Calculator", banquetSub: "Instantly estimate a curated table for your gathering.",
+        bqGuests: "Guests:", bqTier: "Set tier:", bqOrderBtn: "Reserve Banquet",
         hallsHeading: "Halls & VIP Rooms", hallsSub: "Elegant spaces for family dinners, gatherings, and private business meetings.",
         hall1Title: "Main Hall", hall1Desc: "Spacious, luminous hall with vibrant dining atmosphere.",
         hall2Title: "VIP Room", hall2Desc: "Dedicated service and privacy for special occasions.",
         hall3Title: "Family Cabin", hall3Desc: "Cozy private cabins designed for relaxed family dining.",
         chooseHall: "Select",
+        trustHeading: "Guest Reviews • 4.9 ★", trustSub: "450+ positive ratings across Yandex and Google Maps.",
+        rateAsk: "Rate our service", rateSub: "Share quick feedback in one tap.",
         bookHeading: "Reserve a Table", bookSub: "Pick your hall and time, then leave your name and phone.",
         lblRoom: "Hall type:", lblGuests: "Guests:", lblTime: "Time:", btnConfirmBook: "Confirm Reservation",
         locHeading: "Location & Directions", locSub: "We welcome you in Olmazor district, Tashkent.",
@@ -797,7 +987,7 @@
         openNow: "Open now • until 23:00", closedNow: "Closed • opens at 09:00",
         coverTap: "Swipe left to open", coverTapDesk: "Click to open",
         backThanks: "Bon Appétit!", backSub: "Olmazor district • +998 88 000 48 50",
-        addedToast: "Added to cart", wrongPin: "Invalid PIN"
+        addedToast: "Added to cart", wrongPin: "Invalid PIN", upsellTitle: "Pairs well with:"
       }
     };
 
@@ -824,7 +1014,7 @@
     }
 
     window.addEventListener("load", () => {
-      setTimeout(() => document.getElementById("preloader").classList.add("hidden"), 1400);
+      setTimeout(() => document.getElementById("preloader").classList.add("hidden"), 1350);
       updateLiveStatus();
     });
 
@@ -838,12 +1028,12 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      const count = 300;
+      const count = 280;
       const pos = new Float32Array(count * 3);
       for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 16;
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-      const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.055, color: 0xf6df8f, transparent: true, opacity: 0.65 }));
+      const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.055, color: 0xf6df8f, transparent: true, opacity: 0.62 }));
       scene.add(pts);
 
       let mx = 0, my = 0;
@@ -869,41 +1059,43 @@
     })();
 
     const DEFAULT_MENU = [
-      { id: 1, name: "Toshkent To'y Oshi", cat: "Milliy taomlar", price: 48000, desc: "Lazer guruch, qo'y go'shti, qazi va bedana tuxumi." },
-      { id: 2, name: "Qozon Kabob", cat: "Milliy taomlar", price: 78000, desc: "Qozonda qovurilgan qo'y go'shti va kartoshka." },
-      { id: 3, name: "Tandir Somsa (2 dona)", cat: "Milliy taomlar", price: 32000, desc: "Qarsildoq xamir va to'g'ralgan lahm go'sht." },
-      { id: 4, name: "Norin", cat: "Milliy taomlar", price: 45000, desc: "Qo'lda kesilgan xamir va sarxil qazi bilan." },
-      { id: 5, name: "Qo'lbola Manti (5 dona)", cat: "Milliy taomlar", price: 42000, desc: "Bug'da pishirilgan sersuv go'shtli manti." },
-      { id: 6, name: "Ko'za Sho'rva", cat: "Sho'rvalar", price: 46000, desc: "Sopol ko'zada dimlab pishirilgan qo'y go'shti sho'rvasi." },
-      { id: 7, name: "Mastava", cat: "Sho'rvalar", price: 34000, desc: "Qatiq va ko'katlar bilan an'anaviy mastava." },
-      { id: 8, name: "Uyg'ur Lag'mon", cat: "Sho'rvalar", price: 44000, desc: "Cho'zma xamir, sabzavotlar va mol go'shti qaylasi." },
-      { id: 9, name: "Chuchvara", cat: "Sho'rvalar", price: 36000, desc: "Bulyonda pishirilgan mayda uy chuchvarasi." },
-      { id: 10, name: "Qiyma Shashlik", cat: "Shashliklar", price: 24000, desc: "Ko'mirda pishirilgan sersuv mol go'shtli qiyma." },
-      { id: 11, name: "Jaz (Qo'y go'shti)", cat: "Shashliklar", price: 30000, desc: "Ziravorlarda marinadlangan yumshoq qo'y go'shti." },
-      { id: 12, name: "Napoleon Shashlik", cat: "Shashliklar", price: 34000, desc: "Qatlama go'sht va dumba yog'li maxsus shashlik." },
-      { id: 13, name: "Tovuq Qanotcha", cat: "Shashliklar", price: 26000, desc: "Qarsildoq marinadlangan tovuq shashlik." },
-      { id: 14, name: "Jigar Shashlik", cat: "Shashliklar", price: 25000, desc: "Yumshoq mol jigari va dumba bilan." },
-      { id: 15, name: "Achichuk Salati", cat: "Salatlar & Nonlar", price: 22000, desc: "Pishgan pomidor, piyoz va rayhon barglari." },
-      { id: 16, name: "Suzma va Ko'katlar", cat: "Salatlar & Nonlar", price: 18000, desc: "Qishloq qatig'idan tayyorlangan yangi suzma." },
-      { id: 17, name: "Bahor Salati", cat: "Salatlar & Nonlar", price: 25000, desc: "Bodring, rediska, ko'katlar va qaymoq." },
-      { id: 18, name: "Toshkent Patir Noni", cat: "Salatlar & Nonlar", price: 12000, desc: "Tandirdan yangi uzilgan sedana sepilgan patir." },
-      { id: 19, name: "Limonli Ko'k Choy", cat: "Ichimliklar", price: 15000, desc: "Xushbo'y 95-ko'k choy va yangi limon." },
-      { id: 20, name: "Uy Kompoti (1L)", cat: "Ichimliklar", price: 25000, desc: "Olcha, o'rik va olma qoqisidan tabiiy kompot." },
-      { id: 21, name: "Muzdek Ayron", cat: "Ichimliklar", price: 14000, desc: "Rayhon va muz bilan salqin ayron." },
-      { id: 22, name: "Asalli Chak-Chak", cat: "Ichimliklar", price: 28000, desc: "Choy bilan ichish uchun milliy shirinlik." }
+      { id: 1, name: "Toshkent To'y Oshi", cat: "Milliy taomlar", price: 48000, weight: "380 g", prep: "10 daq", available: true, sold: 42, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80", desc: "Lazer guruch, qo'y go'shti, qazi, no'xat, mayiz va bedana tuxumi." },
+      { id: 2, name: "Qozon Kabob", cat: "Milliy taomlar", price: 78000, weight: "420 g", prep: "20 daq", available: true, sold: 35, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", desc: "Qozonda tillarang qovurilgan qo'y qovurg'asi va kartoshka." },
+      { id: 3, name: "Tandir Somsa (2 dona)", cat: "Milliy taomlar", price: 32000, weight: "280 g", prep: "8 daq", available: true, sold: 51, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", desc: "Qarsildoq xamir va to'g'ralgan lahm go'shtli issiq somsa." },
+      { id: 4, name: "Norin", cat: "Milliy taomlar", price: 45000, weight: "320 g", prep: "10 daq", available: true, sold: 19, img: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=800&q=80", desc: "Qo'lda kesilgan xamir va sarxil qazi bilan." },
+      { id: 5, name: "Qo'lbola Manti (5 dona)", cat: "Milliy taomlar", price: 42000, weight: "360 g", prep: "18 daq", available: true, sold: 27, img: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=800&q=80", desc: "Bug'da pishirilgan sersuv go'shtli manti." },
+      { id: 6, name: "Ko'za Sho'rva", cat: "Sho'rvalar", price: 46000, weight: "400 ml", prep: "12 daq", available: true, sold: 29, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80", desc: "Sopol ko'zada dimlab pishirilgan qo'y go'shti sho'rvasi." },
+      { id: 7, name: "Mastava", cat: "Sho'rvalar", price: 34000, weight: "380 ml", prep: "10 daq", available: true, sold: 16, img: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=800&q=80", desc: "Qatiq va ko'katlar bilan an'anaviy mastava." },
+      { id: 8, name: "Uyg'ur Lag'mon", cat: "Sho'rvalar", price: 44000, weight: "420 g", prep: "15 daq", available: true, sold: 24, img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80", desc: "Cho'zma xamir, sabzavotlar va mol go'shti qaylasi." },
+      { id: 9, name: "Chuchvara", cat: "Sho'rvalar", price: 36000, weight: "350 ml", prep: "12 daq", available: true, sold: 18, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80", desc: "Bulyonda pishirilgan mayda uy chuchvarasi." },
+      { id: 10, name: "Qiyma Shashlik", cat: "Shashliklar", price: 24000, weight: "160 g", prep: "15 daq", available: true, sold: 64, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80", desc: "Ko'mirda pishirilgan sersuv mol go'shtli qiyma." },
+      { id: 11, name: "Jaz (Qo'y go'shti)", cat: "Shashliklar", price: 30000, weight: "170 g", prep: "18 daq", available: true, sold: 48, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=80", desc: "Ziravorlarda marinadlangan yumshoq qo'y go'shti." },
+      { id: 12, name: "Napoleon Shashlik", cat: "Shashliklar", price: 34000, weight: "180 g", prep: "18 daq", available: true, sold: 33, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", desc: "Qatlama go'sht va dumba yog'li maxsus shashlik." },
+      { id: 13, name: "Tovuq Qanotcha", cat: "Shashliklar", price: 26000, weight: "180 g", prep: "15 daq", available: true, sold: 22, img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80", desc: "Qarsildoq marinadlangan tovuq shashlik." },
+      { id: 14, name: "Jigar Shashlik", cat: "Shashliklar", price: 25000, weight: "160 g", prep: "14 daq", available: true, sold: 20, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80", desc: "Yumshoq mol jigari va dumba bilan." },
+      { id: 15, name: "Achichuk Salati", cat: "Salatlar & Nonlar", price: 22000, weight: "220 g", prep: "5 daq", available: true, sold: 55, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80", desc: "Pishgan pomidor, piyoz va rayhon barglari." },
+      { id: 16, name: "Suzma va Ko'katlar", cat: "Salatlar & Nonlar", price: 18000, weight: "200 g", prep: "5 daq", available: true, sold: 26, img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80", desc: "Qishloq qatig'idan tayyorlangan yangi suzma." },
+      { id: 17, name: "Bahor Salati", cat: "Salatlar & Nonlar", price: 25000, weight: "240 g", prep: "6 daq", available: true, sold: 21, img: "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=800&q=80", desc: "Bodring, rediska, ko'katlar va qaymoq." },
+      { id: 18, name: "Toshkent Patir Noni", cat: "Salatlar & Nonlar", price: 12000, weight: "300 g", prep: "3 daq", available: true, sold: 70, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80", desc: "Tandirdan yangi uzilgan sedana sepilgan patir." },
+      { id: 19, name: "Limonli Ko'k Choy", cat: "Ichimliklar", price: 15000, weight: "700 ml", prep: "4 daq", available: true, sold: 68, img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80", desc: "Xushbo'y 95-ko'k choy va yangi limon." },
+      { id: 20, name: "Uy Kompoti (1L)", cat: "Ichimliklar", price: 25000, weight: "1000 ml", prep: "3 daq", available: true, sold: 34, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80", desc: "Olcha, o'rik va olma qoqisidan tabiiy kompot." },
+      { id: 21, name: "Muzdek Ayron", cat: "Ichimliklar", price: 14000, weight: "350 ml", prep: "3 daq", available: true, sold: 28, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80", desc: "Rayhon va muz bilan salqin ayron." },
+      { id: 22, name: "Asalli Chak-Chak", cat: "Ichimliklar", price: 28000, weight: "220 g", prep: "4 daq", available: true, sold: 23, img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80", desc: "Choy bilan ichish uchun milliy shirinlik." }
     ];
 
     const CATEGORIES = ["Milliy taomlar", "Sho'rvalar", "Shashliklar", "Salatlar & Nonlar", "Ichimliklar"];
     const TELEGRAM_LINK = "https://t.me/+998880004850";
 
-    let menuItems = JSON.parse(localStorage.getItem("shahboz_menu_v3")) || DEFAULT_MENU;
-    let orders = JSON.parse(localStorage.getItem("shahboz_orders_v3")) || [];
-    let bookings = JSON.parse(localStorage.getItem("shahboz_bookings_v3")) || [];
+    let menuItems = JSON.parse(localStorage.getItem("shahboz_menu_v4")) || DEFAULT_MENU;
+    let orders = JSON.parse(localStorage.getItem("shahboz_orders_v4")) || [];
+    let bookings = JSON.parse(localStorage.getItem("shahboz_bookings_v4")) || [];
+    let feedbacks = JSON.parse(localStorage.getItem("shahboz_feedbacks_v4")) || [];
     let cart = [];
 
-    const saveMenu = () => localStorage.setItem("shahboz_menu_v3", JSON.stringify(menuItems));
-    const saveOrders = () => localStorage.setItem("shahboz_orders_v3", JSON.stringify(orders));
-    const saveBookings = () => localStorage.setItem("shahboz_bookings_v3", JSON.stringify(bookings));
+    const saveMenu = () => localStorage.setItem("shahboz_menu_v4", JSON.stringify(menuItems));
+    const saveOrders = () => localStorage.setItem("shahboz_orders_v4", JSON.stringify(orders));
+    const saveBookings = () => localStorage.setItem("shahboz_bookings_v4", JSON.stringify(bookings));
+    const saveFeedbacks = () => localStorage.setItem("shahboz_feedbacks_v4", JSON.stringify(feedbacks));
     const formatPrice = n => Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
 
     let desktopPage = 0;
@@ -926,18 +1118,21 @@
       return found ? found.qty : 0;
     }
 
-    function renderDishAction(id) {
-      const qty = getCartQty(id);
+    function renderDishAction(item) {
+      if (item.available === false) {
+        return `<span class="sold-tag">Tugagan</span>`;
+      }
+      const qty = getCartQty(item.id);
       if (qty > 0) {
         return `
           <div class="dish-stepper" onclick="event.stopPropagation()">
-            <button type="button" onclick="event.stopPropagation(); changeQty(${id}, -1)">−</button>
+            <button type="button" onclick="event.stopPropagation(); changeQty(${item.id}, -1)">−</button>
             <span>${qty}</span>
-            <button type="button" onclick="event.stopPropagation(); addToCart(${id})">+</button>
+            <button type="button" onclick="event.stopPropagation(); addToCart(${item.id})">+</button>
           </div>
         `;
       }
-      return `<button type="button" class="dish-add-btn" onclick="event.stopPropagation(); addToCart(${id})">+</button>`;
+      return `<button type="button" class="dish-add-btn" onclick="event.stopPropagation(); addToCart(${item.id})">+</button>`;
     }
 
     function renderCategoryPage(catName, pageNum) {
@@ -945,14 +1140,14 @@
       const title = catName === "Chef" ? "Chef Tavsiyasi" : catName;
       const rows = items.length
         ? items.map(item => `
-            <div class="book-dish">
-              <div>
+            <div class="book-dish ${item.available === false ? 'sold-out' : ''}">
+              <div class="book-dish-info" onclick="event.stopPropagation(); openDishPreview(${item.id})">
                 <div class="book-dish-name">${item.name}</div>
                 <div class="book-dish-desc">${item.desc}</div>
               </div>
               <div class="book-dish-right">
                 <span class="book-dish-price">${formatPrice(item.price)}</span>
-                ${renderDishAction(item.id)}
+                ${renderDishAction(item)}
               </div>
             </div>
           `).join("")
@@ -963,6 +1158,30 @@
         <div class="page-list">${rows}</div>
         <div class="page-foot"><span>SHAHBOZ</span><span>${pageNum}</span></div>
       `;
+    }
+
+    function openDishPreview(id) {
+      const item = menuItems.find(m => m.id === id);
+      if (!item) return;
+      document.getElementById("dpName").textContent = item.name;
+      document.getElementById("dpImg").src = item.img || "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80";
+      document.getElementById("dpDesc").textContent = item.desc;
+      document.getElementById("dpMeta").innerHTML = `
+        <span class="meta-badge">${item.cat}</span>
+        <span class="meta-badge">${item.weight || "350 g"}</span>
+        <span class="meta-badge">${item.prep || "15 daq"}</span>
+      `;
+      document.getElementById("dpPrice").textContent = formatPrice(item.price);
+      const btn = document.getElementById("dpAddBtn");
+      if (item.available === false) {
+        btn.disabled = true;
+        btn.textContent = "Vaqtincha tugagan";
+      } else {
+        btn.disabled = false;
+        btn.textContent = "+ Savatga qo'shish";
+        btn.onclick = () => { addToCart(item.id); closeModal("dishModal"); };
+      }
+      openModal("dishModal");
     }
 
     function renderQuickTabs() {
@@ -984,7 +1203,7 @@
       desktopPage = deskIdx;
       mobilePage = mobIdx;
       updateDesktopBook();
-      renderMobilePage();
+      updateMobileBook();
       updateIndicator();
     }
 
@@ -992,7 +1211,7 @@
       if (desktopPage === 0) desktopPage = 1;
       if (mobilePage === 0) mobilePage = 1;
       updateDesktopBook();
-      renderMobilePage();
+      updateMobileBook();
       updateIndicator();
     }
 
@@ -1003,8 +1222,8 @@
         {
           frontClass: "cover-front",
           frontHTML: `
-            <div style="width:142px; height:142px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
-            <h3 class="brand-font" style="color:var(--gold-light); font-size:1.75rem;">${t.menuHeading}</h3>
+            <div style="width:146px; height:146px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
+            <h3 class="brand-font" style="color:var(--gold-light); font-size:1.8rem;">${t.menuHeading}</h3>
             <p style="color:var(--text-muted); font-size:0.86rem;">${t.coverTapDesk}</p>
           `,
           backClass: "paper-back",
@@ -1027,8 +1246,8 @@
           frontHTML: renderCategoryPage("Chef", 6),
           backClass: "cover-back",
           backHTML: `
-            <div style="width:120px; height:120px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
-            <h3 class="brand-font" style="color:var(--gold-light); font-size:1.4rem;">${t.backThanks}</h3>
+            <div style="width:124px; height:124px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
+            <h3 class="brand-font" style="color:var(--gold-light); font-size:1.45rem;">${t.backThanks}</h3>
             <p style="color:var(--text-muted); font-size:0.85rem;">${t.backSub}</p>
           `
         }
@@ -1064,49 +1283,69 @@
     }
 
     function onDesktopSheetClick(e, idx) {
-      if (e.target.closest("button") || e.target.closest(".dish-stepper")) return;
+      if (e.target.closest("button") || e.target.closest(".dish-stepper") || e.target.closest(".book-dish-info")) return;
       if (idx < desktopPage) desktopPage = Math.max(0, desktopPage - 1);
       else desktopPage = Math.min(TOTAL_DESKTOP_SHEETS, desktopPage + 1);
       updateDesktopBook();
       updateIndicator();
     }
 
-    function renderMobilePage(animDir = null) {
-      const card = document.getElementById("mobileBookCard");
+    function buildMobileBook() {
+      const stage = document.getElementById("mobileBookStage");
       const t = I18N[currentLang];
-      const pg = MOBILE_PAGES[mobilePage];
 
-      const applyContent = () => {
-        card.className = "mobile-book-card";
+      stage.innerHTML = MOBILE_PAGES.map((pg, idx) => {
+        let frontClass = "m-paper";
+        let frontHTML = "";
         if (pg.type === "cover") {
-          card.classList.add("mobile-cover-front");
-          card.innerHTML = `
+          frontClass = "m-cover";
+          frontHTML = `
             <div style="width:148px; height:148px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
             <h3 class="brand-font" style="color:var(--gold-light); font-size:1.75rem;">${t.menuHeading}</h3>
-            <p style="color:var(--text-muted); font-size:0.88rem;">${t.coverTap}</p>
-            <button type="button" class="btn btn-gold" onclick="mobileStep(1)">${t.navMenu} →</button>
+            <p style="color:var(--text-muted); font-size:0.86rem;">${t.coverTap}</p>
+            <button type="button" class="btn btn-gold" onclick="event.stopPropagation(); mobileStep(1)">${t.navMenu} →</button>
           `;
         } else if (pg.type === "back") {
-          card.classList.add("mobile-cover-back");
-          card.innerHTML = `
+          frontClass = "m-cover";
+          frontHTML = `
             <div style="width:124px; height:124px;"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
             <h3 class="brand-font" style="color:var(--gold-light); font-size:1.45rem;">${t.backThanks}</h3>
             <p style="color:var(--text-muted); font-size:0.86rem;">${t.backSub}</p>
-            <button type="button" class="btn btn-outline" onclick="mobilePage=0; renderMobilePage('right'); updateIndicator();">↺</button>
+            <button type="button" class="btn btn-outline" onclick="event.stopPropagation(); mobilePage=0; updateMobileBook(); updateIndicator();">↺</button>
           `;
         } else {
-          card.classList.add("paper-mobile");
-          card.innerHTML = renderCategoryPage(pg.cat, pg.num);
+          frontHTML = renderCategoryPage(pg.cat, pg.num);
         }
-      };
 
-      if (animDir) {
-        card.classList.add(animDir === "left" ? "flip-left" : "flip-right");
-        setTimeout(() => {
-          applyContent();
-        }, 180);
-      } else {
-        applyContent();
+        return `
+          <div class="m-sheet" id="m-sheet-${idx}">
+            <div class="m-face ${frontClass}">
+              ${frontHTML}
+              <div class="m-shadow-overlay" id="m-shadow-${idx}"></div>
+            </div>
+            <div class="m-face m-back"></div>
+          </div>
+        `;
+      }).join("");
+
+      updateMobileBook();
+    }
+
+    function updateMobileBook() {
+      for (let i = 0; i < MOBILE_PAGES.length; i++) {
+        const el = document.getElementById(`m-sheet-${i}`);
+        const sh = document.getElementById(`m-shadow-${i}`);
+        if (!el) continue;
+        el.classList.remove("dragging");
+        el.style.transform = "";
+        if (sh) sh.style.opacity = "0";
+        if (i < mobilePage) {
+          el.classList.add("flipped");
+          el.style.zIndex = i + 1;
+        } else {
+          el.classList.remove("flipped");
+          el.style.zIndex = MOBILE_PAGES.length - i + 10;
+        }
       }
     }
 
@@ -1114,65 +1353,177 @@
       const next = mobilePage + dir;
       if (next < 0 || next >= MOBILE_PAGES.length) return;
       mobilePage = next;
-      renderMobilePage(dir > 0 ? "left" : "right");
+      updateMobileBook();
       updateIndicator();
     }
 
-    (function initMobileSwipe() {
-      const vp = document.getElementById("mobileBookViewport");
-      let startX = 0, startY = 0;
-      vp.addEventListener("touchstart", e => {
-        if (!isMobileView()) return;
-        startX = e.changedTouches[0].clientX;
-        startY = e.changedTouches[0].clientY;
-      }, { passive: true });
+    (function initMobileLiveSwipe() {
+      const stage = document.getElementById("mobileBookStage");
+      let startX = 0, startY = 0, dragging = false, activeSheet = null, underShadow = null, dragDir = 0;
 
-      vp.addEventListener("touchend", e => {
+      stage.addEventListener("touchstart", e => {
         if (!isMobileView()) return;
         if (e.target.closest("button") || e.target.closest(".dish-stepper")) return;
-        const dx = e.changedTouches[0].clientX - startX;
-        const dy = e.changedTouches[0].clientY - startY;
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.25) {
-          if (dx < 0) mobileStep(1);
-          else mobileStep(-1);
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        dragging = false;
+        dragDir = 0;
+        activeSheet = null;
+        underShadow = null;
+      }, { passive: true });
+
+      stage.addEventListener("touchmove", e => {
+        if (!isMobileView()) return;
+        const dx = e.touches[0].clientX - startX;
+        const dy = e.touches[0].clientY - startY;
+
+        if (!dragging) {
+          if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+            dragging = true;
+            dragDir = dx < 0 ? 1 : -1;
+            if (dragDir === 1 && mobilePage < MOBILE_PAGES.length - 1) {
+              activeSheet = document.getElementById(`m-sheet-${mobilePage}`);
+              underShadow = document.getElementById(`m-shadow-${mobilePage + 1}`);
+              if (activeSheet) {
+                activeSheet.classList.add("dragging");
+                activeSheet.style.zIndex = 200;
+              }
+            } else if (dragDir === -1 && mobilePage > 0) {
+              activeSheet = document.getElementById(`m-sheet-${mobilePage - 1}`);
+              underShadow = document.getElementById(`m-shadow-${mobilePage}`);
+              if (activeSheet) {
+                activeSheet.classList.add("dragging");
+                activeSheet.classList.remove("flipped");
+                activeSheet.style.zIndex = 200;
+              }
+            }
+          } else {
+            return;
+          }
         }
+
+        if (!activeSheet) return;
+        const w = stage.offsetWidth || 340;
+        let progress = Math.min(1, Math.max(0, Math.abs(dx) / (w * 0.85)));
+        if (dragDir === 1) {
+          const angle = -progress * 180;
+          activeSheet.style.transform = `rotateY(${angle}deg)`;
+          if (underShadow) underShadow.style.opacity = String((1 - progress) * 0.35);
+        } else {
+          const angle = -180 + progress * 180;
+          activeSheet.style.transform = `rotateY(${angle}deg)`;
+          if (underShadow) underShadow.style.opacity = String(progress * 0.35);
+        }
+      }, { passive: true });
+
+      stage.addEventListener("touchend", e => {
+        if (!dragging || !activeSheet) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        activeSheet.classList.remove("dragging");
+        if (dragDir === 1 && dx < -50 && mobilePage < MOBILE_PAGES.length - 1) {
+          mobilePage++;
+        } else if (dragDir === -1 && dx > 50 && mobilePage > 0) {
+          mobilePage--;
+        }
+        updateMobileBook();
+        updateIndicator();
+        dragging = false;
+        activeSheet = null;
       }, { passive: true });
     })();
 
     function handleNext() {
-      if (isMobileView()) {
-        mobileStep(1);
-      } else if (desktopPage < TOTAL_DESKTOP_SHEETS) {
-        desktopPage++;
-        updateDesktopBook();
-        updateIndicator();
-      }
+      if (isMobileView()) mobileStep(1);
+      else if (desktopPage < TOTAL_DESKTOP_SHEETS) { desktopPage++; updateDesktopBook(); updateIndicator(); }
     }
-
     function handlePrev() {
-      if (isMobileView()) {
-        mobileStep(-1);
-      } else if (desktopPage > 0) {
-        desktopPage--;
-        updateDesktopBook();
-        updateIndicator();
-      }
+      if (isMobileView()) mobileStep(-1);
+      else if (desktopPage > 0) { desktopPage--; updateDesktopBook(); updateIndicator(); }
     }
 
     function updateIndicator() {
       const ind = document.getElementById("pageIndicator");
-      if (isMobileView()) {
-        ind.textContent = `${mobilePage + 1} / ${MOBILE_PAGES.length}`;
-      } else {
-        ind.textContent = `${desktopPage} / ${TOTAL_DESKTOP_SHEETS}`;
-      }
+      ind.textContent = isMobileView() ? `${mobilePage + 1} / ${MOBILE_PAGES.length}` : `${desktopPage} / ${TOTAL_DESKTOP_SHEETS}`;
       renderQuickTabs();
     }
 
     function refreshAllBookViews() {
       buildDesktopBook();
-      renderMobilePage();
+      buildMobileBook();
       updateIndicator();
+    }
+
+    let bqGuests = 10;
+    let bqTier = "standard";
+    const BANQUET_TIERS = {
+      standard: { label: "Standart Dasturxon", perPerson: 145000, items: ["Toshkent To'y Oshi (lagan)", "Qiyma & Tovuq shashlik", "Achichuk va Bahor salatlari", "Patir non, ko'k choy va uy kompoti"] },
+      royal: { label: "Shohona Dasturxon", perPerson: 210000, items: ["To'y Oshi + Qozon Kabob", "Jaz, Napoleon va Qiyma shashlik", "Tandir somsa + 4 xil salat", "Patir, choy, kompot va Asalli Chak-Chak"] },
+      vip: { label: "VIP Banket", perPerson: 290000, items: ["Alohida VIP xona va maxsus ofitsiant", "To'y Oshi, Qozon Kabob va Ko'za Sho'rva", "Assorti shashliklar va Norin", "Meva assorti, shirinliklar va cheksiz ichimliklar"] }
+    };
+
+    function renderBanquet() {
+      const cfg = BANQUET_TIERS[bqTier];
+      const total = cfg.perPerson * bqGuests;
+      document.getElementById("bqTitle").textContent = `${cfg.label} • ${bqGuests} kishi`;
+      document.getElementById("bqTotal").textContent = formatPrice(total);
+      document.getElementById("bqPerPerson").textContent = `1 kishi uchun: ${formatPrice(cfg.perPerson)}`;
+      document.getElementById("bqItems").innerHTML = cfg.items.map(x => `<li>✓ ${x}</li>`).join("");
+    }
+    function pickBanquetGuest(el) {
+      selectChip("bqGuestChips", el);
+      bqGuests = Number(el.getAttribute("data-n"));
+      renderBanquet();
+    }
+    function pickBanquetTier(el) {
+      selectChip("bqTierChips", el);
+      bqTier = el.getAttribute("data-tier");
+      renderBanquet();
+    }
+    function orderBanquet() {
+      const cfg = BANQUET_TIERS[bqTier];
+      const total = cfg.perPerson * bqGuests;
+      const msg = `SHAHBOZ RESTAURANT (Olmazor) — Banket:%0A${cfg.label}%0AMehmonlar: ${bqGuests} kishi%0ATaxminiy summa: ${formatPrice(total)}`;
+      window.open(`${TELEGRAM_LINK}?text=${msg}`, "_blank");
+    }
+
+    function pickStar(n) {
+      document.querySelectorAll("#starPicker span").forEach((s, i) => s.classList.toggle("lit", i < n));
+      const body = document.getElementById("fbBody");
+      if (n >= 4) {
+        document.getElementById("fbTitle").textContent = "Rahmat! ★".repeat(1);
+        body.innerHTML = `
+          <p style="color:var(--text-muted); margin-bottom:16px;">Yuqori bahoingiz uchun tashakkur! Agar 10 soniya vaqtingiz bo'lsa, fikringizni xaritada ham qoldiring:</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn btn-gold" style="flex:1;" href="https://yandex.uz/maps/?text=Toshkent+Olmazor+tumani" target="_blank">Yandex Maps</a>
+            <a class="btn btn-outline" style="flex:1;" href="https://www.google.com/maps/search/?api=1&query=Olmazor+district+Tashkent" target="_blank">Google Maps</a>
+          </div>
+        `;
+      } else {
+        document.getElementById("fbTitle").textContent = "Direktorga xabar";
+        body.innerHTML = `
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">Kamchilik uchun uzr so'raymiz. Izohingiz to'g'ridan-to'g'ri restoran direktoriga yetkaziladi:</p>
+          <form onsubmit="submitPrivateFeedback(event, ${n})">
+            <input type="tel" id="fbPhone" placeholder="Telefon raqamingiz (ixtiyoriy)" style="margin-bottom:10px;" />
+            <textarea id="fbText" rows="3" placeholder="Nima yoqmadi?" required style="margin-bottom:12px;"></textarea>
+            <button type="submit" class="btn btn-gold" style="width:100%;">Direktorga yuborish</button>
+          </form>
+        `;
+      }
+      openModal("feedbackModal");
+    }
+
+    function submitPrivateFeedback(e, stars) {
+      e.preventDefault();
+      feedbacks.unshift({
+        id: Date.now(),
+        stars,
+        phone: document.getElementById("fbPhone").value.trim() || "—",
+        text: document.getElementById("fbText").value.trim(),
+        time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" })
+      });
+      saveFeedbacks();
+      closeModal("feedbackModal");
+      showToast("Xabaringiz direktorga yuborildi");
     }
 
     let toastTimer = null;
@@ -1181,7 +1532,7 @@
       el.textContent = msg;
       el.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 1600);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 1700);
     }
 
     function updateCartUI() {
@@ -1204,7 +1555,7 @@
 
     function addToCart(id) {
       const item = menuItems.find(m => m.id === id);
-      if (!item) return;
+      if (!item || item.available === false) return;
       const found = cart.find(c => c.id === id);
       if (found) found.qty++;
       else cart.push({ ...item, qty: 1 });
@@ -1223,9 +1574,11 @@
 
     function renderCartItems() {
       const box = document.getElementById("cartItems");
+      const upsellBox = document.getElementById("cartUpsell");
       const totalEl = document.getElementById("cartTotal");
       if (!cart.length) {
         box.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:16px 0;">—</p>`;
+        upsellBox.innerHTML = "";
         totalEl.textContent = "0 so'm";
         return;
       }
@@ -1244,6 +1597,24 @@
           </div>`;
       }).join("");
       totalEl.textContent = formatPrice(total);
+
+      const cartIds = new Set(cart.map(c => c.id));
+      const suggestions = [15, 19, 18].map(id => menuItems.find(m => m.id === id && m.available !== false && !cartIds.has(id))).filter(Boolean);
+      if (suggestions.length) {
+        upsellBox.innerHTML = `
+          <div class="upsell-box">
+            <div class="upsell-title">${I18N[currentLang].upsellTitle}</div>
+            ${suggestions.map(s => `
+              <div class="upsell-row">
+                <span style="font-size:0.84rem;">${s.name} <small style="color:var(--gold-light);">(${formatPrice(s.price)})</small></span>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.76rem;" onclick="addToCart(${s.id}); renderCartItems();">+ Qo'shish</button>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      } else {
+        upsellBox.innerHTML = "";
+      }
     }
 
     function placeOrder() {
@@ -1251,6 +1622,12 @@
       const name = document.getElementById("orderName").value.trim() || "Mijoz";
       const phone = document.getElementById("orderPhone").value.trim() || "-";
       const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      cart.forEach(ci => {
+        const m = menuItems.find(x => x.id === ci.id);
+        if (m) m.sold = (m.sold || 0) + ci.qty;
+      });
+      saveMenu();
 
       orders.unshift({
         id: Date.now(), name, phone,
@@ -1302,7 +1679,7 @@
       e.target.reset();
     }
 
-    let currentAdminTab = "orders";
+    let currentAdminTab = "analytics";
     let adminLoggedIn = false;
 
     function openAdminGate() {
@@ -1328,24 +1705,46 @@
 
     function switchAdminTab(tab) {
       currentAdminTab = tab;
-      ["orders", "bookings", "menu"].forEach(t => {
+      ["analytics", "orders", "bookings", "menu", "feedback"].forEach(t => {
         const btn = document.getElementById("tab" + t.charAt(0).toUpperCase() + t.slice(1) + "Btn");
-        btn.className = t === tab ? "btn btn-gold" : "btn btn-outline";
+        if (btn) btn.className = t === tab ? "btn btn-gold" : "btn btn-outline";
       });
       renderAdminPanel();
     }
 
     function renderAdminPanel() {
       const revenue = orders.reduce((s, o) => s + o.total, 0);
+      const avgCheck = orders.length ? Math.round(revenue / orders.length) : 0;
+      const stopCount = menuItems.filter(m => m.available === false).length;
+
       document.getElementById("adminStats").innerHTML = `
-        <div class="stat-box"><strong>${menuItems.length}</strong><span>Menyu</span></div>
-        <div class="stat-box"><strong>${orders.length}</strong><span>Buyurtmalar</span></div>
-        <div class="stat-box"><strong>${bookings.length}</strong><span>Bronlar</span></div>
-        <div class="stat-box"><strong>${formatPrice(revenue)}</strong><span>Jami</span></div>
+        <div class="stat-box"><strong>${formatPrice(revenue)}</strong><span>Jami tushum</span></div>
+        <div class="stat-box"><strong>${formatPrice(avgCheck)}</strong><span>O'rtacha chek</span></div>
+        <div class="stat-box"><strong>${orders.length} / ${bookings.length}</strong><span>Buyurtma / Bron</span></div>
+        <div class="stat-box"><strong>${stopCount}</strong><span>Stop-list</span></div>
       `;
 
       const content = document.getElementById("adminTabContent");
-      if (currentAdminTab === "orders") {
+
+      if (currentAdminTab === "analytics") {
+        const top5 = [...menuItems].sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 5);
+        const maxSold = Math.max(1, top5[0]?.sold || 1);
+        content.innerHTML = `
+          <div class="chart-card">
+            <h4 style="color:var(--gold-light); margin-bottom:14px;">Top-5 Ommabop Taomlar</h4>
+            ${top5.map(item => `
+              <div class="bar-row">
+                <div class="bar-label"><span>${item.name}</span><span>${item.sold || 0} ta</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:${Math.round(((item.sold || 0) / maxSold) * 100)}%"></div></div>
+              </div>
+            `).join("")}
+          </div>
+          <div class="chart-card">
+            <h4 style="color:var(--gold-light); margin-bottom:8px;">Qisqa Holat</h4>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Faol taomlar: <b>${menuItems.length - stopCount}</b> • Stop-list: <b>${stopCount}</b> • Direktorga xabarlar: <b>${feedbacks.length}</b></p>
+          </div>
+        `;
+      } else if (currentAdminTab === "orders") {
         content.innerHTML = orders.length
           ? orders.map(o => `
               <div class="admin-item">
@@ -1376,6 +1775,17 @@
                 </div>
               </div>`).join("")
           : `<p style="color:var(--text-muted); text-align:center; padding:20px;">—</p>`;
+      } else if (currentAdminTab === "feedback") {
+        content.innerHTML = feedbacks.length
+          ? feedbacks.map(f => `
+              <div class="admin-item">
+                <div>
+                  <span style="color:var(--gold-light);">${"★".repeat(f.stars)}${"☆".repeat(5 - f.stars)}</span> • <small style="color:var(--text-muted);">${f.time} (${f.phone})</small>
+                  <div style="font-size:0.88rem; margin-top:4px;">${f.text}</div>
+                </div>
+                <button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteFeedback(${f.id})">×</button>
+              </div>`).join("")
+          : `<p style="color:var(--text-muted); text-align:center; padding:20px;">Shikoyat yoki yashirin fikrlar yo'q.</p>`;
       } else {
         content.innerHTML = `
           <form onsubmit="addMenuItem(event)" style="background:rgba(4,19,12,0.75); padding:14px; border-radius:12px; border:1px solid var(--border-gold); margin-bottom:16px;">
@@ -1391,14 +1801,36 @@
           </form>
           ${menuItems.map(m => `
             <div class="admin-item">
-              <div><strong>${m.name}</strong> <small style="color:var(--text-muted);">(${m.cat})</small><div style="color:var(--gold-light); font-size:0.86rem;">${formatPrice(m.price)}</div></div>
-              <button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteMenuItem(${m.id})">O'chirish</button>
+              <div>
+                <strong>${m.name}</strong> <small style="color:var(--text-muted);">(${m.cat})</small>
+                <div style="color:var(--gold-light); font-size:0.86rem;">${formatPrice(m.price)}</div>
+              </div>
+              <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <span class="status-pill ${m.available === false ? 'stop' : 'done'}">${m.available === false ? 'Stop-list' : 'Bor'}</span>
+                <button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="toggleStopList(${m.id})">${m.available === false ? 'Yoqish' : 'Stop'}</button>
+                <button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="editDishPrice(${m.id})">Narx</button>
+                <button class="btn btn-danger" style="padding:5px 9px; font-size:0.76rem;" onclick="deleteMenuItem(${m.id})">×</button>
+              </div>
             </div>
           `).join("")}
         `;
       }
     }
 
+    function toggleStopList(id) {
+      const m = menuItems.find(x => x.id === id);
+      if (m) m.available = m.available === false ? true : false;
+      saveMenu(); renderAdminPanel(); refreshAllBookViews();
+    }
+    function editDishPrice(id) {
+      const m = menuItems.find(x => x.id === id);
+      if (!m) return;
+      const val = prompt(`${m.name} — yangi narx (so'm):`, m.price);
+      if (val && !isNaN(Number(val)) && Number(val) > 0) {
+        m.price = Number(val);
+        saveMenu(); renderAdminPanel(); refreshAllBookViews();
+      }
+    }
     function toggleOrderStatus(id) {
       const o = orders.find(x => x.id === id);
       if (o) o.status = o.status === "Bajarildi" ? "Yangi" : "Bajarildi";
@@ -1411,6 +1843,7 @@
       saveBookings(); renderAdminPanel();
     }
     function deleteBooking(id) { bookings = bookings.filter(x => x.id !== id); saveBookings(); renderAdminPanel(); }
+    function deleteFeedback(id) { feedbacks = feedbacks.filter(x => x.id !== id); saveFeedbacks(); renderAdminPanel(); }
 
     function addMenuItem(e) {
       e.preventDefault();
@@ -1419,23 +1852,22 @@
         name: document.getElementById("newDishName").value.trim(),
         price: Number(document.getElementById("newDishPrice").value),
         cat: document.getElementById("newDishCat").value,
-        desc: document.getElementById("newDishDesc").value.trim()
+        desc: document.getElementById("newDishDesc").value.trim(),
+        weight: "350 g", prep: "15 daq", available: true, sold: 0,
+        img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
       });
-      saveMenu();
-      renderAdminPanel();
-      refreshAllBookViews();
+      saveMenu(); renderAdminPanel(); refreshAllBookViews();
     }
     function deleteMenuItem(id) {
       menuItems = menuItems.filter(m => m.id !== id);
-      saveMenu();
-      renderAdminPanel();
-      refreshAllBookViews();
+      saveMenu(); renderAdminPanel(); refreshAllBookViews();
     }
 
     function openCart() { renderCartItems(); openModal("cartModal"); }
     function openModal(id) { document.getElementById(id).classList.add("open"); }
     function closeModal(id) { document.getElementById(id).classList.remove("open"); }
 
+    renderBanquet();
     refreshAllBookViews();
   </script>
 </body>
