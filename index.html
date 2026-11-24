@@ -9,13 +9,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
-      --bg-dark: #04140c;
-      --bg-glass: rgba(8, 33, 21, 0.72);
+      --bg-dark: #04130c;
+      --bg-glass: rgba(8, 33, 21, 0.78);
       --gold: #d4af37;
       --gold-light: #f6df8f;
+      --paper: #fdf8ec;
+      --paper-dark: #efe4c8;
+      --ink: #1e2a22;
       --text-main: #f7f4ec;
-      --text-muted: #b8c9bf;
-      --border-gold: rgba(212, 175, 55, 0.34);
+      --text-muted: #b5c6bc;
+      --border-gold: rgba(212, 175, 55, 0.35);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,430 +30,277 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    h1, h2, h3, .brand-font { font-family: 'Cinzel', serif; letter-spacing: 0.6px; }
+    h1, h2, h3, h4, .brand-font { font-family: 'Cinzel', serif; letter-spacing: 0.6px; }
 
-    /* 3D Canvas Background */
-    #bg3d {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+    #bg3d { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-    /* 3D Splash Preloader with Logo */
+    /* Splash Preloader */
     #preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: radial-gradient(circle at center, #0a2e1d 0%, #030e08 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      position: fixed; inset: 0; z-index: 9999;
+      background: radial-gradient(circle at center, #0c3622 0%, #030e08 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
     }
     #preloader.hidden { opacity: 0; visibility: hidden; }
-    .loader-logo-box {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      border: 2.5px solid var(--gold);
-      box-shadow: 0 0 45px rgba(212, 175, 55, 0.45);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #062114;
-      animation: logo3dIntro 1.6s ease-out forwards;
+    .splash-logo {
+      width: 175px; height: 175px;
+      animation: logoPop 1.4s ease-out forwards;
+      filter: drop-shadow(0 0 28px rgba(212, 175, 55, 0.55));
     }
-    .loader-logo-box img { width: 100%; height: 100%; object-fit: cover; }
-    @keyframes logo3dIntro {
-      0% { transform: perspective(800px) rotateY(-90deg) scale(0.6); opacity: 0; }
-      60% { transform: perspective(800px) rotateY(12deg) scale(1.05); opacity: 1; }
-      100% { transform: perspective(800px) rotateY(0deg) scale(1); opacity: 1; }
+    @keyframes logoPop {
+      0% { transform: perspective(800px) rotateY(-80deg) scale(0.6); opacity: 0; }
+      70% { transform: perspective(800px) rotateY(10deg) scale(1.05); opacity: 1; }
+      100% { transform: perspective(800px) rotateY(0) scale(1); opacity: 1; }
     }
-    .loader-title {
-      color: var(--gold-light);
-      font-size: 1.4rem;
-      letter-spacing: 4px;
-      animation: fadeUp 1s ease 0.3s both;
-    }
-    .loader-bar {
-      width: 180px;
-      height: 3px;
-      background: rgba(212, 175, 55, 0.2);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .loader-bar span {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
-      animation: loadProgress 1.8s ease forwards;
-    }
-    @keyframes loadProgress { to { width: 100%; } }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .loader-bar { width: 180px; height: 3px; background: rgba(212, 175, 55, 0.2); border-radius: 99px; overflow: hidden; }
+    .loader-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-light)); animation: loadBar 1.5s ease forwards; }
+    @keyframes loadBar { to { width: 100%; } }
 
     /* Navbar */
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(4, 20, 12, 0.8);
-      backdrop-filter: blur(14px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(4, 19, 12, 0.85); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-gold);
     }
     .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
+      max-width: 1200px; margin: 0 auto; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-    .nav-logo-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1.5px solid var(--gold);
-      overflow: hidden;
-      background: #062114;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
-    }
-    .nav-logo-box img { width: 100%; height: 100%; object-fit: cover; }
-    .logo-text strong { display: block; font-size: 1.08rem; color: var(--gold-light); }
-    .logo-text span { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
-    nav { display: flex; gap: 24px; }
-    nav a { color: var(--text-main); text-decoration: none; font-size: 0.94rem; font-weight: 500; transition: color 0.2s; }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-svg { width: 48px; height: 48px; filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.35)); }
+    .logo-text strong { display: block; font-size: 1.05rem; color: var(--gold-light); }
+    .logo-text span { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+    nav { display: flex; gap: 22px; }
+    nav a { color: var(--text-main); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
     nav a:hover { color: var(--gold-light); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
 
-    .nav-actions { display: flex; align-items: center; gap: 10px; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 9px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      border: none;
-      text-decoration: none;
-      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 16px; border-radius: 9px; font-weight: 600; font-size: 0.88rem;
+      cursor: pointer; border: none; text-decoration: none; transition: all 0.22s ease;
     }
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: #04140c;
-      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.28);
-    }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(212, 175, 55, 0.5); }
-    .btn-outline {
-      background: rgba(212, 175, 55, 0.1);
-      color: var(--gold-light);
-      border: 1px solid var(--gold);
-      backdrop-filter: blur(6px);
-    }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #04130c; box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25); }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45); }
+    .btn-outline { background: rgba(212, 175, 55, 0.1); color: var(--gold-light); border: 1px solid var(--gold); }
     .btn-outline:hover { background: rgba(212, 175, 55, 0.22); }
-    .cart-badge {
-      background: #04140c;
-      color: var(--gold-light);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
+    .btn-danger { background: rgba(220, 53, 69, 0.18); color: #ff8a95; border: 1px solid rgba(220, 53, 69, 0.5); }
+    .cart-badge { background: #04130c; color: var(--gold-light); padding: 1px 7px; border-radius: 999px; font-size: 0.76rem; font-weight: 700; }
 
-    /* 3D HERO SECTION (Restaurant Service Photo + 3D Depth) */
+    /* Hero */
     .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 115px 20px 70px;
-      overflow: hidden;
-      perspective: 1200px;
-      border-bottom: 1px solid var(--border-gold);
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 110px 20px 70px; overflow: hidden; border-bottom: 1px solid var(--border-gold);
     }
     .hero-bg {
-      position: absolute;
-      inset: -4%;
-      /* Restoranda mijozlarga xizmat ko'rsatilayotgan muhit rasmi */
+      position: absolute; inset: -4%;
       background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1920&q=85');
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.25s ease-out;
-      z-index: 0;
+      background-size: cover; background-position: center; transition: transform 0.25s ease-out; z-index: 0;
     }
     .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at center, rgba(6, 31, 19, 0.52) 0%, rgba(4, 20, 12, 0.88) 85%),
-        linear-gradient(180deg, rgba(4, 20, 12, 0.72) 0%, rgba(4, 20, 12, 0.45) 55%, #04140c 100%);
-      z-index: 1;
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(circle at center, rgba(6, 31, 19, 0.5) 0%, rgba(4, 19, 12, 0.9) 85%),
+                  linear-gradient(180deg, rgba(4, 19, 12, 0.72) 0%, rgba(4, 19, 12, 0.45) 55%, #04130c 100%);
     }
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 840px;
-      transform-style: preserve-3d;
-      transition: transform 0.2s ease-out;
-    }
-    .hero-logo-3d {
-      width: 145px;
-      height: 145px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      border: 2.5px solid var(--gold);
-      overflow: hidden;
-      background: #062114;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.4);
-      transform: translateZ(50px);
-    }
-    .hero-logo-3d img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-inner { position: relative; z-index: 2; max-width: 820px; }
+    .hero-logo-main { width: 155px; height: 155px; margin: 0 auto 16px; filter: drop-shadow(0 10px 30px rgba(212, 175, 55, 0.45)); }
     .badge {
-      display: inline-block;
-      padding: 7px 18px;
-      border: 1px solid var(--border-gold);
-      background: rgba(4, 20, 12, 0.65);
-      backdrop-filter: blur(8px);
-      border-radius: 999px;
-      color: var(--gold-light);
-      font-size: 0.78rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
+      display: inline-block; padding: 6px 16px; border: 1px solid var(--border-gold);
+      background: rgba(4, 19, 12, 0.65); border-radius: 999px; color: var(--gold-light);
+      font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
     }
-    .hero h1 {
-      font-size: clamp(2.3rem, 6vw, 4.3rem);
-      color: var(--gold-light);
-      line-height: 1.12;
-      margin-bottom: 16px;
-      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
-      transform: translateZ(35px);
-    }
-    .hero p {
-      font-size: 1.08rem;
-      color: #e2ebe5;
-      max-width: 620px;
-      margin: 0 auto 30px;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
-    }
-    .hero-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .hero h1 { font-size: clamp(2.2rem, 5.8vw, 4.1rem); color: var(--gold-light); line-height: 1.12; margin-bottom: 14px; text-shadow: 0 8px 28px rgba(0,0,0,0.75); }
+    .hero p { font-size: 1.05rem; color: #e2ebe5; max-width: 600px; margin: 0 auto 28px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
-    /* Main Content Layer above 3D Canvas */
     main, footer { position: relative; z-index: 2; }
-    section { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
-    .section-header { text-align: center; margin-bottom: 44px; }
-    .section-header h2 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); color: var(--gold-light); margin-bottom: 10px; }
+    section { max-width: 1180px; margin: 0 auto; padding: 76px 20px; }
+    .section-header { text-align: center; margin-bottom: 38px; }
+    .section-header h2 { font-size: clamp(1.7rem, 3.3vw, 2.5rem); color: var(--gold-light); margin-bottom: 8px; }
     .section-header p { color: var(--text-muted); max-width: 580px; margin: 0 auto; }
 
-    /* 3D Tilt Cards */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
+    /* 3D ANIMATED MENU BOOK */
+    .book-stage {
+      perspective: 1800px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
     }
-    .tilt-card {
+    .book-tabs {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+    }
+    .book-tab {
+      padding: 8px 15px; border-radius: 999px; background: var(--bg-glass);
+      color: var(--text-muted); border: 1px solid var(--border-gold); cursor: pointer;
+      font-size: 0.85rem; font-weight: 600; transition: all 0.2s;
+    }
+    .book-tab.active, .book-tab:hover { background: var(--gold); color: #04130c; border-color: var(--gold); }
+
+    .book-container {
+      position: relative; width: 100%; max-width: 880px; min-height: 540px;
       transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.18s ease-out, border-color 0.25s, box-shadow 0.25s;
     }
-    .feature-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-gold);
-      border-radius: 16px;
-      padding: 30px 24px;
-      text-align: center;
+    /* Closed Cover */
+    .book-cover {
+      position: absolute; inset: 0; z-index: 5;
+      background: linear-gradient(145deg, #0b3320 0%, #051c11 60%, #092b1b 100%);
+      border: 3px solid var(--gold); border-radius: 8px 22px 22px 8px;
+      box-shadow: -12px 18px 45px rgba(0,0,0,0.7), inset 14px 0 24px rgba(0,0,0,0.45);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 36px; gap: 16px;
+      transform-origin: left center;
+      transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.6s ease;
+      backface-visibility: hidden;
     }
-    .feature-card:hover { border-color: var(--gold-light); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
-    .feature-icon { font-size: 2.2rem; margin-bottom: 12px; transform: translateZ(25px); }
-    .feature-card h3 { color: var(--gold-light); font-size: 1.12rem; margin-bottom: 8px; }
-    .feature-card p { color: var(--text-muted); font-size: 0.92rem; }
+    .book-cover::before {
+      content: ""; position: absolute; inset: 14px;
+      border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 4px 16px 16px 4px; pointer-events: none;
+    }
+    .book-container.opened .book-cover {
+      transform: rotateY(-165deg);
+      opacity: 0;
+      pointer-events: none;
+    }
 
-    /* Menu */
-    .filter-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 34px; }
-    .filter-btn {
-      padding: 9px 20px;
-      border-radius: 999px;
-      background: var(--bg-glass);
-      color: var(--text-muted);
-      border: 1px solid var(--border-gold);
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .filter-btn.active, .filter-btn:hover {
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: #04140c;
-      border-color: var(--gold);
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
-      gap: 24px;
-    }
-    .dish-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-gold);
-      border-radius: 16px;
+    /* Open Book Spread */
+    .book-spread {
+      position: relative; width: 100%; min-height: 540px;
+      background: linear-gradient(90deg, var(--paper-dark) 0%, var(--paper) 6%, var(--paper) 48%, #d9cba8 50%, var(--paper) 52%, var(--paper) 94%, var(--paper-dark) 100%);
+      border: 4px solid #6b4e16; border-radius: 16px;
+      box-shadow: 0 22px 55px rgba(0,0,0,0.65), inset 0 0 30px rgba(107, 78, 22, 0.18);
+      color: var(--ink);
+      display: grid; grid-template-columns: 1fr 1fr;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      opacity: 0; transform: scale(0.96);
+      transition: opacity 0.5s ease 0.25s, transform 0.5s ease 0.25s;
     }
-    .dish-card:hover { border-color: var(--gold-light); box-shadow: 0 18px 38px rgba(0, 0, 0, 0.5); }
-    .dish-img-wrap { position: relative; height: 190px; overflow: hidden; background: #061c11; }
-    .dish-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .dish-card:hover .dish-img-wrap img { transform: scale(1.08); }
-    .dish-tag {
-      position: absolute; top: 12px; right: 12px;
-      font-size: 0.7rem; font-weight: 700;
-      padding: 4px 10px; border-radius: 999px;
-      background: rgba(4, 20, 12, 0.85);
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
-    }
-    .dish-body { padding: 18px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
-    .dish-body h3 { font-size: 1.12rem; color: var(--text-main); margin-bottom: 6px; font-family: 'Plus Jakarta Sans', sans-serif; }
-    .dish-body p { font-size: 0.87rem; color: var(--text-muted); margin-bottom: 16px; }
-    .dish-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 12px;
-    }
-    .price { font-weight: 700; color: var(--gold-light); font-size: 1.05rem; }
+    .book-container.opened .book-spread { opacity: 1; transform: scale(1); }
 
-    /* Booking Section */
+    .book-page {
+      padding: 28px 26px; display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; transition: transform 0.45s ease, opacity 0.35s ease;
+    }
+    .book-page.flip-out { transform: rotateY(-28deg); opacity: 0.2; }
+    .book-page.flip-in { animation: pageTurnIn 0.45s ease; }
+    @keyframes pageTurnIn {
+      from { transform: rotateY(28deg); opacity: 0.2; }
+      to { transform: rotateY(0); opacity: 1; }
+    }
+    .page-title {
+      font-family: 'Cinzel', serif; font-size: 1.25rem; color: #0b3320;
+      border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .page-title span { font-size: 0.78rem; color: #7c6221; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    .book-dish {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      padding: 10px 0; border-bottom: 1px dashed rgba(107, 78, 22, 0.35);
+    }
+    .book-dish:last-child { border-bottom: none; }
+    .book-dish-info { flex: 1; }
+    .book-dish-name { font-weight: 700; color: #092b1b; font-size: 0.96rem; }
+    .book-dish-desc { font-size: 0.78rem; color: #546359; line-height: 1.35; }
+    .book-dish-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .book-dish-price { font-weight: 700; color: #8c6513; font-size: 0.9rem; white-space: nowrap; }
+    .book-add-btn {
+      padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer;
+      background: #0b3320; color: var(--gold-light); font-size: 0.76rem; font-weight: 600;
+      transition: background 0.2s;
+    }
+    .book-add-btn:hover { background: #145234; }
+    .page-num { text-align: center; font-size: 0.78rem; color: #7c6221; margin-top: 12px; font-weight: 600; }
+
+    .book-controls {
+      display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+    }
+
+    /* SIMPLE FAST BOOKING */
     .booking-section {
-      position: relative;
-      max-width: 100%;
-      background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      padding: 90px 20px;
+      max-width: 100%; position: relative;
+      background: linear-gradient(rgba(4, 19, 12, 0.86), rgba(4, 19, 12, 0.92)),
+                  url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85') center/cover;
       border-top: 1px solid var(--border-gold);
     }
-    .booking-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(4, 20, 12, 0.84);
+    .booking-card {
+      max-width: 680px; margin: 0 auto;
+      background: var(--bg-glass); backdrop-filter: blur(14px);
+      border: 1px solid var(--border-gold); border-radius: 18px; padding: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
-    .booking-wrapper { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; }
-    .booking-box {
-      background: rgba(8, 33, 21, 0.84);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--border-gold);
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    .quick-label { font-size: 0.86rem; color: var(--gold-light); font-weight: 600; margin-bottom: 8px; display: block; }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .chip {
+      flex: 1 1 110px; padding: 10px 12px; text-align: center; border-radius: 10px;
+      background: rgba(4, 19, 12, 0.75); border: 1px solid var(--border-gold);
+      color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 0.88rem; transition: all 0.2s;
     }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 18px; }
-    label { display: block; font-size: 0.85rem; color: var(--gold-light); margin-bottom: 6px; font-weight: 600; }
+    .chip.selected, .chip:hover { background: var(--gold); color: #04130c; border-color: var(--gold); }
+    .simple-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     input, select {
-      width: 100%; padding: 11px 14px; border-radius: 8px;
-      border: 1px solid var(--border-gold);
-      background: rgba(4, 20, 12, 0.9);
-      color: var(--text-main); font-family: inherit; font-size: 0.95rem;
+      width: 100%; padding: 11px 14px; border-radius: 9px;
+      border: 1px solid var(--border-gold); background: rgba(4, 19, 12, 0.9);
+      color: var(--text-main); font-family: inherit; font-size: 0.94rem;
     }
     input:focus, select:focus { outline: none; border-color: var(--gold-light); }
 
     /* Footer */
-    footer {
-      background: rgba(3, 15, 9, 0.95);
-      border-top: 1px solid var(--border-gold);
-      padding: 48px 20px 26px;
-    }
-    .footer-grid {
-      max-width: 1200px;
-      margin: 0 auto 28px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 28px;
-    }
-    footer h4 { color: var(--gold-light); margin-bottom: 12px; font-family: 'Cinzel', serif; }
-    footer p, footer a { color: var(--text-muted); font-size: 0.92rem; text-decoration: none; display: block; margin-bottom: 6px; }
+    footer { background: rgba(3, 14, 9, 0.96); border-top: 1px solid var(--border-gold); padding: 46px 20px 24px; }
+    .footer-grid { max-width: 1180px; margin: 0 auto 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    footer h4 { color: var(--gold-light); margin-bottom: 10px; }
+    footer p, footer a { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; display: block; margin-bottom: 6px; }
     footer a:hover { color: var(--gold-light); }
-    .copyright {
-      text-align: center; color: #7c9487; font-size: 0.84rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 18px;
-    }
+    .copyright { text-align: center; color: #799184; font-size: 0.84rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px; }
 
-    /* Modals */
+    /* Modals & Admin Panel */
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.76);
-      display: none; align-items: center; justify-content: center;
-      z-index: 200; padding: 16px; backdrop-filter: blur(6px);
+      position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; z-index: 300; padding: 14px;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: #082315; border: 1px solid var(--gold);
-      border-radius: 16px; width: 100%; max-width: 480px;
-      padding: 24px; max-height: 88vh; overflow-y: auto;
+      background: #072114; border: 1px solid var(--gold); border-radius: 16px;
+      width: 100%; max-width: 500px; padding: 24px; max-height: 90vh; overflow-y: auto;
     }
+    .modal.modal-lg { max-width: 860px; }
     .modal-header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 18px; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px;
+      margin-bottom: 16px; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px;
     }
     .close-btn { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-    .cart-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); gap: 10px;
+
+    /* Cart & Admin Tables */
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 10px; }
+    .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--gold); background: transparent; color: var(--gold-light); cursor: pointer; font-weight: 700; }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1.12rem; font-weight: 700; color: var(--gold-light); margin: 16px 0; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .stat-box { background: rgba(4, 19, 12, 0.8); border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat-box strong { display: block; font-size: 1.35rem; color: var(--gold-light); }
+    .stat-box span { font-size: 0.78rem; color: var(--text-muted); }
+
+    .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .admin-item {
+      background: rgba(4, 19, 12, 0.7); border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
     }
-    .qty-controls { display: flex; align-items: center; gap: 8px; }
-    .qty-btn {
-      width: 28px; height: 28px; border-radius: 6px;
-      border: 1px solid var(--gold); background: transparent;
-      color: var(--gold-light); cursor: pointer; font-weight: 700;
-    }
-    .cart-total {
-      display: flex; justify-content: space-between;
-      font-size: 1.15rem; font-weight: 700; color: var(--gold-light); margin: 18px 0;
-    }
+    .status-pill { padding: 3px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; background: rgba(212, 175, 55, 0.18); color: var(--gold-light); }
+    .status-pill.done { background: rgba(40, 167, 69, 0.22); color: #7ef29d; }
 
     @media (max-width: 768px) {
       nav { display: none; }
-      .booking-box { padding: 20px; }
-      .booking-section { background-attachment: scroll; }
+      .book-spread { grid-template-columns: 1fr; background: var(--paper); }
+      .simple-inputs { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 3D INTERACTIVE CANVAS -->
   <canvas id="bg3d"></canvas>
 
-  <!-- 3D LOGO SPLASH SCREEN -->
+  <!-- 3D LOGO SPLASH -->
   <div id="preloader">
-    <div class="loader-logo-box">
-      <img src="logo.gif" alt="Shahboz Restaurant Logo" onerror="handleLogoFallback(this)">
-    </div>
-    <div class="loader-title brand-font">SHAHBOZ RESTAURANT</div>
+    <div class="splash-logo" id="splashLogoSlot"></div>
+    <div class="brand-font" style="color:var(--gold-light); letter-spacing:4px; font-size:1.25rem;">SHAHBOZ RESTAURANT</div>
     <div class="loader-bar"><span></span></div>
   </div>
 
@@ -458,147 +308,121 @@
   <header>
     <div class="nav-container">
       <a href="#" class="logo-wrap">
-        <div class="nav-logo-box">
-          <img src="logo.gif" alt="Shahboz Logo" onerror="handleLogoFallback(this)">
-        </div>
+        <div class="nav-logo-svg" id="navLogoSlot"></div>
         <div class="logo-text">
           <strong class="brand-font">SHAHBOZ</strong>
           <span>Milliy Taomlar</span>
         </div>
       </a>
-
       <nav>
-        <a href="#biz-haqimizda">Biz haqimizda</a>
-        <a href="#menyu">Menyu</a>
-        <a href="#bron">Stol band qilish</a>
+        <a href="#menyu-kitob">Kitobcha Menyu</a>
+        <a href="#bron">Tezkor Bron</a>
         <a href="#aloqa">Aloqa</a>
       </nav>
-
       <div class="nav-actions">
-        <button class="btn btn-outline" onclick="openModal('qrModal')">QR-Menyu</button>
+        <button class="btn btn-outline" onclick="openAdminGate()">Admin</button>
         <button class="btn btn-gold" onclick="openCart()">
-          Savatcha <span class="cart-badge" id="cartCount">0</span>
+          Savat <span class="cart-badge" id="cartCount">0</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- 3D HERO -->
+  <!-- HERO -->
   <section class="hero" id="heroSection" style="max-width:100%;">
     <div class="hero-bg" id="heroBg"></div>
     <div class="hero-overlay"></div>
-    <div class="hero-inner" id="heroInner">
-      <div class="hero-logo-3d">
-        <img src="logo.gif" alt="Shahboz Restaurant Logo" onerror="handleLogoFallback(this)">
-      </div>
-      <div class="badge">Halol • Premium Xizmat • Olmazor</div>
+    <div class="hero-inner">
+      <div class="hero-logo-main" id="heroLogoSlot"></div>
+      <div class="badge">Halol • Olmazor Tumani • Est. 2026</div>
       <h1>SHAHBOZ RESTAURANT</h1>
-      <p>
-        Haqiqiy o'zbekona mehmondo'stlik, oliy darajadagi xizmat ko'rsatish va
-        milliy taomlarning betakror ta'mi — endi zamonaviy muhitda.
-      </p>
+      <p>O'zbek milliy taomlarining shohona ta'mi, samimiy xizmat va 3D interaktiv kitobcha menyu.</p>
       <div class="hero-buttons">
-        <a href="#menyu" class="btn btn-gold">Menyuni ko'rish</a>
-        <a href="#bron" class="btn btn-outline">Stol band qilish</a>
+        <a href="#menyu-kitob" class="btn btn-gold" onclick="openBook()">📖 Kitobcha Menyuni Ochish</a>
+        <a href="#bron" class="btn btn-outline">⚡ Tezkor Joy Band Qilish</a>
       </div>
     </div>
   </section>
 
   <main>
-    <!-- ABOUT -->
-    <section id="biz-haqimizda">
+    <!-- 3D ANIMATED MENU BOOK -->
+    <section id="menyu-kitob">
       <div class="section-header">
-        <h2>Nega aynan Shahboz?</h2>
-        <p>Har bir mehmonimizga shohona e'tibor va sarxil, 100% halol taomlar taqdim etamiz.</p>
+        <h2>Kitobcha Menyu</h2>
+        <p>Kitobni oching, sahifalarni varaqlang va yoqtirgan taomlaringizni savatchaga qo'shing.</p>
       </div>
-      <div class="features-grid">
-        <div class="feature-card tilt-card">
-          <div class="feature-icon">🍲</div>
-          <h3>An'anaviy Retseptlar</h3>
-          <p>Toshkent oshi, qozon kabob va tandir somsalar mohir oshpazlar qo'lida tayyorlanadi.</p>
+
+      <div class="book-stage">
+        <div class="book-tabs" id="bookTabs"></div>
+
+        <div class="book-container" id="bookContainer">
+          <!-- Cover -->
+          <div class="book-cover">
+            <div style="width:125px; height:125px;" id="coverLogoSlot"></div>
+            <h3 class="brand-font" style="color:var(--gold-light); font-size:1.8rem;">MILLIY TAOMLAR</h3>
+            <p style="color:var(--text-muted); max-width:340px;">SHAHBOZ RESTAURANT — 20 dan ortiq sarxil taomlar, shashliklar va ichimliklar to'plami.</p>
+            <button class="btn btn-gold" style="padding:12px 28px; font-size:1rem;" onclick="openBook()">📖 Kitobni ochish</button>
+          </div>
+
+          <!-- Open Book 2-Page Spread -->
+          <div class="book-spread">
+            <div class="book-page" id="leftPage"></div>
+            <div class="book-page" id="rightPage"></div>
+          </div>
         </div>
-        <div class="feature-card tilt-card">
-          <div class="feature-icon">🏛️</div>
-          <h3>Oliy Darajadagi Xizmat</h3>
-          <p>Oilaviy kabinalar, VIP zallar va mijozlarga tezkor, samimiy xizmat ko'rsatish.</p>
-        </div>
-        <div class="feature-card tilt-card">
-          <div class="feature-icon">⚡</div>
-          <h3>Onlayn Bron va Buyurtma</h3>
-          <p>Sayt orqali taom tanlang va bir tugma bilan Telegram orqali buyurtma yuboring.</p>
+
+        <div class="book-controls" id="bookControls" style="display:none;">
+          <button class="btn btn-outline" onclick="flipPage(-1)">⬅️ Oldingi sahifa</button>
+          <span id="spreadIndicator" style="color:var(--gold-light); font-weight:600; font-size:0.9rem;"></span>
+          <button class="btn btn-gold" onclick="flipPage(1)">Keyingi sahifa ➡️</button>
+          <button class="btn btn-outline" onclick="closeBook()">Kitobni yopish</button>
         </div>
       </div>
     </section>
 
-    <!-- MENU -->
-    <section id="menyu">
-      <div class="section-header">
-        <h2>Milliy Taomlar Menyusi</h2>
-        <p>Taomlarni tanlang, savatchaga qo'shing va bir zumda buyurtma bering.</p>
-      </div>
-
-      <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterMenu('barchasi', this)">Barchasi</button>
-        <button class="filter-btn" onclick="filterMenu('milliy', this)">Milliy taomlar</button>
-        <button class="filter-btn" onclick="filterMenu('shashlik', this)">Shashliklar</button>
-        <button class="filter-btn" onclick="filterMenu('salat', this)">Salatlar</button>
-        <button class="filter-btn" onclick="filterMenu('ichimlik', this)">Ichimliklar</button>
-      </div>
-
-      <div class="menu-grid" id="menuGrid"></div>
-    </section>
-
-    <!-- BOOKING -->
+    <!-- SIMPLE 1-STEP BOOKING -->
     <section id="bron" class="booking-section">
-      <div class="booking-wrapper">
-        <div class="section-header">
-          <h2>Stol Band Qilish</h2>
-          <p>Oldindan joy band qiling — siz kelguningizcha dasturxonimiz tayyor turadi.</p>
-        </div>
+      <div class="section-header">
+        <h2>10 Soniyada Joy Band Qiling</h2>
+        <p>Ortiqcha savollarsiz — xona va vaqtni tanlang, raqamingizni qoldiring.</p>
+      </div>
 
-        <div class="booking-box">
-          <form onsubmit="submitBooking(event)">
-            <div class="form-grid">
-              <div>
-                <label for="bName">Ismingiz</label>
-                <input type="text" id="bName" placeholder="Masalan: Azizbek" required />
-              </div>
-              <div>
-                <label for="bPhone">Telefon raqam</label>
-                <input type="tel" id="bPhone" placeholder="+998 88 000 48 50" required />
-              </div>
-              <div>
-                <label for="bDate">Sana</label>
-                <input type="date" id="bDate" required />
-              </div>
-              <div>
-                <label for="bTime">Vaqt</label>
-                <input type="time" id="bTime" value="19:00" required />
-              </div>
-              <div>
-                <label for="bGuests">Mehmonlar soni</label>
-                <select id="bGuests">
-                  <option>2 kishi</option>
-                  <option>4 kishi</option>
-                  <option>6 kishi</option>
-                  <option>8+ kishi (Katta davra)</option>
-                </select>
-              </div>
-              <div>
-                <label for="bRoom">Xona turi</label>
-                <select id="bRoom">
-                  <option>Umumiy zal</option>
-                  <option>Oilaviy kabina</option>
-                  <option>VIP xona</option>
-                  <option>Yozgi so'ri</option>
-                </select>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px;">
-              Telegram orqali joy band qilish
-            </button>
-          </form>
-        </div>
+      <div class="booking-card">
+        <form onsubmit="submitSimpleBooking(event)">
+          <span class="quick-label">1. Xona turini tanlang:</span>
+          <div class="chip-group" id="roomChips">
+            <div class="chip selected" onclick="selectChip('roomChips', this)">🏛 Umumiy zal</div>
+            <div class="chip" onclick="selectChip('roomChips', this)">👨‍👩‍👧‍👦 Oilaviy</div>
+            <div class="chip" onclick="selectChip('roomChips', this)">👑 VIP xona</div>
+            <div class="chip" onclick="selectChip('roomChips', this)">🌿 So'ri</div>
+          </div>
+
+          <span class="quick-label">2. Mehmonlar soni:</span>
+          <div class="chip-group" id="guestChips">
+            <div class="chip" onclick="selectChip('guestChips', this)">2 kishi</div>
+            <div class="chip selected" onclick="selectChip('guestChips', this)">4 kishi</div>
+            <div class="chip" onclick="selectChip('guestChips', this)">6 kishi</div>
+            <div class="chip" onclick="selectChip('guestChips', this)">8+ kishi</div>
+          </div>
+
+          <span class="quick-label">3. Qachon kelasiz?</span>
+          <div class="chip-group" id="timeChips">
+            <div class="chip selected" onclick="selectChip('timeChips', this)">Bugun 18:00</div>
+            <div class="chip" onclick="selectChip('timeChips', this)">Bugun 19:30</div>
+            <div class="chip" onclick="selectChip('timeChips', this)">Bugun 21:00</div>
+            <div class="chip" onclick="selectChip('timeChips', this)">Ertaga tushlik</div>
+          </div>
+
+          <div class="simple-inputs">
+            <input type="text" id="bName" placeholder="Ismingiz (masalan: Azizbek)" required />
+            <input type="tel" id="bPhone" placeholder="+998 88 000 48 50" required />
+          </div>
+
+          <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-size:1rem;">
+            ✅ Joyni band qilish
+          </button>
+          <div id="bookingSuccess" style="display:none; margin-top:14px; padding:12px; border-radius:10px; background:rgba(40,167,69,0.2); border:1px solid #4ad971; color:#a4f9ba; text-align:center;"></div>
+        </form>
       </div>
     </section>
   </main>
@@ -613,17 +437,17 @@
       <div>
         <h4>Ish vaqti</h4>
         <p>Har kuni: 09:00 — 23:00</p>
-        <p>Dam olish kunisiz xizmat ko'rsatamiz</p>
+        <p>Dam olish kunisiz</p>
       </div>
       <div>
         <h4>Manzil va Aloqa</h4>
         <p>📍 Toshkent shahri, Olmazor tumani</p>
         <a href="tel:+998880004850">📞 +998 88 000 48 50</a>
-        <a href="https://t.me/+998880004850" target="_blank">✈️ Telegram orqali yozish</a>
+        <a href="https://t.me/+998880004850" target="_blank">✈️ Telegram orqali bog'lanish</a>
       </div>
     </div>
     <div class="copyright">
-      © 2026 SHAHBOZ RESTAURANT. Barcha huquqlar himoyalangan.
+      © 2026 SHAHBOZ RESTAURANT • <a href="javascript:void(0)" onclick="openAdminGate()" style="display:inline; color:var(--gold-light);">Admin Panel</a>
     </div>
   </footer>
 
@@ -631,213 +455,287 @@
   <div class="modal-backdrop" id="cartModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="brand-font" style="color: var(--gold-light);">Sizning Savatchangiz</h3>
+        <h3 class="brand-font" style="color:var(--gold-light);">Savatcha</h3>
         <button class="close-btn" onclick="closeModal('cartModal')">&times;</button>
       </div>
       <div id="cartItems"></div>
-      <div class="cart-total">
-        <span>Jami summa:</span>
-        <span id="cartTotal">0 so'm</span>
+      <div class="cart-total"><span>Jami:</span><span id="cartTotal">0 so'm</span></div>
+      <div class="simple-inputs" style="margin-bottom:12px;">
+        <input type="text" id="orderName" placeholder="Ismingiz" />
+        <input type="tel" id="orderPhone" placeholder="Telefon raqamingiz" />
       </div>
-      <button class="btn btn-gold" style="width: 100%; padding: 13px;" onclick="sendOrderToTelegram()">
-        Telegram orqali buyurtma berish
+      <button class="btn btn-gold" style="width:100%; padding:13px;" onclick="placeOrder()">
+        Buyurtmani tasdiqlash va Telegramga yuborish
       </button>
     </div>
   </div>
 
-  <!-- QR MODAL -->
-  <div class="modal-backdrop" id="qrModal">
-    <div class="modal" style="text-align: center;">
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="modal-backdrop" id="adminLoginModal">
+    <div class="modal" style="max-width:360px; text-align:center;">
       <div class="modal-header">
-        <h3 class="brand-font" style="color: var(--gold-light);">QR-Menyu Tizimi</h3>
-        <button class="close-btn" onclick="closeModal('qrModal')">&times;</button>
+        <h3 class="brand-font" style="color:var(--gold-light);">Admin Kirish</h3>
+        <button class="close-btn" onclick="closeModal('adminLoginModal')">&times;</button>
       </div>
-      <p style="color: var(--text-muted); margin-bottom: 18px;">
-        Stollar ustiga QR-kod joylashtirish orqali mehmonlar menyuni telefonidan ko'rib buyurtma bera oladi.
-      </p>
-      <div style="background: #fff; display: inline-block; padding: 14px; border-radius: 12px; margin-bottom: 14px;">
-        <img id="qrImg" src="" alt="QR Menyu" />
+      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:14px;">Kirish uchun PIN kodni kiriting (Demo PIN: <b>1234</b>)</p>
+      <input type="password" id="adminPinInput" placeholder="PIN kod (1234)" style="text-align:center; margin-bottom:14px;" />
+      <button class="btn btn-gold" style="width:100%;" onclick="checkAdminPin()">Kirish</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL MODAL -->
+  <div class="modal-backdrop" id="adminPanelModal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="brand-font" style="color:var(--gold-light);">SHAHBOZ — Admin Panel</h3>
+        <button class="close-btn" onclick="closeModal('adminPanelModal')">&times;</button>
       </div>
-      <p style="font-size: 0.85rem; color: var(--gold-light);">Skanerlang va menyuni oching</p>
+
+      <div class="stats-row" id="adminStats"></div>
+
+      <div class="admin-tabs">
+        <button class="btn btn-gold" id="tabOrdersBtn" onclick="switchAdminTab('orders')">📦 Buyurtmalar</button>
+        <button class="btn btn-outline" id="tabBookingsBtn" onclick="switchAdminTab('bookings')">📅 Bronlar</button>
+        <button class="btn btn-outline" id="tabMenuBtn" onclick="switchAdminTab('menu')">🍽 Menyuni boshqarish</button>
+      </div>
+
+      <div id="adminTabContent"></div>
     </div>
   </div>
 
   <script>
-    // Logo fallback: avval logo.gif, bo'lmasa logo.jpg, bo'lmasa logo.png, bo'lmasa SVG ko'rsatadi
-    function handleLogoFallback(img) {
-      if (!img.dataset.step) {
-        img.dataset.step = "1";
-        img.src = "logo.jpg";
-      } else if (img.dataset.step === "1") {
-        img.dataset.step = "2";
-        img.src = "logo.png";
-      } else {
-        img.onerror = null;
-        img.src = "data:image/svg+xml;utf8," + encodeURIComponent(
-          `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <rect width='100' height='100' fill='#062114'/>
-            <circle cx='50' cy='50' r='44' stroke='#d4af37' stroke-width='3' fill='none'/>
-            <path d='M28 56 C28 72, 72 72, 72 56 Z' stroke='#f6df8f' stroke-width='3' fill='rgba(212,175,55,0.22)'/>
-            <path d='M42 46 Q45 36 42 30 M50 43 Q53 33 50 26 M58 46 Q61 36 58 30' stroke='#f6df8f' stroke-width='2.5' fill='none' stroke-linecap='round'/>
-            <text x='50' y='85' text-anchor='middle' fill='#f6df8f' font-size='11' font-family='serif' font-weight='700'>SHAHBOZ</text>
-          </svg>`
-        );
-      }
-    }
-
-    // Preloader yopilishi
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("preloader").classList.add("hidden");
-      }, 1700);
-      document.getElementById("qrImg").src =
-        "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(window.location.href);
+    /* 1. HIGH-END EMBEDDED VECTOR LOGO */
+    const PREMIUM_LOGO_SVG = `
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+          <linearGradient id="gGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f9e59b"/>
+            <stop offset="50%" stop-color="#d4af37"/>
+            <stop offset="100%" stop-color="#9e761d"/>
+          </linearGradient>
+          <radialGradient id="gBg" cx="50%" cy="45%" r="55%">
+            <stop offset="0%" stop-color="#0f422a"/>
+            <stop offset="100%" stop-color="#04170e"/>
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="96" fill="url(#gBg)" stroke="url(#gGold)" stroke-width="4"/>
+        <circle cx="100" cy="100" r="86" fill="none" stroke="url(#gGold)" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(212,175,55,0.45)" stroke-width="1"/>
+        <!-- Crown / Oriental Dome -->
+        <path d="M84 42 L91 31 L100 38 L109 31 L116 42 Z" fill="url(#gGold)"/>
+        <!-- Steam -->
+        <path d="M88 64 Q91 54 88 48 M100 62 Q103 51 100 45 M112 64 Q115 54 112 48" stroke="#f9e59b" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <!-- Uzbek Bowl (Kosa) -->
+        <path d="M64 70 C64 96, 136 96, 136 70 Z" fill="rgba(212,175,55,0.18)" stroke="url(#gGold)" stroke-width="3.2"/>
+        <path d="M72 78 Q100 86 128 78" fill="none" stroke="url(#gGold)" stroke-width="1.6"/>
+        <rect x="86" y="92" width="28" height="5" rx="2" fill="url(#gGold)"/>
+        <!-- Wheat / Laurel accents -->
+        <path d="M52 104 Q44 78 60 58" fill="none" stroke="url(#gGold)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M148 104 Q156 78 140 58" fill="none" stroke="url(#gGold)" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- Brand Name -->
+        <text x="100" y="128" text-anchor="middle" fill="url(#gGold)" font-family="Cinzel, serif" font-weight="800" font-size="23" letter-spacing="2">SHAHBOZ</text>
+        <line x1="56" y1="136" x2="144" y2="136" stroke="url(#gGold)" stroke-width="1.2"/>
+        <text x="100" y="151" text-anchor="middle" fill="#f7f4ec" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="9.5" letter-spacing="3">RESTAURANT</text>
+        <text x="100" y="166" text-anchor="middle" fill="#d4af37" font-family="Plus Jakarta Sans, sans-serif" font-size="7.5" letter-spacing="1.5">MILLIY TAOMLAR</text>
+      </svg>
+    `;
+    ["splashLogoSlot", "navLogoSlot", "heroLogoSlot", "coverLogoSlot"].forEach(id => {
+      document.getElementById(id).innerHTML = PREMIUM_LOGO_SVG;
     });
 
-    // THREE.JS 3D GOLDEN PARTICLES & RING BACKGROUND
+    window.addEventListener("load", () => {
+      setTimeout(() => document.getElementById("preloader").classList.add("hidden"), 1500);
+    });
+
+    /* 2. THREE.JS 3D GOLDEN PARTICLES */
     (function init3D() {
       const canvas = document.getElementById("bg3d");
       if (!window.THREE || !canvas) return;
-
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.z = 5;
-
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // Floating 3D Gold Particles
-      const count = 420;
-      const positions = new Float32Array(count * 3);
-      for (let i = 0; i < count * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 16;
-      }
+      const count = 360;
+      const pos = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 16;
       const geo = new THREE.BufferGeometry();
-      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const mat = new THREE.PointsMaterial({
-        size: 0.055,
-        color: 0xf6df8f,
-        transparent: true,
-        opacity: 0.75
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      const pts = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.055, color: 0xf6df8f, transparent: true, opacity: 0.7 }));
+      scene.add(pts);
+
+      let mx = 0, my = 0;
+      window.addEventListener("mousemove", e => {
+        mx = (e.clientX / window.innerWidth - 0.5) * 2;
+        my = (e.clientY / window.innerHeight - 0.5) * 2;
+        document.getElementById("heroBg").style.transform = `translate(${-mx * 10}px, ${-my * 10}px) scale(1.06)`;
       });
-      const particles = new THREE.Points(geo, mat);
-      scene.add(particles);
-
-      // Subtle 3D Golden Wireframe Torus
-      const ringGeo = new THREE.TorusGeometry(2.6, 0.015, 16, 100);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.2 });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      scene.add(ring);
-
-      let mouseX = 0, mouseY = 0;
-      window.addEventListener("mousemove", (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-      });
-
       window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
-
-      function animate() {
+      (function animate() {
         requestAnimationFrame(animate);
-        particles.rotation.y += 0.0009;
-        particles.rotation.x += 0.0004;
-        ring.rotation.x += 0.002;
-        ring.rotation.y += 0.003;
-
-        camera.position.x += (mouseX * 0.55 - camera.position.x) * 0.04;
-        camera.position.y += (-mouseY * 0.4 - camera.position.y) * 0.04;
+        pts.rotation.y += 0.0008;
+        camera.position.x += (mx * 0.5 - camera.position.x) * 0.04;
+        camera.position.y += (-my * 0.35 - camera.position.y) * 0.04;
         camera.lookAt(scene.position);
-
         renderer.render(scene, camera);
-      }
-      animate();
+      })();
     })();
 
-    // Hero 3D Parallax
-    const heroSection = document.getElementById("heroSection");
-    const heroBg = document.getElementById("heroBg");
-    const heroInner = document.getElementById("heroInner");
-    heroSection.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 18;
-      const y = (e.clientY / window.innerHeight - 0.5) * 18;
-      heroBg.style.transform = `translate(${-x}px, ${-y}px) scale(1.06)`;
-      heroInner.style.transform = `rotateY(${x * 0.45}deg) rotateX(${-y * 0.45}deg)`;
-    });
-    heroSection.addEventListener("mouseleave", () => {
-      heroBg.style.transform = "translate(0, 0) scale(1.04)";
-      heroInner.style.transform = "rotateY(0deg) rotateX(0deg)";
-    });
-
-    // 3D Tilt effect for cards
-    function attachTilt() {
-      document.querySelectorAll(".tilt-card").forEach(card => {
-        card.onmousemove = (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          card.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-6px)`;
-        };
-        card.onmouseleave = () => {
-          card.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)";
-        };
-      });
-    }
-
-    // Menu Data & Cart Logic
-    const TELEGRAM_LINK = "https://t.me/+998880004850";
-    const menuItems = [
-      { id: 1, name: "Toshkent To'y Oshi", cat: "milliy", price: 48000, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80", desc: "Lazer guruch, sarxil qo'y go'shti, qazi va bedana tuxumi bilan." },
-      { id: 2, name: "Qozon Kabob", cat: "milliy", price: 78000, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80", desc: "Qozonda tillarang qovurilgan qo'y go'shti va kartoshka." },
-      { id: 3, name: "Tandir Somsa (2 dona)", cat: "milliy", price: 32000, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80", desc: "Qarsildoq xamir va to'g'ralgan lahm go'shtli issiq somsa." },
-      { id: 4, name: "Qiyma Shashlik", cat: "shashlik", price: 24000, img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80", desc: "Ko'mirda pishirilgan sersuv mol go'shtli shashlik." },
-      { id: 5, name: "Jaz Shashlik", cat: "shashlik", price: 30000, img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=700&q=80", desc: "Ziravorlarda marinadlangan yumshoq qo'y go'shti." },
-      { id: 6, name: "Achichuk Salati", cat: "salat", price: 22000, img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80", desc: "Pishgan pomidor, yupqa piyoz va rayhon barglari bilan." },
-      { id: 7, name: "Limonli Ko'k Choy", cat: "ichimlik", price: 15000, img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=80", desc: "Xushbo'y 95-ko'k choy va yangi limon bo'laklari." },
-      { id: 8, name: "Uy Kompoti (1L)", cat: "ichimlik", price: 25000, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=80", desc: "Olcha, o'rik va olma qoqisidan tabiiy salqin ichimlik." }
+    /* 3. EXPANDED MENU DATA (Stored in localStorage so Admin can edit!) */
+    const DEFAULT_MENU = [
+      // Milliy taomlar
+      { id: 1, name: "Toshkent To'y Oshi", cat: "Milliy taomlar", price: 48000, desc: "Lazer guruch, qo'y go'shti, qazi va bedana tuxumi." },
+      { id: 2, name: "Qozon Kabob", cat: "Milliy taomlar", price: 78000, desc: "Qozonda qovurilgan qo'y go'shti va kartoshka." },
+      { id: 3, name: "Tandir Somsa (2 dona)", cat: "Milliy taomlar", price: 32000, desc: "Qarsildoq xamir va to'g'ralgan lahm go'sht." },
+      { id: 4, name: "Norin", cat: "Milliy taomlar", price: 45000, desc: "Qo'lda kesilgan xamir va sarxil qazi bilan." },
+      { id: 5, name: "Qo'lbola Manti (5 dona)", cat: "Milliy taomlar", price: 42000, desc: "Bug'da pishirilgan sersuv go'shtli manti." },
+      // Sho'rva & Suyuq
+      { id: 6, name: "Ko'za Sho'rva", cat: "Sho'rvalar", price: 46000, desc: "Sopol ko'zada dimlab pishirilgan qo'y go'shti sho'rvasi." },
+      { id: 7, name: "Mastava", cat: "Sho'rvalar", price: 34000, desc: "Qatiq va ko'katlar bilan an'anaviy mastava." },
+      { id: 8, name: "Uyg'ur Lag'mon", cat: "Sho'rvalar", price: 44000, desc: "Cho'zma xamir, sabzavotlar va mol go'shti qaylasi." },
+      { id: 9, name: "Chuchvara", cat: "Sho'rvalar", price: 36000, desc: "Bulyonda pishirilgan mayda uy chuchvarasi." },
+      // Shashliklar
+      { id: 10, name: "Qiyma Shashlik", cat: "Shashliklar", price: 24000, desc: "Ko'mirda pishirilgan sersuv mol go'shtli qiyma." },
+      { id: 11, name: "Jaz (Qo'y go'shti)", cat: "Shashliklar", price: 30000, desc: "Ziravorlarda marinadlangan yumshoq qo'y go'shti." },
+      { id: 12, name: "Napoleon Shashlik", cat: "Shashliklar", price: 34000, desc: "Qatlama go'sht va dumba yog'li maxsus shashlik." },
+      { id: 13, name: "Tovuq Qanotcha", cat: "Shashliklar", price: 26000, desc: "Qarsildoq marinadlangan tovuq shashlik." },
+      { id: 14, name: "Jigar Shashlik", cat: "Shashliklar", price: 25000, desc: "Yumshoq mol jigari va dumba bilan." },
+      // Salatlar & Nonlar
+      { id: 15, name: "Achichuk Salati", cat: "Salatlar & Nonlar", price: 22000, desc: "Pishgan pomidor, piyoz va rayhon barglari." },
+      { id: 16, name: "Suzma va Ko'katlar", cat: "Salatlar & Nonlar", price: 18000, desc: "Qishloq qatig'idan tayyorlangan yangi suzma." },
+      { id: 17, name: "Bahor Salati", cat: "Salatlar & Nonlar", price: 25000, desc: "Bodring, rediska, ko'katlar va qaymoq." },
+      { id: 18, name: "Toshkent Patir Noni", cat: "Salatlar & Nonlar", price: 12000, desc: "Tandirdan yangi uzilgan sedana sepilgan patir." },
+      // Ichimliklar & Shirinliklar
+      { id: 19, name: "Limonli Ko'k Choy", cat: "Ichimliklar", price: 15000, desc: "Xushbo'y 95-ko'k choy va yangi limon." },
+      { id: 20, name: "Uy Kompoti (1L)", cat: "Ichimliklar", price: 25000, desc: "Olcha, o'rik va olma qoqisidan tabiiy kompot." },
+      { id: 21, name: "Muzdek Ayron", cat: "Ichimliklar", price: 14000, desc: "Rayhon va muz bilan salqin ayron." },
+      { id: 22, name: "Asalli Chak-Chak", cat: "Ichimliklar", price: 28000, desc: "Choy bilan ichish uchun milliy shirinlik." }
     ];
 
+    const CATEGORIES = ["Milliy taomlar", "Sho'rvalar", "Shashliklar", "Salatlar & Nonlar", "Ichimliklar"];
+    const TELEGRAM_LINK = "https://t.me/+998880004850";
+
+    let menuItems = JSON.parse(localStorage.getItem("shahboz_menu")) || DEFAULT_MENU;
+    let orders = JSON.parse(localStorage.getItem("shahboz_orders")) || [];
+    let bookings = JSON.parse(localStorage.getItem("shahboz_bookings")) || [];
     let cart = [];
-    const formatPrice = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
 
-    function renderMenu(cat = "barchasi") {
-      const grid = document.getElementById("menuGrid");
-      const list = cat === "barchasi" ? menuItems : menuItems.filter(i => i.cat === cat);
-      grid.innerHTML = list.map(item => `
-        <div class="dish-card tilt-card">
-          <div class="dish-img-wrap">
-            <img src="${item.img}" alt="${item.name}" loading="lazy">
-            <span class="dish-tag">${item.cat.toUpperCase()}</span>
-          </div>
-          <div class="dish-body">
-            <div>
-              <h3>${item.name}</h3>
-              <p>${item.desc}</p>
-            </div>
-            <div class="dish-footer">
-              <span class="price">${formatPrice(item.price)}</span>
-              <button class="btn btn-gold" style="padding:8px 14px; font-size:0.84rem;" onclick="addToCart(${item.id})">+ Savatga</button>
-            </div>
-          </div>
-        </div>
+    const saveMenu = () => localStorage.setItem("shahboz_menu", JSON.stringify(menuItems));
+    const saveOrders = () => localStorage.setItem("shahboz_orders", JSON.stringify(orders));
+    const saveBookings = () => localStorage.setItem("shahboz_bookings", JSON.stringify(bookings));
+    const formatPrice = n => Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+
+    /* 4. 3D MENU BOOK LOGIC */
+    let bookOpened = false;
+    let currentSpread = 0; // Each spread shows 2 categories (or 1 on last)
+    const SPREADS = [
+      { left: "Milliy taomlar", right: "Sho'rvalar" },
+      { left: "Shashliklar", right: "Salatlar & Nonlar" },
+      { left: "Ichimliklar", right: "Bosh Oshpaz Tavsiyasi" }
+    ];
+
+    function renderBookTabs() {
+      const tabs = document.getElementById("bookTabs");
+      tabs.innerHTML = SPREADS.map((sp, idx) => `
+        <button class="book-tab ${bookOpened && currentSpread === idx ? 'active' : ''}" onclick="jumpToSpread(${idx})">
+          ${idx + 1}. ${sp.left}
+        </button>
       `).join("");
-      attachTilt();
     }
 
-    function filterMenu(cat, btn) {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderMenu(cat);
+    function buildPageHTML(catName, pageNum) {
+      let items;
+      if (catName === "Bosh Oshpaz Tavsiyasi") {
+        items = menuItems.slice(0, 4);
+      } else {
+        items = menuItems.filter(i => i.cat === catName);
+      }
+      const listHTML = items.length
+        ? items.map(item => `
+            <div class="book-dish">
+              <div class="book-dish-info">
+                <div class="book-dish-name">${item.name}</div>
+                <div class="book-dish-desc">${item.desc}</div>
+              </div>
+              <div class="book-dish-right">
+                <span class="book-dish-price">${formatPrice(item.price)}</span>
+                <button class="book-add-btn" onclick="addToCart(${item.id})">+ Savat</button>
+              </div>
+            </div>
+          `).join("")
+        : `<p style="color:#666; font-size:0.9rem; margin-top:20px;">Bu bo'limda hozircha taom yo'q.</p>`;
+
+      return `
+        <div>
+          <div class="page-title">${catName} <span>${items.length} ta</span></div>
+          ${listHTML}
+        </div>
+        <div class="page-num">— ${pageNum}-sahifa —</div>
+      `;
     }
 
+    function renderSpread(animate = false) {
+      const lp = document.getElementById("leftPage");
+      const rp = document.getElementById("rightPage");
+      const sp = SPREADS[currentSpread];
+
+      if (animate) {
+        lp.classList.add("flip-out");
+        rp.classList.add("flip-out");
+        setTimeout(() => {
+          lp.innerHTML = buildPageHTML(sp.left, currentSpread * 2 + 1);
+          rp.innerHTML = buildPageHTML(sp.right, currentSpread * 2 + 2);
+          lp.classList.remove("flip-out");
+          rp.classList.remove("flip-out");
+          lp.classList.add("flip-in");
+          rp.classList.add("flip-in");
+          setTimeout(() => { lp.classList.remove("flip-in"); rp.classList.remove("flip-in"); }, 450);
+        }, 200);
+      } else {
+        lp.innerHTML = buildPageHTML(sp.left, currentSpread * 2 + 1);
+        rp.innerHTML = buildPageHTML(sp.right, currentSpread * 2 + 2);
+      }
+      document.getElementById("spreadIndicator").textContent = `${currentSpread + 1} / ${SPREADS.length}`;
+      renderBookTabs();
+    }
+
+    function openBook() {
+      bookOpened = true;
+      document.getElementById("bookContainer").classList.add("opened");
+      document.getElementById("bookControls").style.display = "flex";
+      renderSpread(false);
+    }
+    function closeBook() {
+      bookOpened = false;
+      document.getElementById("bookContainer").classList.remove("opened");
+      document.getElementById("bookControls").style.display = "none";
+      renderBookTabs();
+    }
+    function flipPage(dir) {
+      const next = currentSpread + dir;
+      if (next < 0 || next >= SPREADS.length) return;
+      currentSpread = next;
+      renderSpread(true);
+    }
+    function jumpToSpread(idx) {
+      currentSpread = idx;
+      if (!bookOpened) openBook();
+      else renderSpread(true);
+    }
+
+    /* 5. CART & ORDERING */
     function addToCart(id) {
+      const item = menuItems.find(m => m.id === id);
+      if (!item) return;
       const found = cart.find(c => c.id === id);
       if (found) found.qty++;
-      else cart.push({ ...menuItems.find(m => m.id === id), qty: 1 });
+      else cart.push({ ...item, qty: 1 });
       document.getElementById("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
     }
 
@@ -854,7 +752,7 @@
       const box = document.getElementById("cartItems");
       const totalEl = document.getElementById("cartTotal");
       if (!cart.length) {
-        box.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:18px 0;">Savatcha hozircha bo'sh.</p>`;
+        box.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:16px 0;">Savatcha bo'sh. Kitobcha menyudan taom tanlang.</p>`;
         totalEl.textContent = "0 so'm";
         return;
       }
@@ -864,8 +762,8 @@
         total += sub;
         return `
           <div class="cart-item">
-            <div><strong>${item.name}</strong><div style="font-size:0.85rem; color:var(--gold-light);">${formatPrice(sub)}</div></div>
-            <div class="qty-controls">
+            <div><strong>${item.name}</strong><div style="font-size:0.84rem; color:var(--gold-light);">${formatPrice(sub)}</div></div>
+            <div style="display:flex; align-items:center; gap:8px;">
               <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
               <span>${item.qty}</span>
               <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
@@ -875,38 +773,197 @@
       totalEl.textContent = formatPrice(total);
     }
 
+    function placeOrder() {
+      if (!cart.length) return alert("Avval taom tanlang!");
+      const name = document.getElementById("orderName").value.trim() || "Mijoz";
+      const phone = document.getElementById("orderPhone").value.trim() || "Kiritilmagan";
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      // Admin panelga saqlash
+      orders.unshift({
+        id: Date.now(),
+        name, phone,
+        items: cart.map(i => `${i.name} x${i.qty}`).join(", "),
+        total,
+        status: "Yangi",
+        time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" })
+      });
+      saveOrders();
+
+      // Telegramga yuborish
+      let msg = `🍽 SHAHBOZ RESTAURANT (Olmazor) — Buyurtma:%0A👤 ${name} (${phone})%0A%0A`;
+      cart.forEach((i, idx) => msg += `${idx + 1}. ${i.name} x${i.qty} = ${formatPrice(i.price * i.qty)}%0A`);
+      msg += `%0A💰 Jami: ${formatPrice(total)}`;
+
+      cart = [];
+      document.getElementById("cartCount").textContent = "0";
+      closeModal("cartModal");
+      window.open(`${TELEGRAM_LINK}?text=${msg}`, "_blank");
+    }
+
+    /* 6. SIMPLE BOOKING */
+    function selectChip(groupId, el) {
+      document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+    }
+    const getSelectedChip = id => document.querySelector(`#${id} .chip.selected`).textContent.trim();
+
+    function submitSimpleBooking(e) {
+      e.preventDefault();
+      const name = document.getElementById("bName").value.trim();
+      const phone = document.getElementById("bPhone").value.trim();
+      const room = getSelectedChip("roomChips");
+      const guests = getSelectedChip("guestChips");
+      const time = getSelectedChip("timeChips");
+
+      bookings.unshift({ id: Date.now(), name, phone, room, guests, time, status: "Kutilmoqda" });
+      saveBookings();
+
+      const msg = `📅 SHAHBOZ RESTAURANT (Olmazor) — Tezkor Bron:%0A👤 ${name}%0A📞 ${phone}%0A🏛 ${room}%0A👥 ${guests}%0A⏰ ${time}`;
+      const okBox = document.getElementById("bookingSuccess");
+      okBox.style.display = "block";
+      okBox.innerHTML = `✅ Rahmat, <b>${name}</b>! Joyingiz band qilindi (${room}, ${time}). <br><a href="${TELEGRAM_LINK}?text=${msg}" target="_blank" style="color:#f6df8f; font-weight:700;">Telegramdan ham tasdiqlash ↗</a>`;
+      e.target.reset();
+    }
+
+    /* 7. ADMIN PANEL LOGIC */
+    let currentAdminTab = "orders";
+    let adminLoggedIn = false;
+
+    function openAdminGate() {
+      if (adminLoggedIn) {
+        renderAdminPanel();
+        openModal("adminPanelModal");
+      } else {
+        document.getElementById("adminPinInput").value = "";
+        openModal("adminLoginModal");
+      }
+    }
+
+    function checkAdminPin() {
+      if (document.getElementById("adminPinInput").value === "1234") {
+        adminLoggedIn = true;
+        closeModal("adminLoginModal");
+        renderAdminPanel();
+        openModal("adminPanelModal");
+      } else {
+        alert("Noto'g'ri PIN! Demo PIN: 1234");
+      }
+    }
+
+    function switchAdminTab(tab) {
+      currentAdminTab = tab;
+      ["orders", "bookings", "menu"].forEach(t => {
+        const btn = document.getElementById("tab" + t.charAt(0).toUpperCase() + t.slice(1) + "Btn");
+        btn.className = t === tab ? "btn btn-gold" : "btn btn-outline";
+      });
+      renderAdminPanel();
+    }
+
+    function renderAdminPanel() {
+      const revenue = orders.reduce((s, o) => s + o.total, 0);
+      document.getElementById("adminStats").innerHTML = `
+        <div class="stat-box"><strong>${menuItems.length}</strong><span>Taomlar soni</span></div>
+        <div class="stat-box"><strong>${orders.length}</strong><span>Buyurtmalar</span></div>
+        <div class="stat-box"><strong>${bookings.length}</strong><span>Stol bronlari</span></div>
+        <div class="stat-box"><strong>${formatPrice(revenue)}</strong><span>Jami buyurtma</span></div>
+      `;
+
+      const content = document.getElementById("adminTabContent");
+
+      if (currentAdminTab === "orders") {
+        content.innerHTML = orders.length
+          ? orders.map(o => `
+              <div class="admin-item">
+                <div>
+                  <strong>${o.name}</strong> (${o.phone}) • <small style="color:var(--text-muted);">${o.time}</small>
+                  <div style="font-size:0.85rem; color:var(--text-muted);">${o.items}</div>
+                  <div style="color:var(--gold-light); font-weight:700;">${formatPrice(o.total)}</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span class="status-pill ${o.status === 'Bajarildi' ? 'done' : ''}">${o.status}</span>
+                  <button class="btn btn-outline" style="padding:5px 10px; font-size:0.78rem;" onclick="toggleOrderStatus(${o.id})">✓</button>
+                  <button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteOrder(${o.id})">🗑</button>
+                </div>
+              </div>`).join("")
+          : `<p style="color:var(--text-muted); text-align:center; padding:20px;">Hozircha buyurtmalar yo'q. Savatchadan sinab ko'ring!</p>`;
+      } else if (currentAdminTab === "bookings") {
+        content.innerHTML = bookings.length
+          ? bookings.map(b => `
+              <div class="admin-item">
+                <div>
+                  <strong>${b.name}</strong> (${b.phone})
+                  <div style="font-size:0.85rem; color:var(--gold-light);">${b.room} • ${b.guests} • ${b.time}</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span class="status-pill ${b.status === 'Tasdiqlandi' ? 'done' : ''}">${b.status}</span>
+                  <button class="btn btn-outline" style="padding:5px 10px; font-size:0.78rem;" onclick="confirmBooking(${b.id})">✓</button>
+                  <button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteBooking(${b.id})">🗑</button>
+                </div>
+              </div>`).join("")
+          : `<p style="color:var(--text-muted); text-align:center; padding:20px;">Hozircha stol bronlari yo'q.</p>`;
+      } else {
+        content.innerHTML = `
+          <form onsubmit="addMenuItem(event)" style="background:rgba(4,19,12,0.75); padding:14px; border-radius:12px; border:1px solid var(--border-gold); margin-bottom:16px;">
+            <div style="color:var(--gold-light); font-weight:700; margin-bottom:10px;">+ Yangi taom qo'shish</div>
+            <div class="simple-inputs" style="margin-bottom:10px;">
+              <input type="text" id="newDishName" placeholder="Taom nomi" required />
+              <input type="number" id="newDishPrice" placeholder="Narxi (so'm)" required />
+            </div>
+            <div class="simple-inputs" style="margin-bottom:10px;">
+              <select id="newDishCat">${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join("")}</select>
+              <input type="text" id="newDishDesc" placeholder="Qisqa tavsif" required />
+            </div>
+            <button type="submit" class="btn btn-gold" style="width:100%;">Menyuga qo'shish</button>
+          </form>
+          ${menuItems.map(m => `
+            <div class="admin-item">
+              <div><strong>${m.name}</strong> <small style="color:var(--text-muted);">(${m.cat})</small><div style="color:var(--gold-light); font-size:0.86rem;">${formatPrice(m.price)}</div></div>
+              <button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteMenuItem(${m.id})">O'chirish</button>
+            </div>
+          `).join("")}
+        `;
+      }
+    }
+
+    function toggleOrderStatus(id) {
+      const o = orders.find(x => x.id === id);
+      if (o) o.status = o.status === "Bajarildi" ? "Yangi" : "Bajarildi";
+      saveOrders(); renderAdminPanel();
+    }
+    function deleteOrder(id) { orders = orders.filter(x => x.id !== id); saveOrders(); renderAdminPanel(); }
+    function confirmBooking(id) {
+      const b = bookings.find(x => x.id === id);
+      if (b) b.status = b.status === "Tasdiqlandi" ? "Kutilmoqda" : "Tasdiqlandi";
+      saveBookings(); renderAdminPanel();
+    }
+    function deleteBooking(id) { bookings = bookings.filter(x => x.id !== id); saveBookings(); renderAdminPanel(); }
+
+    function addMenuItem(e) {
+      e.preventDefault();
+      menuItems.unshift({
+        id: Date.now(),
+        name: document.getElementById("newDishName").value.trim(),
+        price: Number(document.getElementById("newDishPrice").value),
+        cat: document.getElementById("newDishCat").value,
+        desc: document.getElementById("newDishDesc").value.trim()
+      });
+      saveMenu();
+      renderAdminPanel();
+      if (bookOpened) renderSpread(false);
+    }
+    function deleteMenuItem(id) {
+      menuItems = menuItems.filter(m => m.id !== id);
+      saveMenu();
+      renderAdminPanel();
+      if (bookOpened) renderSpread(false);
+    }
+
     function openCart() { renderCartItems(); openModal("cartModal"); }
     function openModal(id) { document.getElementById(id).classList.add("open"); }
     function closeModal(id) { document.getElementById(id).classList.remove("open"); }
 
-    function sendOrderToTelegram() {
-      if (!cart.length) return alert("Avval menyudan taom tanlang!");
-      let total = 0;
-      let text = "🍽 SHAHBOZ RESTAURANT (Olmazor) — Buyurtma:%0A%0A";
-      cart.forEach((i, idx) => {
-        const sub = i.price * i.qty;
-        total += sub;
-        text += `${idx + 1}. ${i.name} x ${i.qty} = ${formatPrice(sub)}%0A`;
-      });
-      text += `%0A💰 Jami: ${formatPrice(total)}`;
-      window.open(`${TELEGRAM_LINK}?text=${text}`, "_blank");
-    }
-
-    function submitBooking(e) {
-      e.preventDefault();
-      const msg = `📅 SHAHBOZ RESTAURANT (Olmazor) — Stol Band Qilish:%0A%0A` +
-        `👤 Ism: ${document.getElementById("bName").value}%0A` +
-        `📞 Telefon: ${document.getElementById("bPhone").value}%0A` +
-        `📆 Sana: ${document.getElementById("bDate").value}%0A` +
-        `⏰ Vaqt: ${document.getElementById("bTime").value}%0A` +
-        `👥 Mehmonlar: ${document.getElementById("bGuests").value}%0A` +
-        `🏛 Xona: ${document.getElementById("bRoom").value}`;
-      window.open(`${TELEGRAM_LINK}?text=${msg}`, "_blank");
-    }
-
-    document.getElementById("bDate").valueAsDate = new Date();
-    renderMenu();
-    attachTilt();
+    renderBookTabs();
   </script>
 </body>
 </html>
