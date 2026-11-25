@@ -59,7 +59,7 @@
     nav { display: flex; gap: 22px; }
     nav a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
     nav a:hover { color: var(--gold-light); }
-    .nav-actions { display: flex; align-items: center; gap: 7px; }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
 
     .lang-dropdown { position: relative; }
     .lang-menu {
@@ -79,39 +79,25 @@
 
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 8px 13px; border-radius: 9px; font-weight: 600; font-size: 0.85rem;
+      padding: 8px 14px; border-radius: 9px; font-weight: 600; font-size: 0.85rem;
       cursor: pointer; border: none; text-decoration: none; transition: all 0.2s ease; white-space: nowrap;
     }
     .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #04130c; box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25); }
     .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45); }
     .btn-outline { background: rgba(212, 175, 55, 0.1); color: var(--gold-light); border: 1px solid var(--gold); }
     .btn-outline:hover { background: rgba(212, 175, 55, 0.22); }
-    .btn-danger { background: rgba(220, 53, 69, 0.18); color: #ff8a95; border: 1px solid rgba(220, 53, 69, 0.5); }
     .cart-badge { background: #04130c; color: var(--gold-light); padding: 1px 7px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; transition: transform 0.2s; }
     .cart-badge.bump { transform: scale(1.35); }
-    .admin-icon-mob { display: none; font-size: 1rem; line-height: 1; }
 
     .hero {
       position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
       text-align: center; padding: 110px 20px 70px; overflow: hidden; border-bottom: 1px solid var(--border-gold);
     }
-    .hero-bg {
-      position: absolute; inset: -4%;
-      background: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1920&q=85') center/cover;
-      transition: transform 0.25s ease-out; z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: radial-gradient(circle at center, rgba(6, 31, 19, 0.48) 0%, rgba(4, 19, 12, 0.9) 85%),
-                  linear-gradient(180deg, rgba(4, 19, 12, 0.72) 0%, rgba(4, 19, 12, 0.45) 55%, #04130c 100%);
-    }
+    .hero-bg { position: absolute; inset: -4%; background: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1920&q=85') center/cover; transition: transform 0.25s ease-out; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at center, rgba(6, 31, 19, 0.48) 0%, rgba(4, 19, 12, 0.9) 85%), linear-gradient(180deg, rgba(4, 19, 12, 0.72) 0%, rgba(4, 19, 12, 0.45) 55%, #04130c 100%); }
     .hero-inner { position: relative; z-index: 2; max-width: 820px; }
     .hero-logo-main { width: 158px; height: 158px; margin: 0 auto 16px; filter: drop-shadow(0 12px 32px rgba(212, 175, 55, 0.5)); }
-    .status-pill-live {
-      display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px;
-      border: 1px solid var(--border-gold); background: rgba(4, 19, 12, 0.72); backdrop-filter: blur(8px);
-      border-radius: 999px; color: var(--gold-light); font-size: 0.8rem; font-weight: 600; margin-bottom: 14px;
-    }
+    .status-pill-live { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border: 1px solid var(--border-gold); background: rgba(4, 19, 12, 0.72); backdrop-filter: blur(8px); border-radius: 999px; color: var(--gold-light); font-size: 0.8rem; font-weight: 600; margin-bottom: 14px; }
     .live-dot { width: 9px; height: 9px; border-radius: 50%; background: #38e578; box-shadow: 0 0 10px #38e578; animation: pulseDot 1.8s infinite; }
     .live-dot.closed { background: #ff5c6c; box-shadow: 0 0 10px #ff5c6c; animation: none; }
     @keyframes pulseDot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.6; } }
@@ -126,11 +112,7 @@
     .section-header p { color: var(--text-muted); max-width: 620px; margin: 0 auto; font-size: 0.94rem; }
 
     .cat-quick-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
-    .cat-tab {
-      padding: 7px 14px; border-radius: 999px; background: var(--bg-glass);
-      color: var(--text-muted); border: 1px solid var(--border-gold);
-      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    }
+    .cat-tab { padding: 7px 14px; border-radius: 999px; background: var(--bg-glass); color: var(--text-muted); border: 1px solid var(--border-gold); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .cat-tab.active, .cat-tab:hover { background: var(--gold); color: #04130c; border-color: var(--gold); }
 
     .flipbook-wrapper { display: flex; flex-direction: column; align-items: center; gap: 20px; }
@@ -142,12 +124,7 @@
     .sheet.flipped { transform: rotateY(-180deg); }
     .face { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 4px 16px 16px 4px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
     .face.back { transform: rotateY(180deg); border-radius: 16px 4px 4px 16px; }
-    .face.cover-front {
-      background: linear-gradient(145deg, #0c3823 0%, #051c11 65%, #0a2e1d 100%);
-      border: 2.5px solid var(--gold);
-      box-shadow: 12px 18px 42px rgba(0,0,0,0.75), 5px 0 0 #d8c79c, 8px 0 0 #b8a374, inset 16px 0 24px rgba(0,0,0,0.45);
-      align-items: center; justify-content: center; text-align: center; padding: 34px; gap: 16px;
-    }
+    .face.cover-front { background: linear-gradient(145deg, #0c3823 0%, #051c11 65%, #0a2e1d 100%); border: 2.5px solid var(--gold); box-shadow: 12px 18px 42px rgba(0,0,0,0.75), 5px 0 0 #d8c79c, 8px 0 0 #b8a374, inset 16px 0 24px rgba(0,0,0,0.45); align-items: center; justify-content: center; text-align: center; padding: 34px; gap: 16px; }
     .face.cover-front::before { content: ""; position: absolute; inset: 14px; border: 1.5px solid rgba(212, 175, 55, 0.5); border-radius: 3px 12px 12px 3px; pointer-events: none; }
     .face.cover-back { background: linear-gradient(145deg, #051c11 0%, #0c3823 100%); border: 2.5px solid var(--gold); box-shadow: -12px 18px 42px rgba(0,0,0,0.75), inset -16px 0 24px rgba(0,0,0,0.45); align-items: center; justify-content: center; text-align: center; padding: 34px; gap: 14px; }
     .face.paper-front { background: linear-gradient(90deg, #e2d4b0 0%, var(--paper) 7%, var(--paper) 96%, var(--paper-edge) 100%); color: var(--ink); padding: 24px 22px 16px; border: 1px solid rgba(107, 78, 22, 0.35); box-shadow: 6px 12px 28px rgba(0,0,0,0.45); }
@@ -188,23 +165,11 @@
     .page-foot { display: flex; justify-content: space-between; align-items: center; font-size: 0.74rem; color: #7c6221; margin-top: 8px; font-weight: 600; border-top: 1px solid rgba(107, 78, 22, 0.2); padding-top: 6px; }
     .book-controls { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
-    /* === INTERAKTIV VITRINA === */
     .vitrina-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 22px; }
-    .v-tab {
-      padding: 10px 18px; border-radius: 12px; background: var(--bg-glass);
-      color: var(--text-muted); border: 1px solid var(--border-gold);
-      font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center; gap: 8px;
-    }
+    .v-tab { padding: 10px 18px; border-radius: 12px; background: var(--bg-glass); color: var(--text-muted); border: 1px solid var(--border-gold); font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
     .v-tab small { font-weight: 600; opacity: 0.85; font-size: 0.76rem; }
     .v-tab.active, .v-tab:hover { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #04130c; border-color: var(--gold); }
-
-    .vitrina-card {
-      background: var(--bg-glass); backdrop-filter: blur(14px);
-      border: 1px solid var(--border-gold); border-radius: 20px; padding: 24px;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 26px; align-items: start;
-      box-shadow: 0 22px 50px rgba(0,0,0,0.48);
-    }
+    .vitrina-card { background: var(--bg-glass); backdrop-filter: blur(14px); border: 1px solid var(--border-gold); border-radius: 20px; padding: 24px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 26px; align-items: start; box-shadow: 0 22px 50px rgba(0,0,0,0.48); }
     .v-main-photo { width: 100%; height: 270px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-gold); position: relative; margin-bottom: 10px; }
     .v-main-photo img { width: 100%; height: 100%; object-fit: cover; }
     .v-cap-pill { position: absolute; top: 12px; left: 12px; background: rgba(4, 19, 12, 0.86); color: var(--gold-light); padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; border: 1px solid var(--gold); }
@@ -212,7 +177,6 @@
     .v-thumb { height: 64px; border-radius: 9px; overflow: hidden; cursor: pointer; border: 2px solid transparent; opacity: 0.68; transition: all 0.2s; }
     .v-thumb.active, .v-thumb:hover { border-color: var(--gold-light); opacity: 1; }
     .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
     .v-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
     .v-title-row h3 { color: var(--gold-light); font-size: 1.4rem; }
     .v-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; }
@@ -238,10 +202,8 @@
     .room-cell.free.picked { background: var(--st-free); color: #03150b; border-color: #fff; box-shadow: 0 0 16px rgba(40, 199, 111, 0.6); }
     .room-cell.reserved { background: rgba(245, 185, 53, 0.18); border-color: rgba(245, 185, 53, 0.7); color: #ffe08a; cursor: not-allowed; }
     .room-cell.occupied { background: rgba(234, 84, 85, 0.18); border-color: rgba(234, 84, 85, 0.7); color: #ff9c9d; cursor: not-allowed; }
-
     .picked-banner { background: rgba(4, 19, 12, 0.85); border: 1px solid var(--gold); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-    /* === REAL MEHMONLAR FIKRI === */
     .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 24px; }
     .review-card { background: var(--bg-glass); border: 1px solid var(--border-gold); border-radius: 14px; padding: 20px; }
     .review-empty { background: var(--bg-glass); border: 1px dashed var(--border-gold); border-radius: 14px; padding: 26px; text-align: center; color: var(--text-muted); margin-bottom: 22px; font-size: 0.92rem; }
@@ -253,12 +215,7 @@
     .star-picker span { color: rgba(212, 175, 55, 0.3); transition: color 0.15s, transform 0.15s; }
     .star-picker span.lit { color: var(--gold-light); transform: scale(1.1); }
 
-    .booking-section {
-      max-width: 100%; position: relative;
-      background: linear-gradient(rgba(4, 19, 12, 0.86), rgba(4, 19, 12, 0.92)),
-                  url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85') center/cover;
-      border-top: 1px solid var(--border-gold); border-bottom: 1px solid var(--border-gold);
-    }
+    .booking-section { max-width: 100%; position: relative; background: linear-gradient(rgba(4, 19, 12, 0.86), rgba(4, 19, 12, 0.92)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85') center/cover; border-top: 1px solid var(--border-gold); border-bottom: 1px solid var(--border-gold); }
     .booking-card { max-width: 680px; margin: 0 auto; background: var(--bg-glass); backdrop-filter: blur(14px); border: 1px solid var(--border-gold); border-radius: 18px; padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
     .selected-spot-box { background: rgba(40, 199, 111, 0.12); border: 1px solid rgba(40, 199, 111, 0.55); border-radius: 11px; padding: 10px 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.88rem; color: #a7f8c9; }
     .quick-label { font-size: 0.86rem; color: var(--gold-light); font-weight: 600; margin-bottom: 8px; display: block; }
@@ -280,7 +237,6 @@
 
     footer { background: rgba(3, 14, 9, 0.96); border-top: 1px solid var(--border-gold); padding: 34px 20px 115px; text-align: center; }
     .copyright { color: #799184; font-size: 0.85rem; }
-    .copyright a { color: var(--gold-light); text-decoration: none; }
 
     .floating-call { position: fixed; right: 16px; bottom: 72px; z-index: 150; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #04130c; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.35rem; box-shadow: 0 8px 26px rgba(212, 175, 55, 0.5); animation: callPulse 2.4s infinite; }
     @keyframes callPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.65); } 70% { box-shadow: 0 0 0 14px rgba(212, 175, 55, 0); } }
@@ -293,7 +249,6 @@
     .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 300; padding: 14px; }
     .modal-backdrop.open { display: flex; }
     .modal { background: #072114; border: 1px solid var(--gold); border-radius: 16px; width: 100%; max-width: 500px; padding: 22px; max-height: 90vh; overflow-y: auto; }
-    .modal.modal-lg { max-width: 940px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-gold); padding-bottom: 12px; }
     .close-btn { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
@@ -308,45 +263,18 @@
     .qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--gold); background: transparent; color: var(--gold-light); cursor: pointer; font-weight: 700; }
     .cart-total { display: flex; justify-content: space-between; font-size: 1.12rem; font-weight: 700; color: var(--gold-light); margin: 16px 0; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
-    .stat-box { background: rgba(4, 19, 12, 0.85); border: 1px solid var(--border-gold); border-radius: 12px; padding: 14px; text-align: center; }
-    .stat-box strong { display: block; font-size: 1.2rem; color: var(--gold-light); }
-    .stat-box span { font-size: 0.76rem; color: var(--text-muted); }
-
-    .chart-card { background: rgba(4, 19, 12, 0.75); border: 1px solid var(--border-gold); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-    .bar-row { margin-bottom: 10px; }
-    .bar-label { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 4px; color: var(--text-main); }
-    .bar-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
-    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; }
-
-    .admin-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
-    .admin-item { background: rgba(4, 19, 12, 0.72); border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .status-pill { padding: 3px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; background: rgba(212, 175, 55, 0.18); color: var(--gold-light); }
-    .status-pill.done { background: rgba(40, 199, 111, 0.22); color: #7ef29d; }
-    .status-pill.stop { background: rgba(234, 84, 85, 0.25); color: #ff8a95; }
-
-    .admin-zone-block { background: rgba(4, 19, 12, 0.75); border: 1px solid var(--border-gold); border-radius: 14px; padding: 14px; margin-bottom: 14px; }
-    .admin-zone-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-    .admin-room-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
-    .admin-room-cell { border-radius: 8px; padding: 6px 2px; text-align: center; border: 1px solid transparent; font-size: 0.76rem; font-weight: 700; line-height: 1.15; }
-    .admin-room-cell small { display: block; font-size: 0.62rem; font-weight: 500; margin-top: 2px; }
-    .admin-room-cell.free { background: rgba(40, 199, 111, 0.16); border-color: rgba(40, 199, 111, 0.6); color: #8ff5ba; }
-    .admin-room-cell.reserved { background: rgba(245, 185, 53, 0.2); border-color: rgba(245, 185, 53, 0.75); color: #ffe08a; }
-    .admin-room-cell.occupied { background: rgba(234, 84, 85, 0.2); border-color: rgba(234, 84, 85, 0.75); color: #ff9c9d; }
-
     @media (max-width: 960px) {
       .book-viewport-desktop { height: 500px; }
       .book-3d { width: 345px; height: 485px; }
       .location-grid, .vitrina-card { grid-template-columns: 1fr; }
-      .admin-room-grid { grid-template-columns: repeat(5, 1fr); }
     }
     @media (max-width: 740px) {
-      nav, .logo-text, .admin-label-desk { display: none; }
+      nav, .logo-text span { display: none; }
       .nav-container { padding: 8px 12px; }
       .nav-logo-box { width: 38px; height: 38px; }
+      .logo-text strong { font-size: 0.92rem; }
       .nav-actions { gap: 6px; }
       .nav-actions .btn { padding: 7px 11px; font-size: 0.8rem; }
-      .admin-icon-mob { display: inline; }
       .book-viewport-desktop { display: none; }
       .book-viewport-mobile { display: block; }
       .simple-inputs { grid-template-columns: 1fr; }
@@ -387,10 +315,6 @@
             <button type="button" class="lang-option" data-lang="en" onclick="setLang('en')"><span>English</span><small>EN</small></button>
           </div>
         </div>
-        <button type="button" class="btn btn-outline" onclick="openAdminGate()" title="Admin">
-          <span class="admin-label-desk" data-i18n="btnAdmin">Admin</span>
-          <span class="admin-icon-mob">⚙️</span>
-        </button>
         <button type="button" class="btn btn-gold" onclick="openCart()">
           <span data-i18n="btnCart">Savat</span> <span class="cart-badge" id="cartCount">0</span>
         </button>
@@ -468,13 +392,10 @@
       <div class="booking-card">
         <form onsubmit="submitSimpleBooking(event)">
           <div class="selected-spot-box" id="selectedSpotBox"></div>
-
           <span class="quick-label" data-i18n="lblRoom">Hudud:</span>
           <div class="chip-group" id="roomChips"></div>
-
           <span class="quick-label" id="guestLabel" data-i18n="lblGuests">Mehmonlar soni:</span>
           <div class="chip-group" id="guestChips"></div>
-
           <span class="quick-label" data-i18n="lblTime">Vaqt:</span>
           <div class="chip-group" id="timeChips">
             <div class="chip selected" onclick="selectChip('timeChips', this)">18:00</div>
@@ -482,12 +403,10 @@
             <div class="chip" onclick="selectChip('timeChips', this)">21:00</div>
             <div class="chip" onclick="selectChip('timeChips', this)">13:00</div>
           </div>
-
           <div class="simple-inputs">
             <input type="text" id="bName" placeholder="Ismingiz" required />
             <input type="tel" id="bPhone" placeholder="Tel" required />
           </div>
-
           <button type="submit" class="btn btn-gold" style="width:100%; padding:14px; font-size:1rem;" data-i18n="btnConfirmBook">Joyni band qilish</button>
           <div id="bookingSuccess" style="display:none; margin-top:14px; padding:12px; border-radius:10px; background:rgba(40,167,69,0.2); border:1px solid #4ad971; color:#a4f9ba; text-align:center;"></div>
         </form>
@@ -518,7 +437,7 @@
   </main>
 
   <footer>
-    <div class="copyright">© 2026 SHAHBOZ RESTAURANT • <a href="javascript:void(0)" onclick="openAdminGate()">Admin Panel</a></div>
+    <div class="copyright">© 2026 SHAHBOZ RESTAURANT • Toshkent, Olmazor tumani</div>
   </footer>
 
   <div class="bottom-cart-bar" id="bottomCartBar" onclick="openCart()">
@@ -561,30 +480,6 @@
     </div>
   </div>
 
-  <div class="modal-backdrop" id="adminLoginModal">
-    <div class="modal" style="max-width:340px; text-align:center;">
-      <div class="modal-header"><h3 class="brand-font" style="color:var(--gold-light);">Admin Panel</h3><button class="close-btn" onclick="closeModal('adminLoginModal')">&times;</button></div>
-      <input type="password" id="adminPinInput" placeholder="PIN" style="text-align:center; margin-bottom:14px;" />
-      <button class="btn btn-gold" style="width:100%;" onclick="checkAdminPin()">Kirish</button>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="adminPanelModal">
-    <div class="modal modal-lg">
-      <div class="modal-header"><h3 class="brand-font" style="color:var(--gold-light);">SHAHBOZ — Admin Panel</h3><button class="close-btn" onclick="closeModal('adminPanelModal')">&times;</button></div>
-      <div class="stats-row" id="adminStats"></div>
-      <div class="admin-tabs">
-        <button class="btn btn-gold" id="tabRoomsBtn" onclick="switchAdminTab('rooms')">Xonalar (80)</button>
-        <button class="btn btn-outline" id="tabBookingsBtn" onclick="switchAdminTab('bookings')">Bronlar</button>
-        <button class="btn btn-outline" id="tabOrdersBtn" onclick="switchAdminTab('orders')">Buyurtmalar</button>
-        <button class="btn btn-outline" id="tabAnalyticsBtn" onclick="switchAdminTab('analytics')">Analitika</button>
-        <button class="btn btn-outline" id="tabMenuBtn" onclick="switchAdminTab('menu')">Menyu & Stop-list</button>
-        <button class="btn btn-outline" id="tabFeedbackBtn" onclick="switchAdminTab('feedback')">Sharhlar & Sifat</button>
-      </div>
-      <div id="adminTabContent"></div>
-    </div>
-  </div>
-
   <script>
     const FIREBASE_DB_URL = "https://shahboz-restaurant-default-rtdb.firebaseio.com";
     let db = null;
@@ -600,16 +495,14 @@
       else if (img.dataset.step === "1") { img.dataset.step = "2"; img.src = "logo.png"; }
       else {
         img.onerror = null;
-        img.src = "data:image/svg+xml;utf8," + encodeURIComponent(
-          `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'><rect width='220' height='220' fill='#062718'/><circle cx='110' cy='110' r='92' fill='none' stroke='#d4af37' stroke-width='3'/><text x='110' y='115' text-anchor='middle' fill='#f6df8f' font-family='serif' font-weight='800' font-size='26'>SHAHBOZ</text><text x='110' y='138' text-anchor='middle' fill='#d4af37' font-family='sans-serif' font-size='11' letter-spacing='3'>RESTAURANT</text></svg>`
-        );
+        img.src = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'><rect width='220' height='220' fill='#062718'/><circle cx='110' cy='110' r='92' fill='none' stroke='#d4af37' stroke-width='3'/><text x='110' y='115' text-anchor='middle' fill='#f6df8f' font-family='serif' font-weight='800' font-size='26'>SHAHBOZ</text><text x='110' y='138' text-anchor='middle' fill='#d4af37' font-family='sans-serif' font-size='11' letter-spacing='3'>RESTAURANT</text></svg>`);
       }
     }
 
     const I18N = {
       uz: {
         navMenu: "Menyu", navHalls: "Zallar", navBooking: "Bron", navContact: "Aloqa",
-        btnLang: "Til", btnAdmin: "Admin", btnCart: "Savat",
+        btnLang: "Til", btnCart: "Savat",
         heroSub: "O'zbek milliy taomlarining shohona ta'mi, samimiy xizmat va nafis sharqona muhit.",
         heroBook: "Joy tanlash va bron",
         menuHeading: "Menyu", menuSub: "Taom nomiga bosib rasm va tarkibini ko'ring, «+» orqali savatga qo'shing.",
@@ -625,11 +518,11 @@
         openNow: "Hozir ochiq • 23:00 gacha", closedNow: "Yopiq • 09:00 da ochiladi",
         coverTap: "Ochish uchun chapga suring", coverTapDesk: "Ochish uchun bosing",
         backThanks: "Yoqimli ishtaha!", backSub: "Olmazor tumani • +998 88 000 48 50",
-        addedToast: "Savatga qo'shildi", wrongPin: "Noto'g'ri PIN", upsellTitle: "Taom bilan zo'r ketadi:"
+        addedToast: "Savatga qo'shildi", upsellTitle: "Taom bilan zo'r ketadi:"
       },
       ru: {
         navMenu: "Меню", navHalls: "Залы", navBooking: "Бронь", navContact: "Контакты",
-        btnLang: "Язык", btnAdmin: "Админ", btnCart: "Корзина",
+        btnLang: "Язык", btnCart: "Корзина",
         heroSub: "Королевский вкус национальной узбекской кухни, искренний сервис и изысканная атмосфера.",
         heroBook: "Выбрать место и бронь",
         menuHeading: "Меню", menuSub: "Нажмите на блюдо, чтобы увидеть фото и состав, или «+» для добавления в корзину.",
@@ -645,11 +538,11 @@
         openNow: "Сейчас открыто • до 23:00", closedNow: "Закрыто • откроемся в 09:00",
         coverTap: "Свайпните влево, чтобы открыть", coverTapDesk: "Нажмите, чтобы открыть",
         backThanks: "Приятного аппетита!", backSub: "Алмазарский район • +998 88 000 48 50",
-        addedToast: "Добавлено в корзину", wrongPin: "Неверный PIN", upsellTitle: "Отлично сочетается:"
+        addedToast: "Добавлено в корзину", upsellTitle: "Отлично сочетается:"
       },
       en: {
         navMenu: "Menu", navHalls: "Halls", navBooking: "Reserve", navContact: "Contact",
-        btnLang: "Lang", btnAdmin: "Admin", btnCart: "Cart",
+        btnLang: "Lang", btnCart: "Cart",
         heroSub: "Royal taste of authentic Uzbek cuisine, warm hospitality, and refined Eastern ambiance.",
         heroBook: "Pick a Spot & Reserve",
         menuHeading: "Menu", menuSub: "Tap any dish to view photo & details, or «+» to add to your cart.",
@@ -665,7 +558,7 @@
         openNow: "Open now • until 23:00", closedNow: "Closed • opens at 09:00",
         coverTap: "Swipe left to open", coverTapDesk: "Click to open",
         backThanks: "Bon Appétit!", backSub: "Olmazor district • +998 88 000 48 50",
-        addedToast: "Added to cart", wrongPin: "Invalid PIN", upsellTitle: "Pairs well with:"
+        addedToast: "Added to cart", upsellTitle: "Pairs well with:"
       }
     };
 
@@ -766,38 +659,23 @@
       {
         id: "umumiy", name: "Umumiy zal", unit: "Stol", count: 20, capacity: "6 kishilik stol",
         desc: "20 ta shinam stol — har bir stolda 6 tadan qulay o'rindiq joylashgan. Keng va jonli muhit.",
-        rule: "",
-        amenities: ["Har stolda 6 o'rindiq", "Depozitsiz", "Konditsioner", "Bepul Wi-Fi"],
+        rule: "", amenities: ["Har stolda 6 o'rindiq", "Depozitsiz", "Konditsioner", "Bepul Wi-Fi"],
         guestOptions: ["2 kishi", "4 kishi", "6 kishi"],
-        images: [
-          "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
-        ]
+        images: ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"]
       },
       {
         id: "vip", name: "VIP xona", unit: "VIP", count: 20, capacity: "12–20 kishi",
         desc: "20 ta alohida yopiq VIP xona — biznes uchrashuvlar, mehmon kutish va tantanali davralar uchun.",
-        rule: "",
-        amenities: ["12–20 kishilik", "Alohida ofitsiant", "Smart TV", "Yopiq eshik", "Konditsioner"],
+        rule: "", amenities: ["12–20 kishilik", "Alohida ofitsiant", "Smart TV", "Yopiq eshik", "Konditsioner"],
         guestOptions: ["12 kishi", "15 kishi", "18 kishi", "20 kishi"],
-        images: [
-          "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
-        ]
+        images: ["https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"]
       },
       {
         id: "oilaviy", name: "Oilaviy kabina", unit: "Kabina", count: 20, capacity: "6–10 kishi",
         desc: "20 ta yopiq oilaviy kabina — yaqinlaringiz bilan tinch, erkin va shinam suhbat uchun.",
-        rule: "",
-        amenities: ["6–10 kishilik", "Yopiq parda/eshik", "Oilaviy muhit", "Bolalar uchun qulay"],
+        rule: "", amenities: ["6–10 kishilik", "Yopiq parda/eshik", "Oilaviy muhit", "Bolalar uchun qulay"],
         guestOptions: ["6 kishi", "8 kishi", "10 kishi"],
-        images: [
-          "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
-        ]
+        images: ["https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"]
       },
       {
         id: "sori", name: "So'ri", unit: "So'ri", count: 20, capacity: "10–15 kishi",
@@ -805,37 +683,25 @@
         rule: "⚠️ So'ri faqat 10–15 kishilik davralar uchun beriladi (10 kishidan kamini olmaydi).",
         amenities: ["10–15 kishilik", "Milliy ko'rpachalar", "Keng xontaxta", "Salqin muhit"],
         guestOptions: ["10 kishi", "12 kishi", "14 kishi", "15 kishi"],
-        images: [
-          "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
-          "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=80"
-        ]
+        images: ["https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=80"]
       }
     ];
 
     function buildEmptyRooms() {
       const data = {};
-      ZONES.forEach(z => {
-        data[z.id] = Array.from({ length: z.count }, (_, idx) => ({ num: idx + 1, status: "free", time: "" }));
-      });
+      ZONES.forEach(z => { data[z.id] = Array.from({ length: z.count }, (_, idx) => ({ num: idx + 1, status: "free", time: "" })); });
       return data;
     }
 
-    const CATEGORIES = ["Milliy taomlar", "Sho'rvalar", "Shashliklar", "Salatlar & Nonlar", "Ichimliklar"];
     const TELEGRAM_LINK = "https://t.me/+998880004850";
-
     let menuItems = DEFAULT_MENU.map(x => ({ ...x }));
     let roomStates = buildEmptyRooms();
-    let orders = [];
-    let bookings = [];
     let reviews = [];
-    let feedbacks = [];
     let cart = [];
 
     const formatPrice = n => Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
     const toSortedArr = obj => obj ? Object.values(obj).sort((a, b) => (b.id || 0) - (a.id || 0)) : [];
 
-    /* === FIREBASE REAL-TIME SYNC === */
     function initRealtimeSync() {
       if (!db) return;
       const root = db.ref("shahboz_v1");
@@ -844,10 +710,7 @@
         const val = snap.val();
         if (!val) {
           const initObj = {};
-          ZONES.forEach(z => {
-            initObj[z.id] = {};
-            for (let i = 1; i <= z.count; i++) initObj[z.id][i] = { num: i, status: "free", time: "" };
-          });
+          ZONES.forEach(z => { initObj[z.id] = {}; for (let i = 1; i <= z.count; i++) initObj[z.id][i] = { num: i, status: "free", time: "" }; });
           root.child("rooms").set(initObj);
         } else {
           ZONES.forEach(z => {
@@ -860,7 +723,6 @@
           ensureValidSpot(activeZoneId);
           renderVitrina();
           renderBookingControls();
-          if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
         }
       });
 
@@ -873,29 +735,12 @@
         } else {
           menuItems = Object.values(val).sort((a, b) => (a.id || 0) - (b.id || 0));
           refreshAllBookViews();
-          if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
         }
-      });
-
-      root.child("bookings").on("value", snap => {
-        bookings = toSortedArr(snap.val());
-        if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
-      });
-
-      root.child("orders").on("value", snap => {
-        orders = toSortedArr(snap.val());
-        if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
       });
 
       root.child("reviews").on("value", snap => {
         reviews = toSortedArr(snap.val());
         renderReviews();
-        if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
-      });
-
-      root.child("feedbacks").on("value", snap => {
-        feedbacks = toSortedArr(snap.val());
-        if (adminLoggedIn && document.getElementById("adminPanelModal").classList.contains("open")) renderAdminPanel();
       });
     }
 
@@ -905,54 +750,37 @@
       if (db) db.ref(`shahboz_v1/rooms/${zoneId}/${num}`).set({ num, status, time });
     }
 
-    /* === VITRINA & ROOM SELECTION === */
     let activeZoneId = "umumiy", activeImgIdx = 0, selectedSpot = { zoneId: "umumiy", num: 1 };
-
     function ensureValidSpot(zoneId) {
       const list = roomStates[zoneId] || [];
-      const cur = list.find(r => r.num === selectedSpot.num && selectedSpot.zoneId === zoneId && r.status === "free");
-      if (cur) return;
+      if (list.find(r => r.num === selectedSpot.num && selectedSpot.zoneId === zoneId && r.status === "free")) return;
       const firstFree = list.find(r => r.status === "free");
       selectedSpot = { zoneId, num: firstFree ? firstFree.num : null };
     }
-
     function countZoneStats(zoneId) {
       const list = roomStates[zoneId] || [];
-      return {
-        free: list.filter(r => r.status === "free").length,
-        reserved: list.filter(r => r.status === "reserved").length,
-        occupied: list.filter(r => r.status === "occupied").length
-      };
+      return { free: list.filter(r => r.status === "free").length, reserved: list.filter(r => r.status === "reserved").length, occupied: list.filter(r => r.status === "occupied").length };
     }
 
     function renderVitrina() {
       const z = ZONES.find(x => x.id === activeZoneId) || ZONES[0];
-      const list = roomStates[z.id];
-      const st = countZoneStats(z.id);
-
+      const list = roomStates[z.id], st = countZoneStats(z.id);
       document.getElementById("vitrinaTabs").innerHTML = ZONES.map(zone => {
         const s = countZoneStats(zone.id);
         return `<button type="button" class="v-tab ${zone.id === activeZoneId ? 'active' : ''}" onclick="switchZone('${zone.id}')">${zone.name} <small>(${s.free} bo'sh)</small></button>`;
       }).join("");
-
       const cellsHTML = list.map(r => {
         const isPicked = selectedSpot.zoneId === z.id && selectedSpot.num === r.num && r.status === "free";
         const sub = r.status === "free" ? "Bo'sh" : (r.status === "reserved" ? (r.time || "Band") : "Band");
         const clickAttr = r.status === "free" ? `onclick="pickSpot('${z.id}', ${r.num})"` : `onclick="showToast('${z.unit} #${r.num} hozir band')"`;
         return `<div class="room-cell ${r.status} ${isPicked ? 'picked' : ''}" ${clickAttr}><strong>#${r.num}</strong><small>${sub}</small></div>`;
       }).join("");
-
       const hasPickedHere = selectedSpot.zoneId === z.id && selectedSpot.num;
 
       document.getElementById("vitrinaCard").innerHTML = `
         <div>
-          <div class="v-main-photo">
-            <img src="${z.images[activeImgIdx] || z.images[0]}" alt="${z.name}" />
-            <span class="v-cap-pill">${z.capacity}</span>
-          </div>
-          <div class="v-thumbs">
-            ${z.images.map((src, i) => `<div class="v-thumb ${i === activeImgIdx ? 'active' : ''}" onclick="setZoneImg(${i})"><img src="${src}" alt=""></div>`).join("")}
-          </div>
+          <div class="v-main-photo"><img src="${z.images[activeImgIdx] || z.images[0]}" alt="${z.name}" /><span class="v-cap-pill">${z.capacity}</span></div>
+          <div class="v-thumbs">${z.images.map((src, i) => `<div class="v-thumb ${i === activeImgIdx ? 'active' : ''}" onclick="setZoneImg(${i})"><img src="${src}" alt=""></div>`).join("")}</div>
           <div class="v-title-row"><h3>${z.name}</h3><span class="v-badge">${z.count} ta joy</span></div>
           <p class="v-desc">${z.desc}</p>
           ${z.rule ? `<div class="v-rule-note">${z.rule}</div>` : ""}
@@ -971,9 +799,7 @@
           <div class="room-grid">${cellsHTML}</div>
           <div class="picked-banner">
             <div style="font-size:0.86rem;">
-              ${hasPickedHere
-                ? `<span style="color:var(--text-muted);">Tanlangan joy:</span> <strong style="color:var(--gold-light);">${z.name} — ${z.unit} #${selectedSpot.num}</strong>`
-                : `<span style="color:var(--text-muted);">Bo'sh (yashil) katakchani bosing</span>`}
+              ${hasPickedHere ? `<span style="color:var(--text-muted);">Tanlangan joy:</span> <strong style="color:var(--gold-light);">${z.name} — ${z.unit} #${selectedSpot.num}</strong>` : `<span style="color:var(--text-muted);">Bo'sh (yashil) katakchani bosing</span>`}
             </div>
             <button type="button" class="btn btn-gold" onclick="goToBookingForm()">Bron qilish ↓</button>
           </div>
@@ -982,12 +808,7 @@
 
     function switchZone(zoneId) { activeZoneId = zoneId; activeImgIdx = 0; ensureValidSpot(zoneId); renderVitrina(); renderBookingControls(); }
     function setZoneImg(i) { activeImgIdx = i; renderVitrina(); }
-    function pickSpot(zoneId, num) {
-      activeZoneId = zoneId; selectedSpot = { zoneId, num };
-      renderVitrina(); renderBookingControls();
-      const z = ZONES.find(x => x.id === zoneId);
-      showToast(`${z.name} #${num} tanlandi`);
-    }
+    function pickSpot(zoneId, num) { activeZoneId = zoneId; selectedSpot = { zoneId, num }; renderVitrina(); renderBookingControls(); showToast(`${ZONES.find(x => x.id === zoneId).name} #${num} tanlandi`); }
     function goToBookingForm() { renderBookingControls(); document.getElementById("bron").scrollIntoView({ behavior: "smooth" }); }
 
     function renderBookingControls() {
@@ -997,23 +818,15 @@
         ? `<span>Tanlangan joy: <strong style="color:var(--gold-light);">${z.name} — ${z.unit} #${selectedSpot.num}</strong> (${z.capacity})</span><a href="#zallar" style="color:var(--gold-light); font-size:0.82rem; font-weight:700;">Raqamni o'zgartirish ↑</a>`
         : `<span style="color:#ff9c9d;">Bu hududda hozircha bo'sh joy yo'q. Boshqa hududni tanlang.</span>`;
       document.getElementById("roomChips").innerHTML = ZONES.map(zone => `<div class="chip ${zone.id === z.id ? 'selected' : ''}" onclick="switchZone('${zone.id}')">${zone.name}</div>`).join("");
-      document.getElementById("guestLabel").textContent = z.id === "sori"
-        ? "Mehmonlar soni (So'ri: kamida 10 kishi, 15 kishigacha):"
-        : `Mehmonlar soni (${z.capacity}):`;
+      document.getElementById("guestLabel").textContent = z.id === "sori" ? "Mehmonlar soni (So'ri: kamida 10 kishi, 15 kishigacha):" : `Mehmonlar soni (${z.capacity}):`;
       document.getElementById("guestChips").innerHTML = z.guestOptions.map((opt, i) => `<div class="chip ${i === 0 ? 'selected' : ''}" onclick="selectChip('guestChips', this)">${opt}</div>`).join("");
     }
 
-    /* === FLIPBOOK MENU === */
     let desktopPage = 0, TOTAL_DESKTOP_SHEETS = 4, mobilePage = 0;
     const MOBILE_PAGES = [
-      { type: "cover" },
-      { type: "cat", cat: "Milliy taomlar", num: 1 },
-      { type: "cat", cat: "Sho'rvalar", num: 2 },
-      { type: "cat", cat: "Shashliklar", num: 3 },
-      { type: "cat", cat: "Salatlar & Nonlar", num: 4 },
-      { type: "cat", cat: "Ichimliklar", num: 5 },
-      { type: "cat", cat: "Chef", num: 6 },
-      { type: "back" }
+      { type: "cover" }, { type: "cat", cat: "Milliy taomlar", num: 1 }, { type: "cat", cat: "Sho'rvalar", num: 2 },
+      { type: "cat", cat: "Shashliklar", num: 3 }, { type: "cat", cat: "Salatlar & Nonlar", num: 4 },
+      { type: "cat", cat: "Ichimliklar", num: 5 }, { type: "cat", cat: "Chef", num: 6 }, { type: "back" }
     ];
 
     function getCartQty(id) { const f = cart.find(c => c.id === id); return f ? f.qty : 0; }
@@ -1033,10 +846,7 @@
             <div class="book-dish-name">${esc(item.name)}</div>
             <div class="book-dish-desc">${esc(item.desc)}</div>
           </div>
-          <div class="book-dish-right">
-            <span class="book-dish-price">${formatPrice(item.price)}</span>
-            ${renderDishAction(item)}
-          </div>
+          <div class="book-dish-right"><span class="book-dish-price">${formatPrice(item.price)}</span>${renderDishAction(item)}</div>
         </div>`).join("") : `<p style="color:#666; font-size:0.86rem; margin-top:16px;">—</p>`;
       return `<div class="page-title">${title} <span>${items.length}</span></div><div class="page-list">${rows}</div><div class="page-foot"><span>SHAHBOZ</span><span>${pageNum}</span></div>`;
     }
@@ -1055,11 +865,7 @@
     }
 
     function renderQuickTabs() {
-      const items = [
-        { label: "Milliy", desk: 1, mob: 1 }, { label: "Sho'rvalar", desk: 1, mob: 2 },
-        { label: "Shashliklar", desk: 2, mob: 3 }, { label: "Salat & Non", desk: 2, mob: 4 },
-        { label: "Ichimliklar", desk: 3, mob: 5 }
-      ];
+      const items = [{ label: "Milliy", desk: 1, mob: 1 }, { label: "Sho'rvalar", desk: 1, mob: 2 }, { label: "Shashliklar", desk: 2, mob: 3 }, { label: "Salat & Non", desk: 2, mob: 4 }, { label: "Ichimliklar", desk: 3, mob: 5 }];
       document.getElementById("catQuickTabs").innerHTML = items.map(t => `<button class="cat-tab ${(isMobileView() ? mobilePage === t.mob : desktopPage === t.desk) ? 'active' : ''}" onclick="jumpToSection(${t.desk}, ${t.mob})">${t.label}</button>`).join("");
     }
     function jumpToSection(d, m) { desktopPage = d; mobilePage = m; updateDesktopBook(); updateMobileBook(); updateIndicator(); }
@@ -1114,18 +920,13 @@
         else { el.classList.remove("flipped"); el.style.zIndex = MOBILE_PAGES.length - i + 10; }
       }
     }
-    function mobileStep(dir) {
-      const next = mobilePage + dir;
-      if (next < 0 || next >= MOBILE_PAGES.length) return;
-      mobilePage = next; updateMobileBook(); updateIndicator();
-    }
+    function mobileStep(dir) { const next = mobilePage + dir; if (next < 0 || next >= MOBILE_PAGES.length) return; mobilePage = next; updateMobileBook(); updateIndicator(); }
     (function initMobileLiveSwipe() {
       const stage = document.getElementById("mobileBookStage");
       let startX = 0, startY = 0, dragging = false, activeSheet = null, underShadow = null, dragDir = 0;
       stage.addEventListener("touchstart", e => {
         if (!isMobileView() || e.target.closest("button") || e.target.closest(".dish-stepper")) return;
-        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
-        dragging = false; dragDir = 0; activeSheet = null; underShadow = null;
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY; dragging = false; dragDir = 0; activeSheet = null; underShadow = null;
       }, { passive: true });
       stage.addEventListener("touchmove", e => {
         if (!isMobileView()) return;
@@ -1155,8 +956,7 @@
         activeSheet.classList.remove("dragging");
         if (dragDir === 1 && dx < -50 && mobilePage < MOBILE_PAGES.length - 1) mobilePage++;
         else if (dragDir === -1 && dx > 50 && mobilePage > 0) mobilePage--;
-        updateMobileBook(); updateIndicator();
-        dragging = false; activeSheet = null;
+        updateMobileBook(); updateIndicator(); dragging = false; activeSheet = null;
       }, { passive: true });
     })();
 
@@ -1165,11 +965,8 @@
     function updateIndicator() { document.getElementById("pageIndicator").textContent = isMobileView() ? `${mobilePage + 1} / ${MOBILE_PAGES.length}` : `${desktopPage} / ${TOTAL_DESKTOP_SHEETS}`; renderQuickTabs(); }
     function refreshAllBookViews() { buildDesktopBook(); buildMobileBook(); updateIndicator(); }
 
-    /* === REAL REVIEWS & QUALITY CONTROL === */
     function renderReviews() {
-      const box = document.getElementById("reviewsContainer");
-      const h = document.getElementById("reviewsHeading");
-      const sub = document.getElementById("reviewsSub");
+      const box = document.getElementById("reviewsContainer"), h = document.getElementById("reviewsHeading"), sub = document.getElementById("reviewsSub");
       if (!reviews.length) {
         h.textContent = "Mehmonlarimiz Fikri";
         sub.textContent = "Restoranimizga tashrif buyurgan mehmonlarning haqiqiy fikrlari.";
@@ -1192,62 +989,29 @@
       const body = document.getElementById("fbBody");
       if (n >= 4) {
         document.getElementById("fbTitle").textContent = `Rahmat! (${n} ★)`;
-        body.innerHTML = `
-          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">Yuqori bahoingiz uchun rahmat! Qisqa fikringizni yozsangiz, saytimizdagi «Mehmonlar fikri» bo'limida ko'rinadi:</p>
-          <form onsubmit="submitPublicReview(event, ${n})">
-            <input type="text" id="rvName" placeholder="Ismingiz" required style="margin-bottom:10px;" />
-            <textarea id="rvText" rows="3" placeholder="Taomlar va xizmat haqida fikringiz..." required style="margin-bottom:12px;"></textarea>
-            <button type="submit" class="btn btn-gold" style="width:100%;">Fikrni joylash</button>
-          </form>`;
+        body.innerHTML = `<p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">Yuqori bahoingiz uchun rahmat! Qisqa fikringizni yozsangiz, saytimizdagi «Mehmonlar fikri» bo'limida ko'rinadi:</p><form onsubmit="submitPublicReview(event, ${n})"><input type="text" id="rvName" placeholder="Ismingiz" required style="margin-bottom:10px;" /><textarea id="rvText" rows="3" placeholder="Taomlar va xizmat haqida fikringiz..." required style="margin-bottom:12px;"></textarea><button type="submit" class="btn btn-gold" style="width:100%;">Fikrni joylash</button></form>`;
       } else {
-        document.getElementById("fbTitle").textContent = "Adminga xabar";
-        body.innerHTML = `
-          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">Kamchilik uchun uzr so'raymiz. Izohingiz to'g'ridan-to'g'ri restoran adminiga yetkaziladi:</p>
-          <form onsubmit="submitPrivateFeedback(event, ${n})">
-            <input type="tel" id="fbPhone" placeholder="Tel (ixtiyoriy)" style="margin-bottom:10px;" />
-            <textarea id="fbText" rows="3" placeholder="Nima yoqmadi?" required style="margin-bottom:12px;"></textarea>
-            <button type="submit" class="btn btn-gold" style="width:100%;">Adminga yuborish</button>
-          </form>`;
+        document.getElementById("fbTitle").textContent = "Fikr qoldirish";
+        body.innerHTML = `<p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:12px;">Kamchilik uchun uzr so'raymiz. Izohingiz restoran rahbariyatiga to'g'ridan-to'g'ri yetkaziladi:</p><form onsubmit="submitPrivateFeedback(event, ${n})"><input type="tel" id="fbPhone" placeholder="Tel (ixtiyoriy)" style="margin-bottom:10px;" /><textarea id="fbText" rows="3" placeholder="Nima yoqmadi?" required style="margin-bottom:12px;"></textarea><button type="submit" class="btn btn-gold" style="width:100%;">Yuborish</button></form>`;
       }
       openModal("feedbackModal");
     }
 
     function submitPublicReview(e, stars) {
       e.preventDefault();
-      const id = Date.now();
-      const rev = {
-        id, stars,
-        name: document.getElementById("rvName").value.trim(),
-        text: document.getElementById("rvText").value.trim(),
-        date: new Date().toLocaleDateString("uz-UZ")
-      };
-      if (db) db.ref(`shahboz_v1/reviews/${id}`).set(rev);
-      else { reviews.unshift(rev); renderReviews(); }
-      closeModal("feedbackModal");
-      showToast("Fikringiz uchun rahmat!");
+      const id = Date.now(), rev = { id, stars, name: document.getElementById("rvName").value.trim(), text: document.getElementById("rvText").value.trim(), date: new Date().toLocaleDateString("uz-UZ") };
+      if (db) db.ref(`shahboz_v1/reviews/${id}`).set(rev); else { reviews.unshift(rev); renderReviews(); }
+      closeModal("feedbackModal"); showToast("Fikringiz uchun rahmat!");
     }
-
     function submitPrivateFeedback(e, stars) {
       e.preventDefault();
-      const id = Date.now();
-      const fb = {
-        id, stars,
-        phone: document.getElementById("fbPhone").value.trim() || "—",
-        text: document.getElementById("fbText").value.trim(),
-        time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" })
-      };
+      const id = Date.now(), fb = { id, stars, phone: document.getElementById("fbPhone").value.trim() || "—", text: document.getElementById("fbText").value.trim(), time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" }) };
       if (db) db.ref(`shahboz_v1/feedbacks/${id}`).set(fb);
-      else feedbacks.unshift(fb);
-      closeModal("feedbackModal");
-      showToast("Xabaringiz adminga yuborildi");
+      closeModal("feedbackModal"); showToast("Xabaringiz yuborildi");
     }
 
-    /* === CART & ORDERS === */
     let toastTimer = null;
-    function showToast(msg) {
-      const el = document.getElementById("toastBox"); el.textContent = msg; el.classList.add("show");
-      clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
-    }
+    function showToast(msg) { const el = document.getElementById("toastBox"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1800); }
 
     function updateCartUI() {
       const count = cart.reduce((s, i) => s + i.qty, 0), total = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -1286,16 +1050,10 @@
       const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
       cart.forEach(ci => {
         const m = menuItems.find(x => x.id === ci.id);
-        if (m) {
-          m.sold = (m.sold || 0) + ci.qty;
-          if (db) db.ref(`shahboz_v1/menu/${m.id}/sold`).set(m.sold);
-        }
+        if (m) { m.sold = (m.sold || 0) + ci.qty; if (db) db.ref(`shahboz_v1/menu/${m.id}/sold`).set(m.sold); }
       });
-      const id = Date.now();
-      const ord = { id, name, phone, items: cart.map(i => `${i.name} x${i.qty}`).join(", "), total, status: "Yangi", time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" }) };
+      const id = Date.now(), ord = { id, name, phone, items: cart.map(i => `${i.name} x${i.qty}`).join(", "), total, status: "Yangi", time: new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" }) };
       if (db) db.ref(`shahboz_v1/orders/${id}`).set(ord);
-      else orders.unshift(ord);
-
       let msg = `SHAHBOZ RESTAURANT (Olmazor) — Buyurtma:%0A${name} (${phone})%0A%0A`;
       cart.forEach((i, idx) => msg += `${idx + 1}. ${i.name} x${i.qty} = ${formatPrice(i.price * i.qty)}%0A`);
       msg += `%0AJami: ${formatPrice(total)}`;
@@ -1310,191 +1068,21 @@
       e.preventDefault();
       if (!selectedSpot.num) { showToast("Iltimos, bo'sh xona yoki stol tanlang"); return; }
       const z = ZONES.find(x => x.id === selectedSpot.zoneId);
-      const name = document.getElementById("bName").value.trim();
-      const phone = document.getElementById("bPhone").value.trim();
-      const guests = getSelectedChip("guestChips");
-      const time = getSelectedChip("timeChips");
-
+      const name = document.getElementById("bName").value.trim(), phone = document.getElementById("bPhone").value.trim();
+      const guests = getSelectedChip("guestChips"), time = getSelectedChip("timeChips");
       const spot = roomStates[z.id].find(r => r.num === selectedSpot.num);
       if (!spot || spot.status !== "free") { showToast("Bu joy allaqachon band qilingan"); renderVitrina(); return; }
 
       dbSetRoom(z.id, spot.num, "reserved", time);
-      const id = Date.now();
-      const bk = { id, name, phone, zoneId: z.id, zoneName: z.name, unit: z.unit, spotNum: spot.num, guests, time, status: "Band (Sariq)" };
+      const id = Date.now(), bk = { id, name, phone, zoneId: z.id, zoneName: z.name, unit: z.unit, spotNum: spot.num, guests, time, status: "Band (Sariq)" };
       if (db) db.ref(`shahboz_v1/bookings/${id}`).set(bk);
-      else bookings.unshift(bk);
 
       const msg = `SHAHBOZ RESTAURANT (Olmazor) — Bron:%0A${name}%0A${phone}%0A${z.name} — ${z.unit} #${spot.num}%0A${guests} | ${time}`;
       const okBox = document.getElementById("bookingSuccess");
       okBox.style.display = "block";
       okBox.innerHTML = `${esc(name)} — <b>${z.name} #${spot.num}</b> (${time}) band qilindi! <a href="${TELEGRAM_LINK}?text=${msg}" target="_blank" style="color:#f6df8f; font-weight:700;">Telegram ↗</a>`;
 
-      ensureValidSpot(z.id);
-      renderVitrina();
-      renderBookingControls();
-      e.target.reset();
-    }
-
-    /* === ADMIN PANEL === */
-    let currentAdminTab = "rooms", adminLoggedIn = false;
-    function openAdminGate() {
-      if (adminLoggedIn) { renderAdminPanel(); openModal("adminPanelModal"); }
-      else { document.getElementById("adminPinInput").value = ""; openModal("adminLoginModal"); }
-    }
-    function checkAdminPin() {
-      if (document.getElementById("adminPinInput").value === "1234") {
-        adminLoggedIn = true; closeModal("adminLoginModal"); renderAdminPanel(); openModal("adminPanelModal");
-      } else alert(I18N[currentLang].wrongPin);
-    }
-    function switchAdminTab(tab) {
-      currentAdminTab = tab;
-      ["rooms", "bookings", "orders", "analytics", "menu", "feedback"].forEach(t => {
-        const btn = document.getElementById("tab" + t.charAt(0).toUpperCase() + t.slice(1) + "Btn");
-        if (btn) btn.className = t === tab ? "btn btn-gold" : "btn btn-outline";
-      });
-      renderAdminPanel();
-    }
-
-    function renderAdminPanel() {
-      const revenue = orders.reduce((s, o) => s + (o.total || 0), 0);
-      let totFree = 0, totRes = 0, totOcc = 0;
-      ZONES.forEach(z => { const s = countZoneStats(z.id); totFree += s.free; totRes += s.reserved; totOcc += s.occupied; });
-
-      document.getElementById("adminStats").innerHTML = `
-        <div class="stat-box"><strong style="color:var(--st-free)">${totFree} / 80</strong><span>Bo'sh joylar</span></div>
-        <div class="stat-box"><strong style="color:var(--st-res)">${totRes}</strong><span>Band (kelmagan)</span></div>
-        <div class="stat-box"><strong style="color:var(--st-occ)">${totOcc}</strong><span>Ishlayapti</span></div>
-        <div class="stat-box"><strong>${formatPrice(revenue)}</strong><span>Tushum</span></div>`;
-
-      const content = document.getElementById("adminTabContent");
-
-      if (currentAdminTab === "rooms") {
-        content.innerHTML = `
-          <div class="room-legend" style="margin-bottom:14px;">
-            <span class="leg-item"><i class="leg-dot free"></i> Bo'sh (Yashil)</span>
-            <span class="leg-item"><i class="leg-dot res"></i> Band qilingan (Sariq)</span>
-            <span class="leg-item"><i class="leg-dot occ"></i> Hozirda ishlayapti (Qizil)</span>
-          </div>
-          ${ZONES.map(z => {
-            const st = countZoneStats(z.id);
-            return `
-              <div class="admin-zone-block">
-                <div class="admin-zone-head">
-                  <strong style="color:var(--gold-light);">${z.name} <small style="color:var(--text-muted); font-weight:500;">(${z.capacity})</small></strong>
-                  <span style="font-size:0.78rem; color:var(--text-muted);">Bo'sh: <b style="color:var(--st-free)">${st.free}</b> • Band: <b style="color:var(--st-res)">${st.reserved}</b> • Ishlayapti: <b style="color:var(--st-occ)">${st.occupied}</b></span>
-                </div>
-                <div class="admin-room-grid">
-                  ${roomStates[z.id].map(r => `<div class="admin-room-cell ${r.status}">#${r.num}<small>${r.status === 'free' ? 'Bo\'sh' : (r.status === 'reserved' ? (r.time || 'Band') : 'Band')}</small></div>`).join("")}
-                </div>
-              </div>`;
-          }).join("")}`;
-      } else if (currentAdminTab === "bookings") {
-        content.innerHTML = bookings.length
-          ? bookings.map(b => `
-              <div class="admin-item">
-                <div>
-                  <strong>${esc(b.name)}</strong> (${esc(b.phone)})
-                  <div style="font-size:0.85rem; color:var(--gold-light);">${esc(b.zoneName)} — ${esc(b.unit)} #${b.spotNum} • ${esc(b.guests)} • ${esc(b.time)}</div>
-                </div>
-                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                  <span class="status-pill ${b.status === 'Ishlayapti (Qizil)' ? 'stop' : (b.status === 'Yakunlandi' ? 'done' : '')}">${esc(b.status)}</span>
-                  <button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="setBookingState(${b.id}, 'occupied')">Keldi</button>
-                  <button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="setBookingState(${b.id}, 'free')">Bo'shatish</button>
-                  <button class="btn btn-danger" style="padding:5px 9px; font-size:0.76rem;" onclick="deleteBooking(${b.id})">×</button>
-                </div>
-              </div>`).join("")
-          : `<p style="color:var(--text-muted); text-align:center; padding:20px;">Hozircha bronlar yo'q.</p>`;
-      } else if (currentAdminTab === "orders") {
-        content.innerHTML = orders.length
-          ? orders.map(o => `<div class="admin-item"><div><strong>${esc(o.name)}</strong> (${esc(o.phone)}) • <small style="color:var(--text-muted);">${esc(o.time)}</small><div style="font-size:0.85rem; color:var(--text-muted);">${esc(o.items)}</div><div style="color:var(--gold-light); font-weight:700;">${formatPrice(o.total)}</div></div><div style="display:flex; gap:8px; align-items:center;"><span class="status-pill ${o.status === 'Bajarildi' ? 'done' : ''}">${esc(o.status)}</span><button class="btn btn-outline" style="padding:5px 10px; font-size:0.78rem;" onclick="toggleOrderStatus(${o.id})">✓</button><button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteOrder(${o.id})">×</button></div></div>`).join("")
-          : `<p style="color:var(--text-muted); text-align:center; padding:20px;">Hozircha buyurtmalar yo'q.</p>`;
-      } else if (currentAdminTab === "analytics") {
-        const top5 = [...menuItems].sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 5);
-        const maxSold = Math.max(1, top5[0]?.sold || 1);
-        const stopCount = menuItems.filter(m => m.available === false).length;
-        content.innerHTML = `
-          <div class="chart-card">
-            <h4 style="color:var(--gold-light); margin-bottom:14px;">Top-5 Ommabop Taomlar</h4>
-            ${top5.map(item => `<div class="bar-row"><div class="bar-label"><span>${esc(item.name)}</span><span>${item.sold || 0} ta</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(((item.sold || 0) / maxSold) * 100)}%"></div></div></div>`).join("")}
-          </div>
-          <div class="chart-card"><p style="color:var(--text-muted); font-size:0.88rem;">Faol taomlar: <b>${menuItems.length - stopCount}</b> • Stop-list: <b>${stopCount}</b> • Sharhlar: <b>${reviews.length}</b> • Shikoyatlar: <b>${feedbacks.length}</b></p></div>`;
-      } else if (currentAdminTab === "feedback") {
-        content.innerHTML = `
-          <h4 style="color:var(--gold-light); margin-bottom:10px;">Saytdagi sharhlar (${reviews.length})</h4>
-          ${reviews.length ? reviews.map(r => `<div class="admin-item"><div><span style="color:var(--gold-light);">${"★".repeat(r.stars)}</span> <strong>${esc(r.name)}</strong> • <small style="color:var(--text-muted);">${esc(r.date)}</small><div style="font-size:0.86rem; margin-top:3px;">${esc(r.text)}</div></div><button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteReview(${r.id})">×</button></div>`).join("") : `<p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:16px;">Hozircha sharhlar yo'q.</p>`}
-          <h4 style="color:var(--gold-light); margin:16px 0 10px;">Adminga yashirin xabarlar (${feedbacks.length})</h4>
-          ${feedbacks.length ? feedbacks.map(f => `<div class="admin-item"><div><span style="color:var(--gold-light);">${"★".repeat(f.stars)}${"☆".repeat(5 - f.stars)}</span> • <small style="color:var(--text-muted);">${esc(f.time)} (${esc(f.phone)})</small><div style="font-size:0.88rem; margin-top:4px;">${esc(f.text)}</div></div><button class="btn btn-danger" style="padding:5px 10px; font-size:0.78rem;" onclick="deleteFeedback(${f.id})">×</button></div>`).join("") : `<p style="color:var(--text-muted); font-size:0.86rem;">Shikoyat yoki yashirin xabarlar yo'q.</p>`}`;
-      } else {
-        content.innerHTML = `
-          <form onsubmit="addMenuItem(event)" style="background:rgba(4,19,12,0.75); padding:14px; border-radius:12px; border:1px solid var(--border-gold); margin-bottom:16px;">
-            <div class="simple-inputs" style="margin-bottom:10px;"><input type="text" id="newDishName" placeholder="Taom nomi" required /><input type="number" id="newDishPrice" placeholder="Narxi (so'm)" required /></div>
-            <div class="simple-inputs" style="margin-bottom:10px;"><select id="newDishCat">${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join("")}</select><input type="text" id="newDishDesc" placeholder="Tavsif" required /></div>
-            <button type="submit" class="btn btn-gold" style="width:100%;">Qo'shish</button>
-          </form>
-          ${menuItems.map(m => `<div class="admin-item"><div><strong>${esc(m.name)}</strong> <small style="color:var(--text-muted);">(${esc(m.cat)})</small><div style="color:var(--gold-light); font-size:0.86rem;">${formatPrice(m.price)}</div></div><div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;"><span class="status-pill ${m.available === false ? 'stop' : 'done'}">${m.available === false ? 'Stop-list' : 'Bor'}</span><button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="toggleStopList(${m.id})">${m.available === false ? 'Yoqish' : 'Stop'}</button><button class="btn btn-outline" style="padding:5px 9px; font-size:0.76rem;" onclick="editDishPrice(${m.id})">Narx</button><button class="btn btn-danger" style="padding:5px 9px; font-size:0.76rem;" onclick="deleteMenuItem(${m.id})">×</button></div></div>`).join("")}`;
-      }
-    }
-
-    function setBookingState(id, roomStatus) {
-      const b = bookings.find(x => x.id === id); if (!b) return;
-      dbSetRoom(b.zoneId, b.spotNum, roomStatus, "");
-      const stText = roomStatus === "occupied" ? "Ishlayapti (Qizil)" : "Yakunlandi";
-      b.status = stText;
-      if (db) db.ref(`shahboz_v1/bookings/${id}/status`).set(stText);
-      renderAdminPanel(); renderVitrina(); renderBookingControls();
-    }
-    function deleteBooking(id) {
-      const b = bookings.find(x => x.id === id);
-      if (b) dbSetRoom(b.zoneId, b.spotNum, "free", "");
-      if (db) db.ref(`shahboz_v1/bookings/${id}`).remove();
-      else { bookings = bookings.filter(x => x.id !== id); renderAdminPanel(); }
-    }
-    function toggleStopList(id) {
-      const m = menuItems.find(x => x.id === id); if (!m) return;
-      const next = m.available === false ? true : false;
-      m.available = next;
-      if (db) db.ref(`shahboz_v1/menu/${id}/available`).set(next);
-      else { renderAdminPanel(); refreshAllBookViews(); }
-    }
-    function editDishPrice(id) {
-      const m = menuItems.find(x => x.id === id); if (!m) return;
-      const val = prompt(`${m.name} — yangi narx (so'm):`, m.price);
-      if (val && !isNaN(Number(val)) && Number(val) > 0) {
-        m.price = Number(val);
-        if (db) db.ref(`shahboz_v1/menu/${id}/price`).set(m.price);
-        else { renderAdminPanel(); refreshAllBookViews(); }
-      }
-    }
-    function toggleOrderStatus(id) {
-      const o = orders.find(x => x.id === id); if (!o) return;
-      const next = o.status === "Bajarildi" ? "Yangi" : "Bajarildi";
-      o.status = next;
-      if (db) db.ref(`shahboz_v1/orders/${id}/status`).set(next);
-      else renderAdminPanel();
-    }
-    function deleteOrder(id) {
-      if (db) db.ref(`shahboz_v1/orders/${id}`).remove();
-      else { orders = orders.filter(x => x.id !== id); renderAdminPanel(); }
-    }
-    function deleteReview(id) {
-      if (db) db.ref(`shahboz_v1/reviews/${id}`).remove();
-      else { reviews = reviews.filter(x => x.id !== id); renderReviews(); renderAdminPanel(); }
-    }
-    function deleteFeedback(id) {
-      if (db) db.ref(`shahboz_v1/feedbacks/${id}`).remove();
-      else { feedbacks = feedbacks.filter(x => x.id !== id); renderAdminPanel(); }
-    }
-    function addMenuItem(e) {
-      e.preventDefault();
-      const id = Date.now();
-      const item = { id, name: document.getElementById("newDishName").value.trim(), price: Number(document.getElementById("newDishPrice").value), cat: document.getElementById("newDishCat").value, desc: document.getElementById("newDishDesc").value.trim(), weight: "350 g", prep: "15 daq", available: true, sold: 0, img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" };
-      if (db) db.ref(`shahboz_v1/menu/${id}`).set(item);
-      else { menuItems.unshift(item); renderAdminPanel(); refreshAllBookViews(); }
-      e.target.reset();
-    }
-    function deleteMenuItem(id) {
-      if (db) db.ref(`shahboz_v1/menu/${id}`).remove();
-      else { menuItems = menuItems.filter(m => m.id !== id); renderAdminPanel(); refreshAllBookViews(); }
+      ensureValidSpot(z.id); renderVitrina(); renderBookingControls(); e.target.reset();
     }
 
     function openCart() { renderCartItems(); openModal("cartModal"); }
