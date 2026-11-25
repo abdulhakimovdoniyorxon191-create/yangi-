@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHAHBOZ — Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <style>
+    :root {
+      --bg-dark: #04130c;
+      --bg-card: rgba(8, 33, 21, 0.88);
+      --gold: #d4af37;
+      --gold-light: #f6df8f;
+      --text-main: #f7f4ec;
+      --text-muted: #b5c6bc;
+      --border-gold: rgba(212, 175, 55, 0.34);
+      --st-free: #28c76f;
+      --st-res: #f5b935;
+      --st-occ: #ea5455;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: radial-gradient(circle at top right, #0a2d1c 0%, var(--bg-dark) 55%); color: var(--text-main); min-height: 100vh; }
+    h1, h2, h3, h4, .brand-font { font-family: 'Cinzel', serif; letter-spacing: 0.6px; }
+    .brand-logo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold); display: block; background: #062114; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 14px; border-radius: 9px; font-weight: 600; font-size: 0.85rem;
+      cursor: pointer; border: none; text-decoration: none; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #04130c; }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35); }
+    .btn-outline { background: rgba(212, 175, 55, 0.1); color: var(--gold-light); border: 1px solid var(--gold); }
+    .btn-outline:hover { background: rgba(212, 175, 55, 0.22); }
+    .btn-danger { background: rgba(234, 84, 85, 0.18); color: #ff9495; border: 1px solid rgba(234, 84, 85, 0.55); }
+
+    input, select { width: 100%; padding: 11px 14px; border-radius: 9px; border: 1px solid var(--border-gold); background: rgba(4, 19, 12, 0.92); color: var(--text-main); font-family: inherit; font-size: 0.94rem; }
+    input:focus, select:focus { outline: none; border-color: var(--gold-light); }
+
+    #loginScreen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .login-box {
+      width: 100%; max-width: 360px; background: var(--bg-card); border: 1px solid var(--gold);
+      border-radius: 20px; padding: 30px 24px; text-align: center;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.65);
+    }
+    .login-logo { width: 92px; height: 92px; margin: 0 auto 14px; }
+
+    #dashboard { display: none; min-height: 100vh; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(4, 19, 12, 0.94); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-gold);
+      padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .top-brand { display: flex; align-items: center; gap: 10px; }
+    .top-logo { width: 40px; height: 40px; flex-shrink: 0; }
+    .live-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 0.78rem; padding: 5px 11px; border-radius: 999px; background: rgba(40, 199, 111, 0.14); border: 1px solid rgba(40, 199, 111, 0.5); color: #8ff5ba; font-weight: 600; }
+    .live-pill.off { background: rgba(234, 84, 85, 0.15); border-color: rgba(234, 84, 85, 0.5); color: #ff9c9d; }
+    .top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    .container { max-width: 1220px; margin: 0 auto; padding: 22px 16px 60px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .stat-box { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 16px; text-align: center; }
+    .stat-box strong { display: block; font-size: 1.35rem; color: var(--gold-light); }
+    .stat-box span { font-size: 0.78rem; color: var(--text-muted); }
+
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .badge-num { background: #ea5455; color: #fff; padding: 1px 6px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+
+    .room-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; }
+    .leg-item { display: inline-flex; align-items: center; gap: 6px; }
+    .leg-dot { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+    .leg-dot.free { background: var(--st-free); }
+    .leg-dot.res { background: var(--st-res); }
+    .leg-dot.occ { background: var(--st-occ); }
+
+    .zone-block { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
+    .zone-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .room-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+    .room-cell { border-radius: 9px; padding: 8px 4px; text-align: center; border: 1px solid transparent; font-size: 0.82rem; font-weight: 700; line-height: 1.2; }
+    .room-cell small { display: block; font-size: 0.66rem; font-weight: 500; margin-top: 2px; }
+    .room-cell.free { background: rgba(40, 199, 111, 0.16); border-color: rgba(40, 199, 111, 0.6); color: #8ff5ba; }
+    .room-cell.reserved { background: rgba(245, 185, 53, 0.2); border-color: rgba(245, 185, 53, 0.75); color: #ffe08a; }
+    .room-cell.occupied { background: rgba(234, 84, 85, 0.2); border-color: rgba(234, 84, 85, 0.75); color: #ff9c9d; }
+
+    .item-card { background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.24); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .status-pill { padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; background: rgba(245, 185, 53, 0.2); color: #ffe08a; }
+    .status-pill.done { background: rgba(40, 199, 111, 0.22); color: #7ef29d; }
+    .status-pill.stop { background: rgba(234, 84, 85, 0.24); color: #ff9c9d; }
+
+    .chart-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+    .bar-row { margin-bottom: 12px; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 0.86rem; margin-bottom: 5px; }
+    .bar-track { height: 9px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+
+    .toast {
+      position: fixed; top: 72px; right: 18px; z-index: 400;
+      background: #0b3320; color: var(--gold-light); border: 1.5px solid var(--gold);
+      border-radius: 12px; padding: 11px 18px; font-size: 0.88rem; font-weight: 600;
+      opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.25s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) { .room-grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .topbar { padding: 10px 12px; } }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toastBox"></div>
+
+  <div id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
+      <h2 class="brand-font" style="color:var(--gold-light); margin-bottom:6px;">SHAHBOZ</h2>
+      <p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px;">Admin Panel</p>
+      <form onsubmit="loginAdmin(event)">
+        <input type="password" id="pinInput" placeholder="PIN" required style="text-align:center; margin-bottom:14px; letter-spacing:4px;" />
+        <button type="submit" class="btn btn-gold" style="width:100%; padding:12px;">Kirish</button>
+      </form>
+      <p id="loginErr" style="color:#ff8a95; font-size:0.82rem; margin-top:10px; display:none;">Noto'g'ri PIN</p>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div class="topbar">
+      <div class="top-brand">
+        <div class="top-logo"><img src="logo.jpg" class="brand-logo-img" alt="SHAHBOZ" onerror="handleLogoErr(this)"></div>
+        <div>
+          <strong class="brand-font" style="color:var(--gold-light); display:block; line-height:1.1;">SHAHBOZ ADMIN</strong>
+          <small style="color:var(--text-muted); font-size:0.72rem;">Boshqaruv va Nazorat</small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="live-pill" id="connPill">🟢 Jonli aloqa</span>
+        <button type="button" class="btn btn-outline" id="soundBtn" onclick="toggleSound()">🔔 Ovoz: Yoqilgan</button>
+        <a href="index.html" target="_blank" class="btn btn-outline">Saytni ko'rish ↗</a>
+        <button type="button" class="btn btn-danger" onclick="logoutAdmin()">Chiqish</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="stats-row" id="adminStats"></div>
+      <div class="tabs" id="adminTabs"></div>
+      <div id="adminContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const FIREBASE_DB_URL = "https://shahboz-restaurant-default-rtdb.firebaseio.com";
+    firebase.initializeApp({ databaseURL: FIREBASE_DB_URL });
+    const db = firebase.database();
+
+    function handleLogoErr(img) {
+      if (!img.dataset.step) { img.dataset.step = "1"; img.src = "logo.jpeg"; }
+      else if (img.dataset.step === "1") { img.dataset.step = "2"; img.src = "logo.png"; }
+      else { img.onerror = null; img.style.display = "none"; }
+    }
+
+    const ZONES = [
+      { id: "umumiy", name: "Umumiy zal", unit: "Stol", count: 20, capacity: "6 kishilik stol" },
+      { id: "vip", name: "VIP xona", unit: "VIP", count: 20, capacity: "12–20 kishi" },
+      { id: "oilaviy", name: "Oilaviy kabina", unit: "Kabina", count: 20, capacity: "6–10 kishi" },
+      { id: "sori", name: "So'ri", unit: "So'ri", count: 20, capacity: "10–15 kishi" }
+    ];
+    const CATEGORIES = ["Milliy taomlar", "Sho'rvalar", "Shashliklar", "Salatlar & Nonlar", "Ichimliklar"];
+
+    const esc = s => String(s || "").replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    const formatPrice = n => Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+    const toSortedArr = obj => obj ? Object.values(obj).sort((a, b) => (b.id || 0) - (a.id || 0)) : [];
+
+    let roomStates = {};
+    ZONES.forEach(z => { roomStates[z.id] = Array.from({ length: z.count }, (_, i) => ({ num: i + 1, status: "free", time: "" })); });
+    let menuItems = [], orders = [], bookings = [], reviews = [], feedbacks = [];
+    let currentTab = "rooms", soundOn = true, syncedOnce = { bookings: false, orders: false }, prevCounts = { bookings: 0, orders: 0 };
+
+    function playBeep() {
+      if (!soundOn) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = "sine"; osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      document.getElementById("soundBtn").textContent = soundOn ? "🔔 Ovoz: Yoqilgan" : "🔕 Ovoz: O'chiq";
+      if (soundOn) playBeep();
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById("toastBox"); el.textContent = msg; el.classList.add("show");
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+    }
+
+    function loginAdmin(e) {
+      e.preventDefault();
+      if (document.getElementById("pinInput").value === "1234") {
+        sessionStorage.setItem("shahboz_admin_auth", "1");
+        enterDashboard();
+      } else {
+        document.getElementById("loginErr").style.display = "block";
+      }
+    }
+    function logoutAdmin() {
+      sessionStorage.removeItem("shahboz_admin_auth");
+      location.reload();
+    }
+
+    function enterDashboard() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      startSync();
+    }
+
+    function startSync() {
+      db.ref(".info/connected").on("value", s => {
+        const pill = document.getElementById("connPill");
+        pill.className = s.val() ? "live-pill" : "live-pill off";
+        pill.textContent = s.val() ? "🟢 Jonli aloqa" : "🔴 Ulanmoqda...";
+      });
+
+      const root = db.ref("shahboz_v1");
+
+      root.child("rooms").on("value", snap => {
+        const val = snap.val() || {};
+        ZONES.forEach(z => {
+          const zMap = val[z.id] || {};
+          roomStates[z.id] = Array.from({ length: z.count }, (_, idx) => {
+            const n = idx + 1;
+            return zMap[n] ? { num: n, status: zMap[n].status || "free", time: zMap[n].time || "" } : { num: n, status: "free", time: "" };
+          });
+        });
+        render();
+      });
+
+      root.child("bookings").on("value", snap => {
+        bookings = toSortedArr(snap.val());
+        if (syncedOnce.bookings && bookings.length > prevCounts.bookings) {
+          playBeep(); showToast("🔔 Yangi xona broni tushdi!");
+        }
+        prevCounts.bookings = bookings.length; syncedOnce.bookings = true;
+        render();
+      });
+
+      root.child("orders").on("value", snap => {
+        orders = toSortedArr(snap.val());
+        if (syncedOnce.orders && orders.length > prevCounts.orders) {
+          playBeep(); showToast("🔔 Yangi taom buyurtmasi tushdi!");
+        }
+        prevCounts.orders = orders.length; syncedOnce.orders = true;
+        render();
+      });
+
+      root.child("menu").on("value", snap => {
+        const val = snap.val();
+        menuItems = val ? Object.values(val).sort((a, b) => (a.id || 0) - (b.id || 0)) : [];
+        render();
+      });
+
+      root.child("reviews").on("value", snap => { reviews = toSortedArr(snap.val()); render(); });
+      root.child("feedbacks").on("value", snap => { feedbacks = toSortedArr(snap.val()); render(); });
+    }
+
+    function countZone(id) {
+      const list = roomStates[id] || [];
+      return { free: list.filter(r => r.status === "free").length, reserved: list.filter(r => r.status === "reserved").length, occupied: list.filter(r => r.status === "occupied").length };
+    }
+
+    function switchTab(t) { currentTab = t; render(); }
+
+    function render() {
+      const revenue = orders.reduce((s, o) => s + (o.total || 0), 0);
+      let totFree = 0, totRes = 0, totOcc = 0;
+      ZONES.forEach(z => { const s = countZone(z.id); totFree += s.free; totRes += s.reserved; totOcc += s.occupied; });
+      const activeBookings = bookings.filter(b => b.status !== "Yakunlandi").length;
+      const newOrders = orders.filter(o => o.status === "Yangi").length;
+
+      document.getElementById("adminStats").innerHTML = `
+        <div class="stat-box"><strong style="color:var(--st-free)">${totFree} / 80</strong><span>Bo'sh joylar</span></div>
+        <div class="stat-box"><strong style="color:var(--st-res)">${totRes}</strong><span>Band (kelmagan)</span></div>
+        <div class="stat-box"><strong style="color:var(--st-occ)">${totOcc}</strong><span>Hozirda ishlayapti</span></div>
+        <div class="stat-box"><strong>${formatPrice(revenue)}</strong><span>Jami tushum</span></div>`;
+
+      const tabList = [
+        { id: "rooms", label: "Xonalar (80)" },
+        { id: "bookings", label: "Bronlar", badge: activeBookings },
+        { id: "orders", label: "Buyurtmalar", badge: newOrders },
+        { id: "analytics", label: "Analitika" },
+        { id: "menu", label: "Menyu & Stop-list" },
+        { id: "feedback", label: "Sharhlar & Sifat", badge: feedbacks.length }
+      ];
+      document.getElementById("adminTabs").innerHTML = tabList.map(t => `
+        <button class="btn ${currentTab === t.id ? 'btn-gold' : 'btn-outline'}" onclick="switchTab('${t.id}')">
+          ${t.label} ${t.badge ? `<span class="badge-num">${t.badge}</span>` : ""}
+        </button>`).join("");
+
+      const box = document.getElementById("adminContent");
+
+      if (currentTab === "rooms") {
+        box.innerHTML = `
+          <div class="room-legend">
+            <span class="leg-item"><i class="leg-dot free"></i> Bo'sh (Yashil)</span>
+            <span class="leg-item"><i class="leg-dot res"></i> Band qilingan (Sariq)</span>
+            <span class="leg-item"><i class="leg-dot occ"></i> Hozirda ishlayapti (Qizil)</span>
+          </div>
+          ${ZONES.map(z => {
+            const st = countZone(z.id);
+            return `
+              <div class="zone-block">
+                <div class="zone-head">
+                  <strong style="color:var(--gold-light); font-size:1.05rem;">${z.name} <small style="color:var(--text-muted); font-weight:500;">(${z.capacity})</small></strong>
+                  <span style="font-size:0.84rem; color:var(--text-muted);">Bo'sh: <b style="color:var(--st-free)">${st.free}</b> • Band: <b style="color:var(--st-res)">${st.reserved}</b> • Ishlayapti: <b style="color:var(--st-occ)">${st.occupied}</b></span>
+                </div>
+                <div class="room-grid">
+                  ${roomStates[z.id].map(r => `<div class="room-cell ${r.status}">#${r.num}<small>${r.status === 'free' ? 'Bo\'sh' : (r.status === 'reserved' ? (r.time || 'Band') : 'Band')}</small></div>`).join("")}
+                </div>
+              </div>`;
+          }).join("")}`;
+      } else if (currentTab === "bookings") {
+        box.innerHTML = bookings.length
+          ? bookings.map(b => `
+              <div class="item-card">
+                <div>
+                  <strong>${esc(b.name)}</strong> (<a href="tel:${esc(b.phone)}" style="color:var(--gold-light); text-decoration:none;">${esc(b.phone)}</a>)
+                  <div style="font-size:0.88rem; color:var(--gold-light); margin-top:2px;">${esc(b.zoneName)} — ${esc(b.unit)} #${b.spotNum} • ${esc(b.guests)} • ${esc(b.time)}</div>
+                </div>
+                <div style="display:flex; gap:7px; align-items:center; flex-wrap:wrap;">
+                  <span class="status-pill ${b.status === 'Ishlayapti (Qizil)' ? 'stop' : (b.status === 'Yakunlandi' ? 'done' : '')}">${esc(b.status)}</span>
+                  <button class="btn btn-outline" onclick="setBookingState(${b.id}, 'occupied')">Keldi (Qizil)</button>
+                  <button class="btn btn-outline" onclick="setBookingState(${b.id}, 'free')">Bo'shatish (Yashil)</button>
+                  <button class="btn btn-danger" onclick="deleteBooking(${b.id})">×</button>
+                </div>
+              </div>`).join("")
+          : `<div class="chart-card" style="text-align:center; color:var(--text-muted);">Hozircha bronlar yo'q.</div>`;
+      } else if (currentTab === "orders") {
+        box.innerHTML = orders.length
+          ? orders.map(o => `
+              <div class="item-card">
+                <div>
+                  <strong>${esc(o.name)}</strong> (<a href="tel:${esc(o.phone)}" style="color:var(--gold-light); text-decoration:none;">${esc(o.phone)}</a>) • <small style="color:var(--text-muted);">${esc(o.time)}</small>
+                  <div style="font-size:0.86rem; color:var(--text-muted); margin-top:2px;">${esc(o.items)}</div>
+                  <div style="color:var(--gold-light); font-weight:700; margin-top:3px;">${formatPrice(o.total)}</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <span class="status-pill ${o.status === 'Bajarildi' ? 'done' : ''}">${esc(o.status)}</span>
+                  <button class="btn btn-outline" onclick="toggleOrder(${o.id})">✓</button>
+                  <button class="btn btn-danger" onclick="deleteOrder(${o.id})">×</button>
+                </div>
+              </div>`).join("")
+          : `<div class="chart-card" style="text-align:center; color:var(--text-muted);">Hozircha buyurtmalar yo'q.</div>`;
+      } else if (currentTab === "analytics") {
+        const top5 = [...menuItems].sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 5);
+        const maxSold = Math.max(1, top5[0]?.sold || 1);
+        const avgCheck = orders.length ? Math.round(revenue / orders.length) : 0;
+        const stopCount = menuItems.filter(m => m.available === false).length;
+        box.innerHTML = `
+          <div class="chart-card">
+            <h3 style="color:var(--gold-light); margin-bottom:14px;">Top-5 Ommabop Taomlar</h3>
+            ${top5.map(item => `<div class="bar-row"><div class="bar-label"><span>${esc(item.name)}</span><span>${item.sold || 0} ta</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(((item.sold || 0) / maxSold) * 100)}%"></div></div></div>`).join("")}
+          </div>
+          <div class="chart-card">
+            <p style="color:var(--text-muted); font-size:0.9rem;">O'rtacha chek: <b style="color:var(--gold-light)">${formatPrice(avgCheck)}</b> • Faol taomlar: <b>${menuItems.length - stopCount}</b> • Stop-list: <b>${stopCount}</b> • Sharhlar: <b>${reviews.length}</b></p>
+          </div>`;
+      } else if (currentTab === "feedback") {
+        box.innerHTML = `
+          <h3 style="color:var(--gold-light); margin-bottom:10px;">Saytdagi sharhlar (${reviews.length})</h3>
+          ${reviews.length ? reviews.map(r => `<div class="item-card"><div><span style="color:var(--gold-light);">${"★".repeat(r.stars)}</span> <strong>${esc(r.name)}</strong> • <small style="color:var(--text-muted);">${esc(r.date)}</small><div style="font-size:0.88rem; margin-top:4px;">${esc(r.text)}</div></div><button class="btn btn-danger" onclick="deleteReview(${r.id})">O'chirish</button></div>`).join("") : `<div class="chart-card" style="color:var(--text-muted);">Hozircha sharhlar yo'q.</div>`}
+          <h3 style="color:var(--gold-light); margin:20px 0 10px;">Rahbariyatga yashirin xabarlar (${feedbacks.length})</h3>
+          ${feedbacks.length ? feedbacks.map(f => `<div class="item-card"><div><span style="color:var(--gold-light);">${"★".repeat(f.stars)}${"☆".repeat(5 - f.stars)}</span> • <small style="color:var(--text-muted);">${esc(f.time)} (${esc(f.phone)})</small><div style="font-size:0.88rem; margin-top:4px;">${esc(f.text)}</div></div><button class="btn btn-danger" onclick="deleteFeedback(${f.id})">×</button></div>`).join("") : `<div class="chart-card" style="color:var(--text-muted);">Shikoyat yoki yashirin xabarlar yo'q.</div>`}`;
+      } else {
+        box.innerHTML = `
+          <form onsubmit="addMenuItem(event)" class="chart-card">
+            <h4 style="color:var(--gold-light); margin-bottom:12px;">Yangi taom qo'shish</h4>
+            <div class="form-grid"><input type="text" id="newDishName" placeholder="Taom nomi" required /><input type="number" id="newDishPrice" placeholder="Narxi (so'm)" required /></div>
+            <div class="form-grid"><select id="newDishCat">${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join("")}</select><input type="text" id="newDishDesc" placeholder="Tavsif" required /></div>
+            <button type="submit" class="btn btn-gold" style="width:100%;">Qo'shish</button>
+          </form>
+          ${menuItems.map(m => `<div class="item-card"><div><strong>${esc(m.name)}</strong> <small style="color:var(--text-muted);">(${esc(m.cat)})</small><div style="color:var(--gold-light); font-size:0.88rem;">${formatPrice(m.price)}</div></div><div style="display:flex; gap:7px; align-items:center; flex-wrap:wrap;"><span class="status-pill ${m.available === false ? 'stop' : 'done'}">${m.available === false ? 'Stop-list' : 'Bor'}</span><button class="btn btn-outline" onclick="toggleStop(${m.id})">${m.available === false ? 'Yoqish' : 'Stop'}</button><button class="btn btn-outline" onclick="editPrice(${m.id})">Narx</button><button class="btn btn-danger" onclick="deleteMenu(${m.id})">×</button></div></div>`).join("")}`;
+      }
+    }
+
+    function setBookingState(id, roomStatus) {
+      const b = bookings.find(x => x.id === id); if (!b) return;
+      db.ref(`shahboz_v1/rooms/${b.zoneId}/${b.spotNum}`).set({ num: b.spotNum, status: roomStatus, time: "" });
+      db.ref(`shahboz_v1/bookings/${id}/status`).set(roomStatus === "occupied" ? "Ishlayapti (Qizil)" : "Yakunlandi");
+    }
+    function deleteBooking(id) {
+      const b = bookings.find(x => x.id === id);
+      if (b) db.ref(`shahboz_v1/rooms/${b.zoneId}/${b.spotNum}`).set({ num: b.spotNum, status: "free", time: "" });
+      db.ref(`shahboz_v1/bookings/${id}`).remove();
+    }
+    function toggleOrder(id) {
+      const o = orders.find(x => x.id === id); if (!o) return;
+      db.ref(`shahboz_v1/orders/${id}/status`).set(o.status === "Bajarildi" ? "Yangi" : "Bajarildi");
+    }
+    function deleteOrder(id) { db.ref(`shahboz_v1/orders/${id}`).remove(); }
+    function toggleStop(id) {
+      const m = menuItems.find(x => x.id === id); if (!m) return;
+      db.ref(`shahboz_v1/menu/${id}/available`).set(m.available === false ? true : false);
+    }
+    function editPrice(id) {
+      const m = menuItems.find(x => x.id === id); if (!m) return;
+      const val = prompt(`${m.name} — yangi narx (so'm):`, m.price);
+      if (val && !isNaN(Number(val)) && Number(val) > 0) db.ref(`shahboz_v1/menu/${id}/price`).set(Number(val));
+    }
+    function addMenuItem(e) {
+      e.preventDefault();
+      const id = Date.now();
+      db.ref(`shahboz_v1/menu/${id}`).set({
+        id, name: document.getElementById("newDishName").value.trim(), price: Number(document.getElementById("newDishPrice").value),
+        cat: document.getElementById("newDishCat").value, desc: document.getElementById("newDishDesc").value.trim(),
+        weight: "350 g", prep: "15 daq", available: true, sold: 0,
+        img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+      });
+      e.target.reset();
+    }
+    function deleteMenu(id) { db.ref(`shahboz_v1/menu/${id}`).remove(); }
+    function deleteReview(id) { db.ref(`shahboz_v1/reviews/${id}`).remove(); }
+    function deleteFeedback(id) { db.ref(`shahboz_v1/feedbacks/${id}`).remove(); }
+
+    if (sessionStorage.getItem("shahboz_admin_auth") === "1") enterDashboard();
+  </script>
+</body>
+</html>
